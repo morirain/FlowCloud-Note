@@ -6,8 +6,8 @@ android {
         applicationId "me.morirain.dev.flowcloud.note"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 1805150001
+        versionName 'v0.01'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     dataBinding {
@@ -19,49 +19,74 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    productFlavors {
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     /** Google */
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    implementation "com.android.support:recyclerview-v7:27.1.1"
-    implementation "com.android.support:support-annotations:27.1.1"
-    implementation "com.android.support:design:27.1.1"
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:support-annotations:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     /** AndroidUtilCode */ /* https://github.com/Blankj/AndroidUtilCode */
     implementation 'com.blankj:utilcode:1.15.0'
+
     /** RxAndroid */ /* https://github.com/ReactiveX/RxAndroid */
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+
     /** RxJava */ /* https://github.com/ReactiveX/RxJava */
     implementation 'io.reactivex.rxjava2:rxjava:2.1.14-RC1'
+
     /** RxPermissions */ /* https://github.com/tbruyelle/RxPermissions */
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+
     /** OkHttp3 */ /* https://github.com/square/okhttp */
     testImplementation 'com.squareup.okhttp3:mockwebserver:3.10.0'
+
     /** Retrofit2 */ /* https://github.com/square/retrofit */
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+
+    /** Dagger2 */ /* https://github.com/google/dagger */
+    implementation 'com.google.dagger:dagger:2.16'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.x'
+
     /** material-dialogs */ /* https://github.com/afollestad/material-dialogs */
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+
     /** MaterialDrawer */ /* https://github.com/mikepenz/MaterialDrawer */
-    implementation("com.mikepenz:materialdrawer:6.0.7@aar") { transitive = true }
+    implementation('com.mikepenz:materialdrawer:6.0.7@aar') { transitive = true }
+
     /** Glide */ /* https://github.com/bumptech/glide */
-    implementation ('com.github.bumptech.glide:glide:4.7.1') { exclude group: 'com.android.support' }
+    implementation('com.github.bumptech.glide:glide:4.7.1') { exclude group: 'com.android.support' }
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
-    /** BaseRecyclerViewAdapterHelper */ /* https://github.com/CymChad/BaseRecyclerViewAdapterHelper */
+
+    /** BRVAH BaseRecyclerViewAdapterHelper */ /* https://github.com/CymChad/BaseRecyclerViewAdapterHelper */
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+
     /** PhotoView */ /* https://github.com/chrisbanes/PhotoView */
     implementation 'com.github.chrisbanes:PhotoView:2.1.3'
+
     /** SearchBar-SearchView */ /* https://github.com/lapism/SearchBar-SearchView */
     //Need Sdk 21//implementation 'com.lapism:searchview:27.1.1.0.0'
+
     /** MaterialTapTargetPrompt */ /* https://github.com/sjwall/MaterialTapTargetPrompt */
     implementation 'uk.co.samuelwall:material-tap-target-prompt:2.8.0'
+
     /** Gson */ /* https://github.com/google/gson */
     implementation 'com.google.code.gson:gson:2.8.4'
+
     /** AutoEx */ /* https://github.com/BolexLiu/AutoEx */
     debugImplementation 'com.github.BolexLiu.AutoEx:AutoEx-Lib:v1.0.7' //debug包
     releaseImplementation 'com.github.BolexLiu.AutoEx:AutoEx-Lib-No-Op:v1.0.7' //release包
