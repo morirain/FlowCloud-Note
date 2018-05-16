@@ -43,12 +43,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    /** JGit */ /* http://www.eclipse.org/jgit */
-    implementation 'org.eclipse.jgit:org.eclipse.jgit:3.7.1.201504261725-r'
-
-    /** Jsch */ /* http://www.jcraft.com/jsch */
-    implementation 'com.jcraft:jsch:0.1.54'
-
     /** AndroidUtilCode */ /* https://github.com/Blankj/AndroidUtilCode */
     implementation 'com.blankj:utilcode:1.15.0'
 
@@ -99,4 +93,5 @@ dependencies {
     /** AutoEx */ /* https://github.com/BolexLiu/AutoEx */
     debugImplementation 'com.github.BolexLiu.AutoEx:AutoEx-Lib:v1.0.7' //debug包
     releaseImplementation 'com.github.BolexLiu.AutoEx:AutoEx-Lib-No-Op:v1.0.7' //release包
+    compile project(path: ':jgitutils')
 }
