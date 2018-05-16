@@ -6,7 +6,7 @@ android {
         applicationId "me.morirain.dev.flowcloud.note"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 1805150001
+        versionCode 01
         versionName 'v0.01'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -14,8 +14,11 @@ android {
         enabled true
     }
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
+        }
+        release {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -39,6 +42,12 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    /** JGit */ /* http://www.eclipse.org/jgit */
+    implementation 'org.eclipse.jgit:org.eclipse.jgit:3.7.1.201504261725-r'
+
+    /** Jsch */ /* http://www.jcraft.com/jsch */
+    implementation 'com.jcraft:jsch:0.1.54'
 
     /** AndroidUtilCode */ /* https://github.com/Blankj/AndroidUtilCode */
     implementation 'com.blankj:utilcode:1.15.0'
