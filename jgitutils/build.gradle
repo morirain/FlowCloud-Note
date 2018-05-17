@@ -6,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 01
+        versionName '0.01'
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -20,17 +20,26 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    /** JGit */ /* http://www.eclipse.org/jgit */
-    implementation 'org.eclipse.jgit:org.eclipse.jgit:3.7.1.201504261725-r'
-
-    /** Jsch */ /* http://www.jcraft.com/jsch */
-    implementation 'com.jcraft:jsch:0.1.54'
-
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    /** RxAndroid */
+    /* https://github.com/ReactiveX/RxAndroid */
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    /** RxJava */
+    /* https://github.com/ReactiveX/RxJava */
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.14-RC1'
+    /** JGit */
+    /* http://www.eclipse.org/jgit */
+    api 'org.eclipse.jgit:org.eclipse.jgit:3.7.1.201504261725-r'
+    /** Jsch */
+    /* http://www.jcraft.com/jsch */
+    api 'com.jcraft:jsch:0.1.54'
     //implementation 'com.android.support:appcompat-v7:27.1.1'
     //testImplementation 'junit:junit:4.12'
     //androidTestImplementation 'com.android.support.test:runner:1.0.2'

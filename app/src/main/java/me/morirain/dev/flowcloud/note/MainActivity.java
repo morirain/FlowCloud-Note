@@ -17,8 +17,9 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JGit.newTask()
-                        .clone("https://github.com/morirain/FlowCloud-Note.git");
+                JGit.prepare()
+                        .clone("https://github.com/morirain/FlowCloud-Note.git")
+                        .call();
             }
         });
     }

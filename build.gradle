@@ -23,6 +23,11 @@ allprojects {
             url 'https://jitpack.io'
         }
     }
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xmaxerrs" << "500" // or whatever number you want
+        }
+    }
 }
 
 task clean(type: Delete) {
