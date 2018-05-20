@@ -4,9 +4,12 @@ import android.os.Environment;
 import android.util.Log;
 
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.GitCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -21,6 +24,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.internal.schedulers.IoScheduler;
 import io.reactivex.schedulers.Schedulers;
@@ -29,10 +33,39 @@ public class JGit {
 
     private String mCloneFromUrl;
 
+    private Observer<Object> mObserver;
+
+    private Observable<Object> mObservable;
+
+    private List<GitCommand> mTaskSequence = new ArrayList<>();
+
     private JGit() {
     }
 
     public static JGit prepare() {
+        JGit jGit = new JGit();
+        jGit.mObserver = new Observer<Object>() {
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Object o) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
         return new JGit();
     }
 
@@ -50,11 +83,27 @@ public class JGit {
 
     public JGit clone(String remoteUrl) {
         mCloneFromUrl = remoteUrl;
+        mTaskSequence.add(
+                Git.cloneRepository()
+                .setURI(mCloneFromUrl)
+                .setDirectory(new File(remoteUrl))
+        );
         return this;
     }
 
     public void call() {
 
+        if (mObserver != null) {
+            mObservable = new Observable<Object>() {
+                @Override
+                protected void subscribeActual(Observer<? super Object> observer) {
+
+                }
+            };
+            mObservable.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(mObserver);
+        }
         if (!mCloneFromUrl.isEmpty()) {
             final File toPath = new File(Environment.getExternalStorageDirectory(), "/rsad1p/");
 
