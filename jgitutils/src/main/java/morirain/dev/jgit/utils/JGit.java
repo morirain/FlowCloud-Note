@@ -18,7 +18,6 @@ import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import morirain.dev.jgit.utils.bean.JGitCommandBean;
 
 public class JGit {
 
@@ -31,8 +30,6 @@ public class JGit {
     private List<GitCommand> mTaskSequence = new ArrayList<>();
 
     private SparseArray<File> mSparseArray = new SparseArray<>();
-
-    private List<JGitCommandBean> mJGitCommandBean = new ArrayList<>();
 
     private JGit() {
     }
@@ -82,14 +79,6 @@ public class JGit {
                 Git.cloneRepository()
                 .setURI(mCloneFromUrl)
                 .setDirectory(new File(remoteUrl))
-        );
-        mJGitCommandBean.add(
-                new JGitCommandBean(
-                        Git.cloneRepository()
-                                .setURI(mCloneFromUrl)
-                                .setDirectory(new File(remoteUrl)),
-                        new File(remoteUrl)
-                )
         );
         return this;
     }
