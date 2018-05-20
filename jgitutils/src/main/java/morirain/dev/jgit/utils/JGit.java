@@ -1,7 +1,7 @@
 package morirain.dev.jgit.utils;
 
 import android.os.Environment;
-import android.util.Log;
+import android.util.SparseArray;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.GitCommand;
@@ -12,22 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
-import io.reactivex.SingleEmitter;
 import io.reactivex.SingleObserver;
-import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
-import io.reactivex.internal.schedulers.IoScheduler;
 import io.reactivex.schedulers.Schedulers;
+import morirain.dev.jgit.utils.bean.JGitCommandBean;
 
 public class JGit {
 
@@ -38,6 +29,10 @@ public class JGit {
     private Observable<Object> mObservable;
 
     private List<GitCommand> mTaskSequence = new ArrayList<>();
+
+    private SparseArray<File> mSparseArray = new SparseArray<>();
+
+    private List<JGitCommandBean> mJGitCommandBean = new ArrayList<>();
 
     private JGit() {
     }
@@ -70,7 +65,7 @@ public class JGit {
     }
 
     /*public JGit to(String toDir, Boolean isExternal) {
-        if (!toDir.isEmpty()) {
+        if (!toDir.isEmpty() && !mTaskSequence.isEmpty()) {
             if (isExternal) {
                 mToDir = new File(Environment.getExternalStorageDirectory(), toDir);
                 if(!mToDir.exists()) {
@@ -87,6 +82,14 @@ public class JGit {
                 Git.cloneRepository()
                 .setURI(mCloneFromUrl)
                 .setDirectory(new File(remoteUrl))
+        );
+        mJGitCommandBean.add(
+                new JGitCommandBean(
+                        Git.cloneRepository()
+                                .setURI(mCloneFromUrl)
+                                .setDirectory(new File(remoteUrl)),
+                        new File(remoteUrl)
+                )
         );
         return this;
     }
