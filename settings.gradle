@@ -1,1 +1,1 @@
-include ':flowcloud', ':jgitutils'
+include ':flowmemo', ':jgitutils'

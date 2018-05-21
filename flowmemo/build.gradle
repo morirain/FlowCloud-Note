@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "me.morirain.dev.flowcloud.note"
+        applicationId "me.morirain.dev.flowmemo"
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 01
