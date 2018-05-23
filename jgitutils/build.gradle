@@ -36,10 +36,10 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.1.14-RC1'
     /** JGit */
     /* http://www.eclipse.org/jgit */
-    api 'org.eclipse.jgit:org.eclipse.jgit:3.7.1.201504261725-r'
+    implementation 'org.eclipse.jgit:org.eclipse.jgit:3.7.1.201504261725-r'
     /** Jsch */
     /* http://www.jcraft.com/jsch */
-    api 'com.jcraft:jsch:0.1.54'
+    implementation 'com.jcraft:jsch:0.1.54'
     //implementation 'com.android.support:appcompat-v7:27.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

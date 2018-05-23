@@ -1,4 +1,4 @@
-package me.morirain.dev.flowcloud.note;
+package me.morirain.dev.flowmemo;
 
 import org.junit.Test;
 

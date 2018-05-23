@@ -1,4 +1,4 @@
-package me.morirain.dev.flowcloud.note;
+package me.morirain.dev.flowmemo;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("me.morirain.dev.flowcloud.note", appContext.getPackageName());
+        assertEquals("me.morirain.dev.flowmemo", appContext.getPackageName());
     }
 }

@@ -1,4 +1,4 @@
-package me.morirain.dev.flowcloud.note;
+package me.morirain.dev.flowmemo;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 JGit.prepare()
-                        .clone("https://github.com/morirain/FlowCloud-Note.git")
+                        .clone("https://github.com/morirain/FlowMemo.git")
                         .call();
             }
         });
