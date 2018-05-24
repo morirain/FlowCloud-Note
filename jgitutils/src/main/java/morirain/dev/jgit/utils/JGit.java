@@ -1,5 +1,6 @@
 package morirain.dev.jgit.utils;
 
+import android.app.Application;
 import android.os.Environment;
 import android.util.SparseArray;
 
@@ -9,14 +10,23 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.GitCommand;
 import org.eclipse.jgit.api.InitCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.Repository;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import io.reactivex.Completable;
+import io.reactivex.CompletableEmitter;
+import io.reactivex.CompletableObserver;
+import io.reactivex.CompletableOnSubscribe;
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
@@ -24,39 +34,49 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+
 public class JGit {
 
-    private String mCloneFromUrl;
+    private CompletableObserver mObserver;
 
-    private Observer<GitCommand> mObserver;
-
-    private Observable<GitCommand> mObservable;
+    private Completable mObservable;
 
     private List<Callable> mTaskSequence = new ArrayList<>();
 
-    private SparseArray<File> mSparseArray = new SparseArray<>();
+    private Git mNowOpenGitRepo;
+
+    private String mName = "empty name";
+
+    private String mEmail = "empty@email.com";
 
     private JGit() {
-        mObserver = new Observer<GitCommand>() {
+        mObservable = Completable.create(emitter -> {
+            if (!mTaskSequence.isEmpty()) {
+                for (Callable command : mTaskSequence) {
 
+                    if (command instanceof GitCommand || command instanceof InitCommand) {
+                        command.call();
+                    }
+
+                }
+                emitter.onComplete();
+            }
+        });
+
+        mObserver = new CompletableObserver() {
             @Override
             public void onSubscribe(Disposable d) {
 
             }
 
             @Override
-            public void onNext(GitCommand gitCommand) {
+            public void onComplete() {
 
             }
 
             @Override
             public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
+                e.printStackTrace();
             }
         };
     }
@@ -65,12 +85,27 @@ public class JGit {
         return new JGit();
     }
 
+    public JGit setAuthor(String name, String email) {
+        mName = name;
+        mEmail = email;
+        return this;
+    }
+
     public JGit init(File toDir) {
         mTaskSequence.add(
                 Git.init()
                         .setDirectory(toDir)
                         .setBare(false)
         );
+        return this;
+    }
+
+    public JGit openExistedRepo(File repoDir) {
+        try {
+            mNowOpenGitRepo = Git.open(repoDir);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return this;
     }
 
@@ -85,37 +120,58 @@ public class JGit {
         return this;
     }
 
-    public JGit clone(String remoteUrl) {
+    public JGit commitAll(Git git, String commitMessage) {
+        mTaskSequence.add(
+                git
+                        .commit()
+                        .setAll(true)
+                        .setCommitter(mName, mEmail)
+                        .setMessage(commitMessage)
+        );
+        return this;
+    }
+
+    public JGit commitAll(String commitMessage) {
+        if (mNowOpenGitRepo != null) commitAll(mNowOpenGitRepo, commitMessage);
+        return this;
+    }
+
+    public JGit commitAll(File repoDir, String commitMessage) {
+        openExistedRepo(repoDir);
+        commitAll(commitMessage);
+        return this;
+    }
+
+    public JGit clone(String remoteUrl, String toExternalDir) {
+        File toDir;
+        if (toExternalDir.isEmpty()) {
+            Pattern patterns = Pattern.compile("[a-zA-Z-]*\\.git");
+            Matcher matcher = patterns.matcher(remoteUrl);
+            toDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), matcher.group());
+        } else {
+            toDir = new File(Environment.getExternalStorageDirectory(), toExternalDir);
+        }
         mTaskSequence.add(
                 Git.cloneRepository()
-                .setURI(remoteUrl)
-                .setDirectory(new File(Environment.getExternalStorageDirectory(), "/aaa/"))
+                        .setURI(remoteUrl)
+                        .setDirectory(toDir)
         );
+        return this;
+    }
+
+    public JGit clone(String remoteUrl) {
+        clone(remoteUrl, "");
+        return this;
+    }
+
+    public JGit push(String remoteUrl) {
+
         return this;
     }
 
     public void call() {
 
         if (mObserver != null) {
-            mObservable = new Observable<GitCommand>() {
-                @Override
-                protected void subscribeActual(Observer<? super GitCommand> observer) {
-                    if (!mTaskSequence.isEmpty()) {
-                        try {
-                            for (Callable command : mTaskSequence) {
-                                if (command instanceof InitCommand
-                                        || command instanceof AddCommand
-                                        || command instanceof CloneCommand) {
-                                    command.call();
-                                }
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }
-            };
             mObservable.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(mObserver);
