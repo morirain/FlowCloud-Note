@@ -2,6 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
 android {
+    signingConfigs {
+        morirain {
+            keyAlias 'morirain'
+            keyPassword 'morirain'
+            storeFile file('C:/Users/Administrator/morirainkey.jks')
+            storePassword 'morirain'
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "me.morirain.dev.flowmemo"
@@ -20,10 +28,12 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            signingConfig signingConfigs.morirain
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.morirain
         }
     }
     compileOptions {
@@ -42,8 +52,8 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'com.android.support:support-annotations:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
+    //implementation 'com.android.support:support-annotations:27.1.1'
+    //implementation 'com.android.support:design:27.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -60,21 +70,31 @@ dependencies {
     /** RxPermissions */ /* https://github.com/tbruyelle/RxPermissions */
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
 
+    /** RxBinding*/ /* https://github.com/JakeWharton/RxBinding */
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
+    implementation 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.1.1'
+
     /** OkHttp3 */ /* https://github.com/square/okhttp */
-    testImplementation 'com.squareup.okhttp3:mockwebserver:3.10.0'
+    //testImplementation 'com.squareup.okhttp3:mockwebserver:3.10.0'
 
     /** Retrofit2 */ /* https://github.com/square/retrofit */
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
 
     /** Dagger2 */ /* https://github.com/google/dagger */
-    implementation 'com.google.dagger:dagger:2.16'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.16'
+    //implementation 'com.google.dagger:dagger:2.16'
+    //annotationProcessor 'com.google.dagger:dagger-compiler:2.16'
+
+    /** butterknife */ /* https://github.com/JakeWharton/butterknife */
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     /** material-dialogs */ /* https://github.com/afollestad/material-dialogs */
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 
     /** MaterialDrawer */ /* https://github.com/mikepenz/MaterialDrawer */
-    implementation('com.mikepenz:materialdrawer:6.0.7@aar') { transitive = true }
+    //implementation('com.mikepenz:materialdrawer:6.0.7@aar') { transitive = true }
 
     /** Glide */ /* https://github.com/bumptech/glide */
     implementation('com.github.bumptech.glide:glide:4.7.1') { exclude group: 'com.android.support' }
@@ -93,9 +113,9 @@ dependencies {
     implementation 'uk.co.samuelwall:material-tap-target-prompt:2.8.0'
 
     /** Gson */ /* https://github.com/google/gson */
-    implementation 'com.google.code.gson:gson:2.8.4'
+    //implementation 'com.google.code.gson:gson:2.8.4'
 
     /** AutoEx */ /* https://github.com/BolexLiu/AutoEx */
-    debugImplementation 'com.github.BolexLiu.AutoEx:AutoEx-Lib:v1.0.7' //debug包
-    releaseImplementation 'com.github.BolexLiu.AutoEx:AutoEx-Lib-No-Op:v1.0.7' //release包
+    //debugImplementation 'com.github.BolexLiu.AutoEx:AutoEx-Lib:v1.0.7' //debug包
+    //releaseImplementation 'com.github.BolexLiu.AutoEx:AutoEx-Lib-No-Op:v1.0.7' //release包
 }

@@ -40,7 +40,7 @@
 -dontwarn javax.annotation.**
 -dontwarn org.conscrypt.**
 # A resource is loaded with a relative path so the package of this class must be preserved.
--keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
+-keep class okhttp3.internal.publicsuffix.PublicSuffixDatabase
 
 # Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
@@ -69,4 +69,20 @@
 -dontwarn org.apache.http.**
 -dontwarn org.slf4j.**
 -dontwarn com.morirain.jgit.utils.**
--dontwarn org.eclipse.**
+-dontwarn org.eclipse.jgit.**
+-keep class org.eclipse.jgit.** { *; }
+-keep class org.eclipse.jgit.internal.JGitText.** { *; }
+
+-keep class org.eclipse.jgit.nls.TranslationBundle.** { *; }
+
+-keep class org.slf4j.** { *; }
+-keep class org.eclipse.jgit.nls.TranslationBundle.** { *; }
+-keep class org.eclipse.jgit.internal.JGitText.** { *; }
+-keep class org.eclipse.jgit.lib.Repository.**
+-keep class com.jcraft.jsch.jce.**
+-keep class * extends com.jcraft.jsch.KeyExchange
+-keep class com.jcraft.jsch.**
+-keep class org.apache.commons.io.FileUtils { public *** openOutputStream(...); }
+-keep class org.apache.commons.io.IOUtils  { public *** closeQuietly(...); public *** copy(...); }
+-keep class org.apache.commons.io.input.BoundedInputStream { *; }
+-keep class org.eclipse.jgit.transport.RemoteConfig { *** removeURI(...); }
