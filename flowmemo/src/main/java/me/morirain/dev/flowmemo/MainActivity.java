@@ -1,11 +1,11 @@
 package me.morirain.dev.flowmemo;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import morirain.dev.jgit.utils.JGit;
+import com.morirain.jgit.utils.JGit;
 
 public class MainActivity extends AppCompatActivity {
 

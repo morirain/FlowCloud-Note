@@ -1,4 +1,4 @@
-package morirain.dev.jgit.utils;
+package com.morirain.jgit.utils;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

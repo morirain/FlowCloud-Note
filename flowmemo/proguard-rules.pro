@@ -21,6 +21,10 @@
 #-renamesourcefileattribute SourceFile
 # Retain generic type information for use by reflection by converters and adapters.
 
+-obfuscationdictionary proguard-dictionary.txt
+-packageobfuscationdictionary proguard-dictionary.txt
+-classobfuscationdictionary proguard-dictionary.txt
+
 # retrofit
 -keepattributes Signature
 # Retain service method parameters.
@@ -46,5 +50,23 @@
   public *;
 }
 
-# for DexGuard only
--keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+# RxJava
+-dontwarn sun.misc.**
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+ long producerIndex;
+ long consumerIndex;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+ rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+ rx.internal.util.atomic.LinkedQueueNode consumerNode;
+}
+
+# Jgit
+-dontwarn com.jcraft.jsch.**
+-dontwarn org.apache.commons.**
+-dontwarn org.apache.http.**
+-dontwarn org.slf4j.**
+-dontwarn com.morirain.jgit.utils.**
+-dontwarn org.eclipse.**

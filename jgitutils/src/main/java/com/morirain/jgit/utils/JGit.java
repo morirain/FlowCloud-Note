@@ -1,4 +1,4 @@
-package morirain.dev.jgit.utils;
+package com.morirain.jgit.utils;
 
 import android.app.Application;
 import android.os.Environment;
@@ -144,13 +144,17 @@ public class JGit {
 
     public JGit clone(String remoteUrl, String toExternalDir) {
         File toDir;
+        String child = "GitRepo";
         if (toExternalDir.isEmpty()) {
             Pattern patterns = Pattern.compile("[a-zA-Z-]*\\.git");
             Matcher matcher = patterns.matcher(remoteUrl);
-            toDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), matcher.group());
+            if (matcher.find()) {
+                child = matcher.group();
+            }
         } else {
-            toDir = new File(Environment.getExternalStorageDirectory(), toExternalDir);
+            child = toExternalDir;
         }
+        toDir = new File(Environment.getExternalStorageDirectory(), child);
         mTaskSequence.add(
                 Git.cloneRepository()
                         .setURI(remoteUrl)

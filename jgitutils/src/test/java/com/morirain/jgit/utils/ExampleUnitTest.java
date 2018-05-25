@@ -1,4 +1,4 @@
-package morirain.dev.jgit.utils;
+package com.morirain.jgit.utils;
 
 import org.junit.Test;
 
