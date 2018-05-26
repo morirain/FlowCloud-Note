@@ -1,38 +1,27 @@
 package me.morirain.dev.flowmemo;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
+import android.widget.Toast;
 
 import com.morirain.jgit.utils.JGit;
-import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
+import me.morirain.dev.flowmemo.databinding.ActivityMainBinding;
+import me.morirain.dev.flowmemo.utils.LogUtil;
 
-public class MainActivity extends AppCompatActivity {
-
-    @BindView(R.id.button1) Button mButton;
-
-    @OnClick(R.id.button1) void onClick() {
-        JGit.prepare()
-                .clone("https://github.com/morirain/FlowMemo.git")
-                .call();
-    }
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding.setClickListener(this);
+
         RxPermissions rxPermissions = new RxPermissions(this);
         Disposable subscribe = rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(granted -> {
@@ -43,5 +32,33 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    @Override
+    public void onClick(View view) {
+        if ( view.getId() == R.id.button1 ) {
+            JGit.with("FlowMemo")
+                    //.clone("https://github.com/morirain/FlowMemo.git")
+                    .addAll()
+                    .commitAll("helloworld")
+                    .call();
+            /*JGit.with()
+                    .clone("https://github.com/morirain/FlowMemo.git", "FlowMemo")
+                    .setLastCallback((isComplete, e) -> {
+                        if (isComplete) {
+                            Toast.makeText(MainActivity.this, "clone complete", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .setAllCommandCallback((isComplete, e) -> {
+                        if (isComplete) {
+                            Toast.makeText(MainActivity.this, "all command complete", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .call();*/
+        }
     }
 }
