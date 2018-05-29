@@ -2,36 +2,32 @@ package com.morirain.jgit.utils;
 
 import android.os.Environment;
 
+import org.eclipse.jgit.api.CheckoutCommand;
+import org.eclipse.jgit.api.CreateBranchCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.concurrent.Callable;
 
-import io.reactivex.Emitter;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.ObservableSource;
-import io.reactivex.Observer;
+import io.reactivex.Completable;
+import io.reactivex.CompletableObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-import com.morirain.jgit.utils.CallbackCommand.LastCallback;
-import com.morirain.jgit.utils.CallbackCommand.AllCommandCallback;
-
 
 public class JGit {
 
-    private Observer<CallbackCommand> mObserver;
+    private static final String TAG = "JGitUtils";
 
-    private Observable<CallbackCommand> mObservable;
+    //private CompletableObserver mObserver;
 
-    private List<Observable<CallbackCommand>> mTaskSequence = new ArrayList<>();
+    //private Observable<CallbackCommand> mObservable;
+
+    private List<Completable> mTaskSequence = new ArrayList<>();
 
     private Git mNowOpenGitRepo;
 
@@ -41,17 +37,22 @@ public class JGit {
 
     private String mEmail = "empty@email.com";
 
-    private LastCallback mLastCallback;
+    //身份验证
+    private UsernamePasswordCredentialsProvider mUsernamePassword = new UsernamePasswordCredentialsProvider("empty", "empty");
+
+    //private LastCallback mLastCallback;
 
     private AllCommandCallback mAllCommandCallback;
 
-    private Hashtable<Callable, CallbackCommand.LastCallback> mCallbackTable = new Hashtable<>();
+    public interface AllCommandCallback {
+        void onFinish(Boolean isComplete, Throwable e);
+    }
 
-    /*public JGit setLastCallback(LastCallback lastCallback) {
-        if (!mTaskSequence.isEmpty()) {
-            Callable nowTask = mTaskSequence.get(mTaskSequence.size() - 1);
-            mCallbackTable.put(nowTask, lastCallback);
-        }
+    /*private Hashtable<Observable, LastCallback> mCallbackTable = new Hashtable<>();
+
+    public JGit setLastCallback(LastCallback lastCallback) {
+        Observable<CallbackCommand> nowTask = mTaskSequence.get(mTaskSequence.size() - 1);
+        mCallbackTable.put(nowTask, lastCallback);
         return this;
     }*/
 
@@ -61,32 +62,13 @@ public class JGit {
     }
 
     private JGit() {
-        mObserver = new Observer<CallbackCommand>() {
-            @Override
-            public void onSubscribe(Disposable d) {}
-
-            @Override
-            public void onNext(CallbackCommand callLastCallback) {
-                callLastCallback.call();
-            }
-
-            @Override
-            public void onComplete() {
-                if (mAllCommandCallback != null) mAllCommandCallback.onFinish(true, null);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-                if (mAllCommandCallback != null) mAllCommandCallback.onFinish(false, e);
-            }
-        };
     }
 
     private void openExistedRepo(File repoDir) {
-        mTaskSequence.add(Observable.create(emitter -> {
+        mTaskSequence.add(
+                JGitCreateCommand.create(emitter -> {
                     try {
-                        mNowOpenGitRepo = Git.open(repoDir);
+                        if (mNowOpenGitRepo == null) mNowOpenGitRepo = Git.open(repoDir);
                     } catch (IOException e) {
                         //NoExistedRepo
                         //e.printStackTrace();
@@ -98,13 +80,9 @@ public class JGit {
 
     private JGit openDir(File dir) {
         mNowOpenDir = dir;
-        if (mNowOpenDir.exists()) openExistedRepo(dir);
+        if (dir.exists()) openExistedRepo(dir);
         return this;
     }
-
-    /*public static JGit with() {
-        return new JGit();
-    }*/
 
     public static JGit with(File openRepo) {
         return new JGit().openDir(openRepo);
@@ -114,19 +92,36 @@ public class JGit {
         return new JGit().openDir(new File(Environment.getExternalStorageDirectory(), openRepoOnExternal));
     }
 
-    public JGit setAuthor(String name, String email) {
+
+    public JGit setAuthorImmediate(String name, String email) {
         mName = name;
         mEmail = email;
         return this;
     }
 
-    public JGit init() {
+    public JGit setAuthorOnSequence(String name, String email) {
         mTaskSequence.add(
                 JGitCreateCommand.create(emitter ->
-                        Git.init()
-                                .setDirectory(mNowOpenDir)
-                                .setBare(false)
-                                .call()
+                        setAuthorImmediate(name, email)
+                )
+        );
+        return this;
+    }
+
+    public JGit setUsernamePassword(String name, String password) {
+        mUsernamePassword = new UsernamePasswordCredentialsProvider(name, password);
+        return this;
+    }
+
+    public JGit init() {
+        mTaskSequence.add(
+                JGitCreateCommand.create(emitter -> {
+                            Git git = Git.init()
+                                    .setDirectory(mNowOpenDir)
+                                    .setBare(false)
+                                    .call();
+                            if (mNowOpenGitRepo == null && git != null) mNowOpenGitRepo = git;
+                        }
                 )
 
         );
@@ -158,39 +153,17 @@ public class JGit {
         return this;
     }
 
-    /*public JGit commitAll(File repoDir, String commitMessage) {
-        openExistedRepo(repoDir);
-        commitAll(commitMessage);
-        return this;
-    }*/
-
-    /*public JGit clone(String remoteUrl, String toExternalDirName) {
-        File toDir;
-        String child = "GitRepo";
-        if (toExternalDirName.isEmpty()) {
-            Pattern patterns = Pattern.compile("[a-zA-Z-]*\\.git");
-            Matcher matcher = patterns.matcher(remoteUrl);
-            if (matcher.find()) {
-                child = matcher.group();
-            }
-        } else {
-            child = toExternalDirName;
-        }
-        toDir = new File(Environment.getExternalStorageDirectory(), child);
-        mTaskSequence.add(
-                Git.cloneRepository()
-                        .setURI(remoteUrl)
-                        .setDirectory(toDir)
-        );
-        return this;
-    }*/
-
     public JGit clone(String remoteUrl, File toDir) {
-        mTaskSequence.add(JGitCreateCommand.create(emitter ->
-                        Git.cloneRepository()
-                                .setURI(remoteUrl)
-                                .setDirectory(toDir)
-                                .call()
+        mTaskSequence.add(
+                JGitCreateCommand.create(emitter -> {
+                            Git git = Git.cloneRepository()
+                                    .setURI(remoteUrl)
+                                    .setDirectory(toDir)
+                                    .setCredentialsProvider(mUsernamePassword)
+                                    .call();
+                            if (mNowOpenGitRepo == null && git != null) mNowOpenGitRepo = git;
+                        }
+
                 )
 
         );
@@ -202,18 +175,89 @@ public class JGit {
         return this;
     }
 
-    /*public JGit push(String remoteUrl) {
+    public JGit pull(String remoteUrl, String remoteBranchName) {
         mTaskSequence.add(
-                mNowOpenGitRepo.push()
-                        .setRemote(remoteUrl)
+                JGitCreateCommand.create(emitter ->
+                        mNowOpenGitRepo.pull()
+                                .setRemoteBranchName(remoteBranchName)
+                                .setRemote(remoteUrl)
+                                .setCredentialsProvider(mUsernamePassword)
+                )
         );
         return this;
-    }*/
+    }
+
+    public JGit pull(String remoteBranchName) {
+        pull(null, remoteBranchName);
+        return this;
+    }
+
+    public JGit push(String remoteUrl) {
+        mTaskSequence.add(
+                JGitCreateCommand.create(emitter ->
+                        mNowOpenGitRepo.push()
+                                .setRemote(remoteUrl)
+                                .setCredentialsProvider(mUsernamePassword)
+
+                )
+
+        );
+        return this;
+    }
+
+    JGit checkout(String branchName, Boolean isCreateNewBranch, String remoteName) {
+        mTaskSequence.add(
+                JGitCreateCommand.create(emitter -> {
+                            CheckoutCommand checkoutCommand = mNowOpenGitRepo.checkout();
+                            if (isCreateNewBranch) checkoutCommand.setCreateBranch(true);
+                            if (!remoteName.isEmpty()) {
+                                checkoutCommand
+                                        .setUpstreamMode(CreateBranchCommand.SetupUpstreamMode.SET_UPSTREAM)
+                                        .setStartPoint(remoteName + "/" + branchName);
+                            }
+                            checkoutCommand.setName(branchName)
+                                    .call();
+                        }
+                ));
+        return this;
+    }
+
+    public JGit checkoutNewBranch(String createBranchName) {
+        checkout(createBranchName, true, null);
+        return this;
+    }
+
+    public JGit checkoutExistedBranch(String checkoutBranchName) {
+        checkout(checkoutBranchName, false, null);
+        return this;
+    }
+
+    public JGit checkoutRemoteBranch(String remoteName, String checkoutBranchName) {
+        checkout(checkoutBranchName, true, remoteName);
+        return this;
+    }
 
     public void call() {
-        mObservable = Observable.concat(mTaskSequence)
+        Completable.concat(mTaskSequence)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-        mObservable.subscribe(mObserver);
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        if (mNowOpenGitRepo != null) mNowOpenGitRepo.close();
+                        if (mAllCommandCallback != null) mAllCommandCallback.onFinish(true, null);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        if (mNowOpenGitRepo != null) mNowOpenGitRepo.close();
+                        if (mAllCommandCallback != null) mAllCommandCallback.onFinish(false, e);
+                    }
+                });
     }
 }

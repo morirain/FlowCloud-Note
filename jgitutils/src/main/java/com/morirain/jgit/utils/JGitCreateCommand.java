@@ -1,18 +1,21 @@
 package com.morirain.jgit.utils;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
+
+import io.reactivex.Completable;
+import io.reactivex.CompletableEmitter;
+import io.reactivex.CompletableOnSubscribe;
 
 class JGitCreateCommand {
 
     protected interface Command {
-        void doSomething(ObservableEmitter<CallbackCommand> emitter) throws Exception;
+        void doSomething(CompletableEmitter emitter) throws Exception;
     }
 
-        protected static Observable<CallbackCommand> create(Command command){
-            return Observable.defer(() -> Observable.create((ObservableOnSubscribe<CallbackCommand>) emitter -> {
-                command.doSomething(emitter);
-                emitter.onComplete();
-            }));
-        }
+    protected static Completable create(Command command) {
+        return Completable.defer(() ->
+                Completable.create(emitter -> {
+                    command.doSomething(emitter);
+                    emitter.onComplete();
+                })
+        );
+    }
 }
