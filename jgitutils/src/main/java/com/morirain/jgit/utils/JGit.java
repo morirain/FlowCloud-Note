@@ -5,6 +5,8 @@ import android.os.Environment;
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.CreateBranchCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.GitCommand;
+import org.eclipse.jgit.api.PushCommand;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 import java.io.File;
@@ -23,10 +25,6 @@ public class JGit {
 
     private static final String TAG = "JGitUtils";
 
-    //private CompletableObserver mObserver;
-
-    //private Observable<CallbackCommand> mObservable;
-
     private List<Completable> mTaskSequence = new ArrayList<>();
 
     private Git mNowOpenGitRepo;
@@ -40,21 +38,11 @@ public class JGit {
     //身份验证
     private UsernamePasswordCredentialsProvider mUsernamePassword = new UsernamePasswordCredentialsProvider("empty", "empty");
 
-    //private LastCallback mLastCallback;
-
     private AllCommandCallback mAllCommandCallback;
 
     public interface AllCommandCallback {
         void onFinish(Boolean isComplete, Throwable e);
     }
-
-    /*private Hashtable<Observable, LastCallback> mCallbackTable = new Hashtable<>();
-
-    public JGit setLastCallback(LastCallback lastCallback) {
-        Observable<CallbackCommand> nowTask = mTaskSequence.get(mTaskSequence.size() - 1);
-        mCallbackTable.put(nowTask, lastCallback);
-        return this;
-    }*/
 
     public JGit setAllCommandCallback(AllCommandCallback allCommandCallback) {
         mAllCommandCallback = allCommandCallback;
@@ -73,21 +61,23 @@ public class JGit {
                         //NoExistedRepo
                         //e.printStackTrace();
                     }
-                })
-        );
+                }));
 
     }
 
     private JGit openDir(File dir) {
         mNowOpenDir = dir;
-        if (dir.exists()) openExistedRepo(dir);
+        if (mNowOpenDir.exists()) {
+            openExistedRepo(dir);
+        } else {
+            init();
+        }
         return this;
     }
 
     public static JGit with(File openRepo) {
         return new JGit().openDir(openRepo);
     }
-
     public static JGit with(String openRepoOnExternal) {
         return new JGit().openDir(new File(Environment.getExternalStorageDirectory(), openRepoOnExternal));
     }
@@ -116,15 +106,12 @@ public class JGit {
     public JGit init() {
         mTaskSequence.add(
                 JGitCreateCommand.create(emitter -> {
-                            Git git = Git.init()
-                                    .setDirectory(mNowOpenDir)
-                                    .setBare(false)
-                                    .call();
-                            if (mNowOpenGitRepo == null && git != null) mNowOpenGitRepo = git;
-                        }
-                )
-
-        );
+                    Git git = Git.init()
+                            .setDirectory(mNowOpenDir)
+                            .setBare(false)
+                            .call();
+                    if (mNowOpenGitRepo == null && git != null) mNowOpenGitRepo = git;
+                }));
         return this;
     }
 
@@ -182,41 +169,58 @@ public class JGit {
                                 .setRemoteBranchName(remoteBranchName)
                                 .setRemote(remoteUrl)
                                 .setCredentialsProvider(mUsernamePassword)
+                                .call()
                 )
         );
         return this;
     }
-
     public JGit pull(String remoteBranchName) {
         pull(null, remoteBranchName);
         return this;
     }
-
-    public JGit push(String remoteUrl) {
-        mTaskSequence.add(
-                JGitCreateCommand.create(emitter ->
-                        mNowOpenGitRepo.push()
-                                .setRemote(remoteUrl)
-                                .setCredentialsProvider(mUsernamePassword)
-
-                )
-
-        );
+    public JGit pull() {
+        pull(null, null);
         return this;
     }
+
+    public JGit push(String remoteUrl, Boolean force, Boolean pushAllBranch) {
+        mTaskSequence.add(
+                JGitCreateCommand.create(emitter -> {
+                    PushCommand pushCommand = mNowOpenGitRepo.push()
+                            .setForce(force)
+                            .setCredentialsProvider(mUsernamePassword);
+                    if (!remoteUrl.isEmpty()) pushCommand.setRemote(remoteUrl);
+                    if (pushAllBranch) pushCommand.setPushAll();
+                    pushCommand.call();
+                }));
+        return this;
+    }
+    public JGit push(Boolean force, Boolean pushAllBranch) {
+        push(null, force, pushAllBranch);
+        return this;
+    }
+    public JGit push(Boolean force) {
+        push(null, force, false);
+        return this;
+    }
+    public JGit push() {
+        push(null, false, false);
+        return this;
+    }
+
 
     JGit checkout(String branchName, Boolean isCreateNewBranch, String remoteName) {
         mTaskSequence.add(
                 JGitCreateCommand.create(emitter -> {
-                            CheckoutCommand checkoutCommand = mNowOpenGitRepo.checkout();
+                            CheckoutCommand checkoutCommand = mNowOpenGitRepo.checkout()
+                                    .setName(branchName);
                             if (isCreateNewBranch) checkoutCommand.setCreateBranch(true);
                             if (!remoteName.isEmpty()) {
                                 checkoutCommand
                                         .setUpstreamMode(CreateBranchCommand.SetupUpstreamMode.SET_UPSTREAM)
                                         .setStartPoint(remoteName + "/" + branchName);
                             }
-                            checkoutCommand.setName(branchName)
-                                    .call();
+                            checkoutCommand.call();
                         }
                 ));
         return this;
@@ -226,16 +230,15 @@ public class JGit {
         checkout(createBranchName, true, null);
         return this;
     }
-
     public JGit checkoutExistedBranch(String checkoutBranchName) {
         checkout(checkoutBranchName, false, null);
         return this;
     }
-
     public JGit checkoutRemoteBranch(String remoteName, String checkoutBranchName) {
         checkout(checkoutBranchName, true, remoteName);
         return this;
     }
+
 
     public void call() {
         Completable.concat(mTaskSequence)

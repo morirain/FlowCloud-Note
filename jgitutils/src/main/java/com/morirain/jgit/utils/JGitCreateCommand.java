@@ -2,7 +2,6 @@ package com.morirain.jgit.utils;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableEmitter;
-import io.reactivex.CompletableOnSubscribe;
 
 class JGitCreateCommand {
 
@@ -15,7 +14,6 @@ class JGitCreateCommand {
                 Completable.create(emitter -> {
                     command.doSomething(emitter);
                     emitter.onComplete();
-                })
-        );
+                }));
     }
 }
