@@ -6,6 +6,7 @@ import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.CreateBranchCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.GitCommand;
+import org.eclipse.jgit.api.MergeCommand;
 import org.eclipse.jgit.api.PushCommand;
 import org.eclipse.jgit.api.RemoteAddCommand;
 import org.eclipse.jgit.transport.URIish;
@@ -176,6 +177,7 @@ public class JGit {
                         mNowOpenGitRepo.pull()
                                 .setRemoteBranchName(remoteBranchName)
                                 .setRemote(remoteUrl)
+                                .setFastForward(MergeCommand.FastForwardMode.NO_FF)
                                 .setCredentialsProvider(mUsernamePassword)
                                 .call()
                 )
