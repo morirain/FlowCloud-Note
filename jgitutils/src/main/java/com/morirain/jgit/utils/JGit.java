@@ -7,10 +7,13 @@ import org.eclipse.jgit.api.CreateBranchCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.GitCommand;
 import org.eclipse.jgit.api.PushCommand;
+import org.eclipse.jgit.api.RemoteAddCommand;
+import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,7 +84,12 @@ public class JGit {
     public static JGit with(String openRepoOnExternal) {
         return new JGit().openDir(new File(Environment.getExternalStorageDirectory(), openRepoOnExternal));
     }
-
+    public static JGit with(Git openGit) {
+        JGit jGit = new JGit();
+        jGit.mNowOpenDir = openGit.getRepository().getDirectory();
+        jGit.mNowOpenGitRepo = openGit;
+        return jGit;
+    }
 
     public JGit setAuthorImmediate(String name, String email) {
         mName = name;
@@ -239,6 +247,17 @@ public class JGit {
         return this;
     }
 
+    public JGit addRemote(String remoteUri, String remoteName) {
+        mTaskSequence.add(
+                JGitCreateCommand.create(emitter -> {
+                            RemoteAddCommand remoteAddCommand = mNowOpenGitRepo.remoteAdd();
+                            remoteAddCommand.setUri(new URIish(remoteUri));
+                            remoteAddCommand.setName(remoteName);
+                            remoteAddCommand.call();
+                        }
+                ));
+        return this;
+    }
 
     public void call() {
         Completable.concat(mTaskSequence)

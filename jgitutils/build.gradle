@@ -37,11 +37,17 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.1.14-RC1'
     /** JGit */
     /* http://www.eclipse.org/jgit */
-    implementation 'org.eclipse.jgit:org.eclipse.jgit:3.7.1.201504261725-r'
+    implementation 'org.eclipse.jgit:org.eclipse.jgit:4.11.0.201803080745-r'
     /** Jsch */
     /* http://www.jcraft.com/jsch */
     implementation 'com.jcraft:jsch:0.1.54'
-    //implementation 'com.android.support:appcompat-v7:27.1.1'
+    /* http://www.jcraft.com/jzlib/LICENSE.txt */
+    implementation 'com.jcraft:jzlib:1.1.3'
+    /* http://www.apache.org/licenses/LICENSE-2.0.txt */
+    implementation 'com.googlecode.javaewah:JavaEWAH:1.1.6'
+    /* http://www.opensource.org/licenses/mit-license.php */
+    implementation 'org.slf4j:slf4j-api:1.7.25'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
