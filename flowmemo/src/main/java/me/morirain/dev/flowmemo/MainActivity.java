@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if ( view.getId() == R.id.button1 ) {
             JGit.with("FlowMemo")
-                    //.clone("https://github.com/morirain/FlowMemo.git")
+                    .clone("https://github.com/morirain/FlowMemo.git")
                     .addAll()
                     .commitAll("helloworld")
                     .call();

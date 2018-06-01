@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
+apply plugin: 'com.getkeepsafe.dexcount'
 
 android {
     signingConfigs {
         morirain {
             keyAlias 'morirain'
             keyPassword 'morirain'
-            storeFile file('C:/Users/Administrator/morirainkey.jks')
+            storeFile file('D:/Project/morirainkey.jks')
             storePassword 'morirain'
         }
     }
@@ -42,7 +43,16 @@ android {
     }
     productFlavors {
     }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
 }
+
+
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -97,20 +107,20 @@ dependencies {
     //implementation('com.mikepenz:materialdrawer:6.0.7@aar') { transitive = true }
 
     /** Glide */ /* https://github.com/bumptech/glide */
-    implementation('com.github.bumptech.glide:glide:4.7.1') { exclude group: 'com.android.support' }
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    //implementation('com.github.bumptech.glide:glide:4.7.1') { exclude group: 'com.android.support' }
+    //annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 
     /** BRVAH BaseRecyclerViewAdapterHelper */ /* https://github.com/CymChad/BaseRecyclerViewAdapterHelper */
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    //implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 
     /** PhotoView */ /* https://github.com/chrisbanes/PhotoView */
-    implementation 'com.github.chrisbanes:PhotoView:2.1.3'
+    //implementation 'com.github.chrisbanes:PhotoView:2.1.3'
 
     /** SearchBar-SearchView */ /* https://github.com/lapism/SearchBar-SearchView */
     //Need Sdk 21//implementation 'com.lapism:searchview:27.1.1.0.0'
 
     /** MaterialTapTargetPrompt */ /* https://github.com/sjwall/MaterialTapTargetPrompt */
-    implementation 'uk.co.samuelwall:material-tap-target-prompt:2.8.0'
+    //implementation 'uk.co.samuelwall:material-tap-target-prompt:2.8.0'
 
     /** Gson */ /* https://github.com/google/gson */
     //implementation 'com.google.code.gson:gson:2.8.4'

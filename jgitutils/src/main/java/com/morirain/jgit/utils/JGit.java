@@ -71,11 +71,7 @@ public class JGit {
 
     private JGit openDir(File dir) {
         mNowOpenDir = dir;
-        if (mNowOpenDir.exists()) {
-            openExistedRepo(dir);
-        } else {
-            init();
-        }
+        if (mNowOpenDir.exists()) openExistedRepo(dir);
         return this;
     }
 
@@ -177,7 +173,7 @@ public class JGit {
                         mNowOpenGitRepo.pull()
                                 .setRemoteBranchName(remoteBranchName)
                                 .setRemote(remoteUrl)
-                                .setFastForward(MergeCommand.FastForwardMode.NO_FF)
+                                //.setFastForward(MergeCommand.FastForwardMode.NO_FF)
                                 .setCredentialsProvider(mUsernamePassword)
                                 .call()
                 )
