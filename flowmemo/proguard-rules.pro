@@ -86,3 +86,13 @@
 -keep class org.apache.commons.io.IOUtils  { public *** closeQuietly(...); public *** copy(...); }
 -keep class org.apache.commons.io.input.BoundedInputStream { *; }
 -keep class org.eclipse.jgit.transport.RemoteConfig { *** removeURI(...); }
+
+# BRVAH
+-keep class com.chad.library.adapter.** {
+*;
+}
+-keep public class * extends com.chad.library.adapter.base.BaseQuickAdapter
+-keep public class * extends com.chad.library.adapter.base.BaseViewHolder
+-keepclassmembers  class **$** extends com.chad.library.adapter.base.BaseViewHolder {
+     <init>(...);
+}
