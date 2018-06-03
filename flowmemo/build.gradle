@@ -75,6 +75,11 @@ dependencies {
     /* https://github.com/Blankj/AndroidUtilCode */
     implementation 'com.blankj:utilcode:1.15.0'
 
+    /** Lifecycle */
+    implementation "android.arch.lifecycle:runtime:1.1.1"
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+
     /** RxAndroid */
 
     /* https://github.com/ReactiveX/RxAndroid */

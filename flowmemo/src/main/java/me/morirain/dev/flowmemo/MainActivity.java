@@ -7,15 +7,12 @@ import android.view.View;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.reactivex.disposables.Disposable;
 import me.morirain.dev.flowmemo.base.BaseActivity;
 import me.morirain.dev.flowmemo.base.BaseAdapter;
 import me.morirain.dev.flowmemo.bean.Notes;
 import me.morirain.dev.flowmemo.databinding.ActivityMainBinding;
-import me.morirain.dev.flowmemo.viewmodel.ActivityMainViewModel;
+import me.morirain.dev.flowmemo.viewmodel.NotesViewModel;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -23,14 +20,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private BaseAdapter<Notes> mNotesAdapter;
 
-    private ActivityMainViewModel mActivityMainViewModel;
+    private NotesViewModel mNotesViewModel;
 
     @Override
     protected void init() {
         mBind = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mBind.setClickListener(this);
+        mBind.setLifecycleOwner(this);
         initRecyclerView();
-
+        initViewModel();
         RxPermissions rxPermissions = new RxPermissions(this);
         Disposable subscribe = rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(granted -> {
@@ -43,12 +41,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 });
     }
 
+    private void initViewModel() {
+        mNotesViewModel = new NotesViewModel(mNotesAdapter);
+    }
+
     private void initRecyclerView() {
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         mBind.notesRecyclerView.setLayoutManager(layoutManager);
-        List<Notes> list = new ArrayList<>();
-        list.add(new Notes("A", "B", "C"));
-        mNotesAdapter = new BaseAdapter<>(list, me.morirain.dev.flowmemo.BR.notes, R.layout.item_notes);
+
+        mNotesAdapter = new BaseAdapter<>(me.morirain.dev.flowmemo.BR.notes, R.layout.item_notes);
         mBind.notesRecyclerView.setAdapter(mNotesAdapter);
 
     }

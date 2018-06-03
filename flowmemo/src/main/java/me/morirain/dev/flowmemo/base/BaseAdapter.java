@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,8 +27,8 @@ public class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolder>
         return mList;
     }
 
-    public BaseAdapter(List<T> list, int variableId, int layoutId) {
-        this.mList = list;
+    public BaseAdapter(int variableId, int layoutId) {
+        this.mList = new ArrayList<>();
         this.mVariableId = variableId;
         this.mLayoutId = layoutId;
     }
@@ -44,6 +45,17 @@ public class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.binding.setVariable(mVariableId, mList.get(position));
+    }
+
+    /**
+     * 刷新数据
+     *
+     * @param data 数据源
+     */
+    public void refresh(List<T> data) {
+        mList.clear();
+        mList.addAll(data);
+        notifyDataSetChanged();
     }
 
     @Override

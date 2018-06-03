@@ -1,9 +1,10 @@
 package me.morirain.dev.flowmemo.bean;
 
 
-import android.databinding.BaseObservable;
+import android.arch.lifecycle.MutableLiveData;
 import android.databinding.Bindable;
-import android.databinding.ObservableField;
+
+import me.morirain.dev.flowmemo.BR;
 
 /**
  * Created by morirain on 2018/6/2.
@@ -11,39 +12,42 @@ import android.databinding.ObservableField;
  */
 
 
-public class Notes extends BaseObservable {
+public class Notes{
 
-    private ObservableField<String> noteLabel;
-    private ObservableField<String> noteContent;
-    private ObservableField<String> noteLastUpdateTime;
+    private MutableLiveData<String> noteLabel;
+    private MutableLiveData<String> noteContent;
+    private MutableLiveData<String> noteLastUpdateTime;
 
-    public Notes(String noteLabel, String noteContent, String noteLastUpdateTime) {
-        this.noteLabel = new ObservableField<String>(noteLabel);
-        this.noteContent = new ObservableField<String>(noteContent);
-        this.noteLastUpdateTime = new ObservableField<String>(noteLastUpdateTime);
+    public Notes(MutableLiveData<String> noteLabel, MutableLiveData<String> noteContent, MutableLiveData<String> noteLastUpdateTime) {
+        this.noteLabel = noteLabel;
+        this.noteContent = noteContent;
+        this.noteLastUpdateTime = noteLastUpdateTime;
     }
 
-    public ObservableField<String> getNoteLabel() {
+    //@Bindable
+    public MutableLiveData<String> getNoteLabel() {
         return noteLabel;
     }
 
-    public void setNoteLabel(ObservableField<String> noteLabel) {
+    public void setNoteLabel(MutableLiveData<String> noteLabel) {
         this.noteLabel = noteLabel;
     }
 
-    public ObservableField<String> getNoteContent() {
+    //@Bindable
+    public MutableLiveData<String> getNoteContent() {
         return noteContent;
     }
 
-    public void setNoteContent(ObservableField<String> noteContent) {
+    public void setNoteContent(MutableLiveData<String> noteContent) {
         this.noteContent = noteContent;
     }
 
-    public ObservableField<String> getNoteLastUpdateTime() {
+    //@Bindable
+    public MutableLiveData<String> getNoteLastUpdateTime() {
         return noteLastUpdateTime;
     }
 
-    public void setNoteLastUpdateTime(ObservableField<String> noteLastUpdateTime) {
+    public void setNoteLastUpdateTime(MutableLiveData<String> noteLastUpdateTime) {
         this.noteLastUpdateTime = noteLastUpdateTime;
     }
 }
