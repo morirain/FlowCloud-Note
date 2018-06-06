@@ -7,7 +7,7 @@ android {
         morirain {
             keyAlias 'morirain'
             keyPassword 'morirain'
-            storeFile file('C:/Users/Administrator/morirainkey.jks')
+            storeFile file('D:/Project/morirainkey.jks')
             storePassword 'morirain'
         }
     }

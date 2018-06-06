@@ -1,6 +1,7 @@
 package me.morirain.dev.flowmemo.bean;
 
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.databinding.Bindable;
 
@@ -14,14 +15,14 @@ import me.morirain.dev.flowmemo.BR;
 
 public class Notes{
 
-    private MutableLiveData<String> noteLabel;
-    private MutableLiveData<String> noteContent;
-    private MutableLiveData<String> noteLastUpdateTime;
+    private MutableLiveData<String> noteLabel = new MutableLiveData<>();
+    private MutableLiveData<String> noteContent = new MutableLiveData<>();
+    private MutableLiveData<String> noteLastUpdateTime = new MutableLiveData<>();
 
-    public Notes(MutableLiveData<String> noteLabel, MutableLiveData<String> noteContent, MutableLiveData<String> noteLastUpdateTime) {
-        this.noteLabel = noteLabel;
-        this.noteContent = noteContent;
-        this.noteLastUpdateTime = noteLastUpdateTime;
+    public Notes(String noteLabel, String noteContent, String noteLastUpdateTime) {
+        this.noteLabel.setValue(noteLabel);
+        this.noteContent.setValue(noteContent);
+        this.noteLastUpdateTime.setValue(noteLastUpdateTime);
     }
 
     //@Bindable

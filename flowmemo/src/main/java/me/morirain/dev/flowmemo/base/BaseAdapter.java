@@ -1,9 +1,15 @@
 package me.morirain.dev.flowmemo.base;
 
 
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +17,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author morirain
@@ -19,18 +26,21 @@ import java.util.List;
  */
 
 public class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolder> {
-    private List<T> mList;
+    private MutableLiveData<List<T>> mList;
+
     private int mVariableId;
     private int mLayoutId;
 
-    protected List<T> getList() {
+    public MutableLiveData<List<T>> getList() {
         return mList;
     }
 
-    public BaseAdapter(int variableId, int layoutId) {
-        this.mList = new ArrayList<>();
+    public BaseAdapter(LifecycleOwner lifecycleOwner, int variableId, int layoutId) {
+        this.mList = new MutableLiveData<>();
         this.mVariableId = variableId;
         this.mLayoutId = layoutId;
+        mList.setValue(new ArrayList<T>());
+        this.mList.observe(lifecycleOwner, (List<T> ts) -> notifyDataSetChanged());
     }
 
     @NonNull
@@ -44,7 +54,7 @@ public class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.binding.setVariable(mVariableId, mList.get(position));
+        holder.binding.setVariable(mVariableId, mList.getValue().get(position));
     }
 
     /**
@@ -53,21 +63,22 @@ public class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolder>
      * @param data 数据源
      */
     public void refresh(List<T> data) {
-        mList.clear();
-        mList.addAll(data);
-        notifyDataSetChanged();
+        if (mList.getValue() != null) mList.getValue().clear();
+        mList.getValue().addAll(data);
+        //notifyDataSetChanged();
     }
+
 
     @Override
     public int getItemCount() {
-        return null == mList ? 0 : mList.size();
+        return null == mList ? 0 : mList.getValue().size();
     }
 
     public class ViewHolder<T> extends RecyclerView.ViewHolder {
 
         private ViewDataBinding binding;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
         }
 
@@ -75,7 +86,7 @@ public class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolder>
             return binding;
         }
 
-        public void setBinding(ViewDataBinding binding) {
+        void setBinding(ViewDataBinding binding) {
             this.binding = binding;
         }
     }

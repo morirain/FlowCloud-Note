@@ -1,6 +1,8 @@
 package me.morirain.dev.flowmemo;
 
 import android.Manifest;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
@@ -42,18 +44,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initViewModel() {
-        mNotesViewModel = new NotesViewModel(mNotesAdapter);
+        mNotesViewModel = ViewModelProviders.of(this).get(NotesViewModel.class);
+        mNotesViewModel.init(mNotesAdapter);
     }
 
     private void initRecyclerView() {
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         mBind.notesRecyclerView.setLayoutManager(layoutManager);
 
-        mNotesAdapter = new BaseAdapter<>(me.morirain.dev.flowmemo.BR.notes, R.layout.item_notes);
+        mNotesAdapter = new BaseAdapter<Notes>(this, me.morirain.dev.flowmemo.BR.notes, R.layout.item_notes);
         mBind.notesRecyclerView.setAdapter(mNotesAdapter);
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
     @Override
     public void onClick(View view) {
