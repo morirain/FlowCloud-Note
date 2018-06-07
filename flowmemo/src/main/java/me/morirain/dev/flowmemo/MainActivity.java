@@ -4,7 +4,9 @@ import android.Manifest;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -29,6 +31,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mBind = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mBind.setClickListener(this);
         mBind.setLifecycleOwner(this);
+
+        Toolbar toolbar = mBind.toolbar;
+        setSupportActionBar(toolbar);
+
         initRecyclerView();
         initViewModel();
         RxPermissions rxPermissions = new RxPermissions(this);
@@ -52,7 +58,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         mBind.notesRecyclerView.setLayoutManager(layoutManager);
 
-        mNotesAdapter = new BaseAdapter<Notes>(this, me.morirain.dev.flowmemo.BR.notes, R.layout.item_notes);
+        mNotesAdapter = new BaseAdapter<>(this, me.morirain.dev.flowmemo.BR.notes, R.layout.item_notes);
         mBind.notesRecyclerView.setAdapter(mNotesAdapter);
 
     }

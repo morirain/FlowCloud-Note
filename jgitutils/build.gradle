@@ -50,8 +50,4 @@ dependencies {
     /** slf4j */
     /* http://www.opensource.org/licenses/mit-license.php */
     implementation 'org.slf4j:slf4j-api:1.7.25'
-
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }

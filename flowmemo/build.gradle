@@ -60,12 +60,13 @@ dependencies {
 
     /** Google */
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
 
     //implementation 'com.android.support:support-annotations:27.1.1'
 
-    //implementation 'com.android.support:design:27.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -98,8 +99,8 @@ dependencies {
     /** RxBinding*/
 
     /* https://github.com/JakeWharton/RxBinding */
-    implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
-    implementation 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.1.1'
+    //implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
+    //implementation 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.1.1'
 
     /** OkHttp3 */
 
@@ -110,9 +111,9 @@ dependencies {
     /** Retrofit2 */
 
     /* https://github.com/square/retrofit */
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    //implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    //implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    //implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
 
     /** Dagger2 */
 
@@ -133,7 +134,7 @@ dependencies {
     /** material-dialogs */
 
     /* https://github.com/afollestad/material-dialogs */
-    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    //implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 
     /** SmartRefreshLayout */
     /* https://github.com/scwang90/SmartRefreshLayout */
@@ -157,7 +158,7 @@ dependencies {
 
     /* https://github.com/CymChad/BaseRecyclerViewAdapterHelper */
 
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    //implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 
     /** PhotoView */
 
@@ -190,5 +191,4 @@ dependencies {
     //debugImplementation 'com.github.BolexLiu.AutoEx:AutoEx-Lib:v1.0.7' //debug包
 
     //releaseImplementation 'com.github.BolexLiu.AutoEx:AutoEx-Lib-No-Op:v1.0.7' //release包
-    implementation 'com.android.support:cardview-v7:27.1.1'
 }
