@@ -1,14 +1,13 @@
 package me.morirain.dev.flowmemo;
 
 import android.Manifest;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
-import android.os.Build;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.jaeger.library.StatusBarUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import io.reactivex.disposables.Disposable;
@@ -34,6 +33,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         Toolbar toolbar = mBind.toolbar;
         setSupportActionBar(toolbar);
+        StatusBarUtil.setLightMode(this);
 
         initRecyclerView();
         initViewModel();
@@ -61,11 +61,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mNotesAdapter = new BaseAdapter<>(this, me.morirain.dev.flowmemo.BR.notes, R.layout.item_notes);
         mBind.notesRecyclerView.setAdapter(mNotesAdapter);
 
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     @Override

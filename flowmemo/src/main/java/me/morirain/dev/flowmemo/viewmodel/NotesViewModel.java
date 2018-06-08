@@ -44,7 +44,6 @@ public class NotesViewModel extends ViewModel {
         label = new MutableLiveData<String>();
         label.setValue("safdfdsasdaf");
         Notes n2 = new Notes("asdf", "gs", "fsd");
-        mNotesList.getValue().add(n2);
-
+        mList.add(n2);
     }
 }
