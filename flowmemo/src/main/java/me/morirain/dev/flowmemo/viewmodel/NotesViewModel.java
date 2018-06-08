@@ -25,7 +25,10 @@ public class NotesViewModel extends ViewModel {
     private List<Notes> mList;
 
     public LiveData<List<Notes>> getNotesList() {
-        if (mNotesList == null) mNotesList = mNotesAdapter.getList();
+        if (mNotesList == null) {
+            mNotesList = mNotesAdapter.getList();
+            getNotesData();
+        }
         return mNotesList;
     }
 
@@ -33,17 +36,12 @@ public class NotesViewModel extends ViewModel {
         mNotesAdapter = notesAdapter;
         mNotesList = notesAdapter.getList();
         mList = mNotesList.getValue();
-        getNotes();
+        getNotesData();
     }
-    private void getNotes() {
-        MutableLiveData<String> label = new MutableLiveData<String>();
-        label.setValue("hello");
-        Notes notes = new Notes("asdsa", "fsad", "afsdew");
-        mNotesList.getValue().add(notes);
-
-        label = new MutableLiveData<String>();
-        label.setValue("safdfdsasdaf");
-        Notes n2 = new Notes("asdf", "gs", "fsd");
-        mList.add(n2);
+    private void getNotesData() {
+        for (int i = 0; i < 100; i++) {
+            Notes notes = new Notes("Label", "Content", "Just Now");
+            mNotesList.getValue().add(notes);
+        }
     }
 }

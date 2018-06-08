@@ -20,7 +20,20 @@ import java.util.List;
  * @since 2018/6/2
  */
 
-public class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolder> {
+public class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolder> implements View.OnClickListener {
+
+    public interface OnItemClickListener {
+        void onItemClick(View view , int position);
+    }
+
+    private OnItemClickListener mOnItemClickListener;
+
+    @Override
+    public void onClick(View view) {
+        if (mOnItemClickListener != null) {
+            mOnItemClickListener.onItemClick(view, (int) view.getTag());
+        }
+    }
 
     private MutableLiveData<List<T>> mList;
     private List<T> getListValue(){
@@ -49,12 +62,18 @@ public class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolder>
         ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), mLayoutId, parent, false);
         ViewHolder<T> viewHolder = new ViewHolder<>(binding.getRoot());
         viewHolder.setBinding(binding);
+        viewHolder.itemView.setOnClickListener(this);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.itemView.setTag(position);
         holder.binding.setVariable(mVariableId, getListValue().get(position));
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mOnItemClickListener = listener;
     }
 
     /**

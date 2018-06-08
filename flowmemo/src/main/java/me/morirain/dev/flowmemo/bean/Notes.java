@@ -1,11 +1,7 @@
 package me.morirain.dev.flowmemo.bean;
 
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.databinding.Bindable;
-
-import me.morirain.dev.flowmemo.BR;
 
 /**
  * Created by morirain on 2018/6/2.
