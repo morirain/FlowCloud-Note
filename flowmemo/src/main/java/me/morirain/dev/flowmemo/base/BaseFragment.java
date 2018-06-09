@@ -1,5 +1,6 @@
 package me.morirain.dev.flowmemo.base;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -18,11 +19,11 @@ import android.view.ViewGroup;
  */
 
 
-public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
+public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel> extends Fragment {
 
     private T mBind;
 
-    protected abstract int getLayoutResId();
+    private V mViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,12 +33,23 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
         mBind = DataBindingUtil.inflate(inflater, getLayoutResId(), container, false);
         mBind.setLifecycleOwner(this);
 
+        initViewModel();
+        setViewModel();
         init(savedInstanceState);
 
         return mBind.getRoot();
     }
 
+    private void initViewModel() {
+        mViewModel = ViewModelProviders.of(this).get(getViewModelClass());
+        mViewModel.init();
+    }
+
     protected abstract void init(Bundle savedInstanceState);
+
+    protected abstract void setViewModel();
+
+    protected abstract int getLayoutResId();
 
     protected View getRoot() {
         return mBind.getRoot();
@@ -45,6 +57,12 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
 
     protected final T getBinding() {
         return mBind;
+    }
+
+    protected abstract Class<V> getViewModelClass();
+
+    protected final V getViewModel() {
+        return mViewModel;
     }
 
 

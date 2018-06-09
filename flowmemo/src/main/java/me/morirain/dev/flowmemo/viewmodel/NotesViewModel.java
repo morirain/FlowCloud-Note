@@ -7,6 +7,7 @@ import android.arch.lifecycle.ViewModel;
 
 import java.util.List;
 import me.morirain.dev.flowmemo.base.BaseAdapter;
+import me.morirain.dev.flowmemo.base.BaseViewModel;
 import me.morirain.dev.flowmemo.bean.Notes;
 
 /**
@@ -16,7 +17,7 @@ import me.morirain.dev.flowmemo.bean.Notes;
  */
 
 
-public class NotesViewModel extends ViewModel {
+public class NotesViewModel extends BaseViewModel {
 
     private BaseAdapter<Notes> mNotesAdapter;
 
@@ -31,8 +32,12 @@ public class NotesViewModel extends ViewModel {
         }
         return mNotesList;
     }
+    @Override
+    protected void init() {
 
-    public void init(BaseAdapter<Notes> notesAdapter) {
+    }
+
+    public void setAdapter(BaseAdapter<Notes> notesAdapter) {
         mNotesAdapter = notesAdapter;
         mNotesList = notesAdapter.getList();
         mList = mNotesList.getValue();
