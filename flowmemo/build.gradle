@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'realm-android'
+apply plugin: 'io.objectbox'
 apply plugin: 'com.getkeepsafe.dexcount'
 
 android {
@@ -16,15 +16,12 @@ android {
         applicationId "me.morirain.dev.flowmemo"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 01
-        versionName '0.01'
+        versionCode 0001
+        versionName '0.02'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     dataBinding {
         enabled true
-    }
-    realm {
-        syncEnabled true
     }
     buildTypes {
         debug {
@@ -41,8 +38,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-    productFlavors {
     }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
@@ -85,7 +80,6 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation "android.arch.lifecycle:common-java8:1.1.1"
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
-
 
     /** RxAndroid */
     /* https://github.com/ReactiveX/RxAndroid */
