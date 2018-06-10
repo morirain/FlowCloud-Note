@@ -1,4 +1,4 @@
-package me.morirain.dev.flowmemo.bean;
+package me.morirain.dev.flowmemo.model;
 
 
 import android.arch.lifecycle.MutableLiveData;

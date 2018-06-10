@@ -2,6 +2,7 @@ package me.morirain.dev.flowmemo;
 
 import android.Manifest;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -27,13 +28,18 @@ import me.morirain.dev.flowmemo.databinding.ActivityMainBinding;
 import me.morirain.dev.flowmemo.view.fragment.MemoryFragment;
 import me.morirain.dev.flowmemo.view.fragment.NotesFragment;
 import me.morirain.dev.flowmemo.viewmodel.MainViewModel;
+import me.morirain.dev.flowmemo.viewmodel.UserProfileViewModel;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
 
     private Drawer mDrawer;
 
+    private UserProfileViewModel mUserProfileViewModel;
+
+
     @Override
     protected void init(Bundle savedInstanceState) {
+        mUserProfileViewModel = ViewModelProviders.of(this).get(UserProfileViewModel.class);
 
         initToolbar();
         initDrawer();
@@ -62,33 +68,30 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     private void initDrawer() {
 
-        LiveData<String> name = getViewModel().getProfileName();
-        LiveData<String> email = getViewModel().getProfileEmail();
+        //LiveData<String> name = getViewModel().getProfileName();
+        //LiveData<String> email = getViewModel().getProfileEmail();
 
 //        Toolbar toolbar = findViewById(R.id.toolbar_drawer);
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 //.withHeaderBackground(R.drawable.header)
-                .addProfiles(
+                /*.addProfiles(
                         new ProfileDrawerItem().withName(name.getValue())
                                 .withEmail(email.getValue())
                                 .withIcon(getResources().getDrawable(R.drawable.ic_face_black_128dp))
-                )
+                )*/
                 .withOnAccountHeaderListener((view, profile, currentProfile) -> false)
                 .withSelectionListEnabledForSingleProfile(false)
                 .withTextColor(Color.BLACK)
                 .build();
 
-
         mDrawer = new DrawerBuilder().withActivity(this)
+                .withRootView(getBinding().drawerReplace)
                 .withToolbar(getBinding().toolbar)
-                .withAccountHeader(headerResult)
+                //.withAccountHeader(headerResult)
                 //.withHeader(getBinding().toolbarDrawer)
-                //.withTranslucentStatusBar(false)
                 .withActionBarDrawerToggle(true)
                 .withActionBarDrawerToggleAnimated(true)
-                .withFullscreen(false)
-                .withSliderBackgroundColor(Color.WHITE)
                 .addDrawerItems(
                         new DividerDrawerItem()
                 )
@@ -129,6 +132,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     protected void setViewModel() {
+        getBinding().setUserProfileViewModel(mUserProfileViewModel);
         getBinding().setViewModel(getViewModel());
     }
 

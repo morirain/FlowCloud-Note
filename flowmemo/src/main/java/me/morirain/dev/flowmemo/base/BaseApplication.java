@@ -7,7 +7,7 @@ import android.content.Context;
 import io.objectbox.BoxStore;
 import io.objectbox.android.AndroidObjectBrowser;
 import me.morirain.dev.flowmemo.BuildConfig;
-import me.morirain.dev.flowmemo.bean.MyObjectBox;
+import me.morirain.dev.flowmemo.model.MyObjectBox;
 
 /**
  * Created by morirain on 2018/6/2.

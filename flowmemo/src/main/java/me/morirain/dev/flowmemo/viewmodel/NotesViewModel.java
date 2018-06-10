@@ -3,12 +3,11 @@ package me.morirain.dev.flowmemo.viewmodel;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
 
 import java.util.List;
 import me.morirain.dev.flowmemo.base.BaseAdapter;
 import me.morirain.dev.flowmemo.base.BaseViewModel;
-import me.morirain.dev.flowmemo.bean.Notes;
+import me.morirain.dev.flowmemo.model.Notes;
 
 /**
  * @author morirain

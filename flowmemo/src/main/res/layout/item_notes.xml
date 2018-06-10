@@ -6,7 +6,7 @@
     <data>
         <variable
             name="notes"
-            type="me.morirain.dev.flowmemo.bean.Notes" />
+            type="me.morirain.dev.flowmemo.model.Notes" />
     </data>
 
     <android.support.v7.widget.CardView

@@ -1,16 +1,13 @@
 package me.morirain.dev.flowmemo.view.fragment;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 
-import com.mikepenz.materialdrawer.DrawerBuilder;
-
 import me.morirain.dev.flowmemo.R;
 import me.morirain.dev.flowmemo.base.BaseAdapter;
 import me.morirain.dev.flowmemo.base.BaseFragment;
-import me.morirain.dev.flowmemo.bean.Notes;
+import me.morirain.dev.flowmemo.model.Notes;
 import me.morirain.dev.flowmemo.databinding.FragmentNotesBinding;
 import me.morirain.dev.flowmemo.viewmodel.NotesViewModel;
 
