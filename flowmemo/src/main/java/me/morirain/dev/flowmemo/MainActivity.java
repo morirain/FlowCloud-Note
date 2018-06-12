@@ -1,21 +1,17 @@
 package me.morirain.dev.flowmemo;
 
 import android.Manifest;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProviders;
-import android.graphics.Color;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.jaeger.library.StatusBarUtil;
-import com.mikepenz.materialdrawer.AccountHeader;
-import com.mikepenz.materialdrawer.AccountHeaderBuilder;
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
@@ -25,6 +21,7 @@ import io.reactivex.disposables.Disposable;
 import me.morirain.dev.flowmemo.adapter.PagerAdapter;
 import me.morirain.dev.flowmemo.base.BaseActivity;
 import me.morirain.dev.flowmemo.databinding.ActivityMainBinding;
+import me.morirain.dev.flowmemo.databinding.DrawerContentBinding;
 import me.morirain.dev.flowmemo.view.fragment.MemoryFragment;
 import me.morirain.dev.flowmemo.view.fragment.NotesFragment;
 import me.morirain.dev.flowmemo.viewmodel.MainViewModel;
@@ -32,7 +29,9 @@ import me.morirain.dev.flowmemo.viewmodel.UserProfileViewModel;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
 
-    private Drawer mDrawer;
+    private DrawerLayout mDrawer;
+
+    private DrawerContentBinding mDrawerBinding;
 
     private UserProfileViewModel mUserProfileViewModel;
 
@@ -42,8 +41,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         mUserProfileViewModel = ViewModelProviders.of(this).get(UserProfileViewModel.class);
 
         initToolbar();
-        initDrawer();
         initFragment();
+        initDrawer();
 
         RxPermissions rxPermissions = new RxPermissions(this);
         Disposable subscribe = rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -58,48 +57,19 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     private void initToolbar() {
-        //ActionBar actionBar = getActionBar();
-        //if (actionBar != null) //actionBar.setDisplayHomeAsUpEnabled(true);
-
         setSupportActionBar(getBinding().toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+        }
         StatusBarUtil.setLightMode(this);
     }
 
     private void initDrawer() {
-
-        //LiveData<String> name = getViewModel().getProfileName();
-        //LiveData<String> email = getViewModel().getProfileEmail();
-
-//        Toolbar toolbar = findViewById(R.id.toolbar_drawer);
-        AccountHeader headerResult = new AccountHeaderBuilder()
-                .withActivity(this)
-                //.withHeaderBackground(R.drawable.header)
-                /*.addProfiles(
-                        new ProfileDrawerItem().withName(name.getValue())
-                                .withEmail(email.getValue())
-                                .withIcon(getResources().getDrawable(R.drawable.ic_face_black_128dp))
-                )*/
-                .withOnAccountHeaderListener((view, profile, currentProfile) -> false)
-                .withSelectionListEnabledForSingleProfile(false)
-                .withTextColor(Color.BLACK)
-                .build();
-
-        mDrawer = new DrawerBuilder().withActivity(this)
-                .withRootView(getBinding().drawerReplace)
-                .withToolbar(getBinding().toolbar)
-                //.withAccountHeader(headerResult)
-                //.withHeader(getBinding().toolbarDrawer)
-                .withActionBarDrawerToggle(true)
-                .withActionBarDrawerToggleAnimated(true)
-                .addDrawerItems(
-                        new DividerDrawerItem()
-                )
-                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                    // do something with the clicked item :D
-                    return true;
-                })
-                .build();
+        mDrawerBinding = getBinding().drawerContent;
+        mDrawer = (DrawerLayout) getBinding().getRoot();
     }
 
     private void initFragment() {
@@ -124,16 +94,21 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_toolbar_setting) {
-
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawer.openDrawer(GravityCompat.START);
+                break;
+            case R.id.menu_toolbar_setting:
+                break;
+            default:
         }
         return true;
     }
 
     @Override
     protected void setViewModel() {
-        getBinding().setUserProfileViewModel(mUserProfileViewModel);
         getBinding().setViewModel(getViewModel());
+        getBinding().setUserProfileViewModel(mUserProfileViewModel);
     }
 
     @Override

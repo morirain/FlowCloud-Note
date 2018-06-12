@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
-            type="me.morirain.dev.flowmemo.viewmodel.MainViewModel"/>
+            type="me.morirain.dev.flowmemo.viewmodel.MainViewModel" />
+
         <variable
             name="userProfileViewModel"
-            type="me.morirain.dev.flowmemo.viewmodel.UserProfileViewModel"/>
+            type="me.morirain.dev.flowmemo.viewmodel.UserProfileViewModel" />
 
     </data>
 
+    <android.support.v4.widget.DrawerLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context=".MainActivity">
+
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            tools:context=".MainActivity">
-
+            android:layout_height="match_parent">
 
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/appBarLayout"
@@ -36,6 +42,7 @@
 
                     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -43,83 +50,38 @@
                         android:text="Flow"
                         android:textColor="@android:color/background_dark"
                         android:textSize="20sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="Memo"
-                        android:textStyle="bold"
                         android:textColor="@android:color/background_dark"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
                 </android.support.v7.widget.Toolbar>
             </android.support.design.widget.AppBarLayout>
-            <FrameLayout
-                android:id="@+id/drawer_replace"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    android:text="分类"
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="20sp" />
-
-            </FrameLayout>
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/toolbar_drawer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fitsSystemWindows="true">
-
-                <android.support.design.widget.AppBarLayout
-                    android:id="@+id/toolbar_drawer_appBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <android.support.v7.widget.Toolbar
-                        android:layout_width="match_parent"
-                        android:layout_height="?android:attr/actionBarSize"
-                        android:background="@color/colorPrimary"
-                        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left|center"
-                            android:text="分类"
-                            android:textColor="@android:color/background_dark"
-                            android:textSize="20sp" />
-
-                    </android.support.v7.widget.Toolbar>
-                </android.support.design.widget.AppBarLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@{userProfileViewModel.userName}"
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="12sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/toolbar_drawer_appBar" />
-            </android.support.constraint.ConstraintLayout>
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/vp_fragment"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appBarLayout" >
+                android:layout_height="match_parent">
 
             </android.support.v4.view.ViewPager>
 
+
         </android.support.constraint.ConstraintLayout>
+
+        <include layout="@layout/drawer_content"
+            android:id="@+id/drawer_content"
+            bind:userProfileViewModel="@{userProfileViewModel}"
+            android:layout_gravity="start"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp">
+
+        </include>
+    </android.support.v4.widget.DrawerLayout>
 </layout>
