@@ -80,9 +80,7 @@
             app:viewModel="@{userProfileViewModel}"
             android:layout_gravity="start"
             android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp">
+            android:layout_width="match_parent">
 
         </include>
     </android.support.v4.widget.DrawerLayout>

@@ -17,9 +17,13 @@ public class UserProfileViewModel extends BaseViewModel {
     public MutableLiveData<String> userName = new MutableLiveData<>();
     public MutableLiveData<String> userEmail = new MutableLiveData<>();
 
-    @Override
-    protected void init() {
+    public UserProfileViewModel(){
         userName.postValue("empty name");
         userEmail.postValue("empty@email.com");
+    }
+
+    @Override
+    protected void init() {
+
     }
 }
