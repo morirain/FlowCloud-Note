@@ -9,4 +9,9 @@
         <item name="android:windowBackground">@null</item>
     </style>
 
+    <style name="launchTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
 </resources>

@@ -39,6 +39,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     protected void init(Bundle savedInstanceState) {
         mUserProfileViewModel = ViewModelProviders.of(this).get(UserProfileViewModel.class);
+        getBinding().setUserProfileViewModel(mUserProfileViewModel);
+
         initToolbar();
         initFragment();
         initDrawer();
@@ -107,7 +109,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     protected void setViewModel() {
         getBinding().setViewModel(getViewModel());
-        getBinding().setUserProfileViewModel(mUserProfileViewModel);
     }
 
     @Override
