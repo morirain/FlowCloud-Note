@@ -130,6 +130,13 @@ dependencies {
     /* https://github.com/laobie/StatusBarUtil */
     implementation 'com.jaeger.statusbarutil:library:1.5.1'
 
+    /** Android-skin-support */
+    /* https://github.com/ximsfei/Android-skin-support */
+    implementation 'skin.support:skin-support:3.1.0-beta1'                   // skin-support 基础控件支持
+    implementation 'skin.support:skin-support-design:3.1.0-beta1'            // skin-support-design material design 控件支持
+    implementation 'skin.support:skin-support-cardview:3.1.0-beta1'          // skin-support-cardview CardView 控件支持
+    implementation 'skin.support:skin-support-constraint-layout:3.1.0-beta1' // skin-support-constraint-layout ConstraintLayout 控件支持
+
     /** SmartRefreshLayout */
     /* https://github.com/scwang90/SmartRefreshLayout */
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-6'

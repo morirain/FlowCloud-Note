@@ -2,7 +2,6 @@ package me.morirain.dev.flowmemo;
 
 import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -26,6 +25,7 @@ import me.morirain.dev.flowmemo.view.fragment.MemoryFragment;
 import me.morirain.dev.flowmemo.view.fragment.NotesFragment;
 import me.morirain.dev.flowmemo.viewmodel.MainViewModel;
 import me.morirain.dev.flowmemo.viewmodel.UserProfileViewModel;
+import skin.support.content.res.SkinCompatUserThemeManager;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
 
@@ -58,7 +58,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     private void initToolbar() {
-        setSupportActionBar(getBinding().toolbar);
+        setSupportActionBar(getBinding().toolbarMain.toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false);
