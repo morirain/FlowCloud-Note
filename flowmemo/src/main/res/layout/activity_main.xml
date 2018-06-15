@@ -7,11 +7,11 @@
 
         <variable
             name="viewModel"
-            type="me.morirain.dev.flowmemo.viewmodel.MainViewModel" />
+            type="com.flowmemo.viewmodel.MainViewModel" />
 
         <variable
             name="userProfileViewModel"
-            type="me.morirain.dev.flowmemo.viewmodel.UserProfileViewModel" />
+            type="com.flowmemo.viewmodel.UserProfileViewModel" />
 
     </data>
 
@@ -50,8 +50,6 @@
             app:viewModel="@{userProfileViewModel}"
             android:layout_gravity="start"
             android:layout_height="match_parent"
-            android:layout_width="match_parent">
-
-        </include>
+            android:layout_width="match_parent"/>
     </android.support.v4.widget.DrawerLayout>
 </layout>

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="me.morirain.dev.flowmemo.viewmodel.MemoryViewModel"/>
+            type="com.flowmemo.viewmodel.MemoryViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -22,7 +22,8 @@
             app:cardElevation="64dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:cardBackgroundColor="@color/colorPrimary">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"

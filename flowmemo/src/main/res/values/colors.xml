@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#ffffff</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="colorBackground">#f5f5f5</color>
+    <color name="colorBackground">#ffffff</color>
     <color name="colorRecyclerViewItem">#ffffff</color>
     <color name="colorText">#212121</color>
     <color name="colorTextLight">#616161</color>

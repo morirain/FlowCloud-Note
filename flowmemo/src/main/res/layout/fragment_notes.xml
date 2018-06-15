@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="me.morirain.dev.flowmemo.viewmodel.NotesViewModel" />
+            type="com.flowmemo.viewmodel.NotesViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
