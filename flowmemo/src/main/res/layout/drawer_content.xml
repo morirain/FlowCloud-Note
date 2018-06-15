@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             app:cardCornerRadius="0dp"
-            app:cardElevation="3dp">
+            app:cardElevation="4dp">
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
