@@ -10,6 +10,10 @@
             type="com.flowmemo.viewmodel.MainViewModel" />
 
         <variable
+            name="folderViewModel"
+            type="com.flowmemo.viewmodel.FolderViewModel" />
+
+        <variable
             name="userProfileViewModel"
             type="com.flowmemo.viewmodel.UserProfileViewModel" />
 
@@ -25,11 +29,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <include layout="@layout/toolbar_main"
+            <include
                 android:id="@+id/toolbar_main"
+                layout="@layout/toolbar_main"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/vp_fragment"
@@ -45,11 +50,13 @@
 
         </android.support.constraint.ConstraintLayout>
 
-        <include layout="@layout/drawer_content"
+        <include
             android:id="@+id/drawer_content"
-            app:viewModel="@{userProfileViewModel}"
-            android:layout_gravity="start"
+            layout="@layout/drawer_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_width="match_parent"/>
+            android:layout_gravity="start"
+            app:userProfileViewModel="@{userProfileViewModel}"
+            app:viewModel="@{folderViewModel}" />
     </android.support.v4.widget.DrawerLayout>
 </layout>

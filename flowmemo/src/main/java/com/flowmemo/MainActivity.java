@@ -7,9 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.flowmemo.base.BaseAdapter;
+import com.flowmemo.model.Folder;
+import com.flowmemo.viewmodel.FolderViewModel;
 import com.jaeger.library.StatusBarUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -29,16 +33,22 @@ import skin.support.content.res.SkinCompatUserThemeManager;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
 
+    private BaseAdapter<Folder> mFolderAdapter;
+
     private DrawerLayout mDrawer;
 
     private DrawerContentBinding mDrawerBinding;
+
+    private FolderViewModel mFolderViewModel;
 
     private UserProfileViewModel mUserProfileViewModel;
 
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        mFolderViewModel = ViewModelProviders.of(this).get(FolderViewModel.class);
         mUserProfileViewModel = ViewModelProviders.of(this).get(UserProfileViewModel.class);
+        getBinding().setFolderViewModel(mFolderViewModel);
         getBinding().setUserProfileViewModel(mUserProfileViewModel);
 
         initToolbar();
@@ -71,6 +81,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private void initDrawer() {
         mDrawerBinding = getBinding().drawerContent;
         mDrawer = (DrawerLayout) getBinding().getRoot();
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        mDrawerBinding.recyclerView.setLayoutManager(layoutManager);
+
+        mFolderAdapter = new BaseAdapter<>(this, BR.folder, R.layout.item_drawer_folder);
+        //mFolderAdapter.setOnItemClickListener(this);
+        mDrawerBinding.recyclerView.setAdapter(mFolderAdapter);
+        mFolderViewModel.setAdapter(mFolderAdapter);
     }
 
     private void initFragment() {

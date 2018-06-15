@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.flowmemo.viewmodel.MemoryViewModel"/>
+            type="com.flowmemo.viewmodel.MemoryViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/fragment_memory"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackground"
-        android:id="@+id/fragment_memory">
+        android:background="@color/colorBackground">
 
         <android.support.v7.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:cardBackgroundColor="@color/colorPrimary"
             app:cardElevation="64dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:cardBackgroundColor="@color/colorPrimary">
+            app:layout_constraintStart_toStartOf="parent">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -38,10 +39,10 @@
                     android:focusable="true"
                     android:padding="12dp"
                     android:src="@drawable/ic_keyboard_voice_black_24dp"
-                    app:layout_constraintVertical_bias="0.0"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <EditText
                     android:id="@+id/editText_input"
@@ -50,8 +51,8 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="start|center"
-                    android:padding="8dp"
                     android:maxLines="4"
+                    android:padding="8dp"
                     android:text="@={viewModel.inputText}"
                     android:textColor="@color/colorText"
                     app:layout_constraintBottom_toBottomOf="parent"

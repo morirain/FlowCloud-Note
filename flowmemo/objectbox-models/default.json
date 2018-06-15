@@ -34,9 +34,21 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "3:5119562943077550577",
+      "lastPropertyId": "1:3362084745527935406",
+      "name": "Folder",
+      "properties": [
+        {
+          "id": "1:3362084745527935406",
+          "name": "boxId"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "2:7845860199914728557",
+  "lastEntityId": "3:5119562943077550577",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
