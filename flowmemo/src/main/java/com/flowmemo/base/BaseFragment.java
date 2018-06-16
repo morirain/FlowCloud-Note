@@ -36,13 +36,12 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         initViewModel();
         setViewModel();
         init(savedInstanceState);
-
+        if (getAdapter() != null) getAdapter().setLifecycleOwner(this);
         return mBind.getRoot();
     }
 
     private void initViewModel() {
         mViewModel = ViewModelProviders.of(this).get(getViewModelClass());
-        mViewModel.init();
     }
 
     protected abstract void init(Bundle savedInstanceState);
@@ -50,6 +49,10 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     protected abstract void setViewModel();
 
     protected abstract int getLayoutResId();
+
+    protected BaseAdapter getAdapter() {
+        return getViewModel().getAdapter();
+    }
 
     protected View getRoot() {
         return mBind.getRoot();

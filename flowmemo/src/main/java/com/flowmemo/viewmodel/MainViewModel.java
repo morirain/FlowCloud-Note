@@ -16,8 +16,6 @@ import com.flowmemo.base.BaseViewModel;
 
 public class MainViewModel extends BaseViewModel {
 
-    @Override
-    protected void init() {
+    public MainViewModel() {
     }
-
 }

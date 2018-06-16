@@ -12,13 +12,21 @@ import io.reactivex.disposables.Disposable;
 
 public class SplashActivity extends Activity {
 
+    Disposable d;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Disposable d = Completable.timer(3, TimeUnit.MILLISECONDS).subscribe(() -> {
+        d = Completable.timer(1, TimeUnit.MILLISECONDS).subscribe(() -> {
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(intent);
             SplashActivity.this.finish();
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        d.dispose();
+        super.onDestroy();
     }
 }

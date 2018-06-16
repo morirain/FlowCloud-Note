@@ -8,6 +8,10 @@
         <variable
             name="folder"
             type="com.flowmemo.model.Folder" />
+
+        <variable
+            name="presenter"
+            type="com.flowmemo.presenter.DrawerPresenter" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -24,6 +28,7 @@
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="@{presenter::onClickMore}"
             android:padding="6dp"
             android:src="@drawable/ic_more_horiz_black_24dp"
             app:layout_constraintEnd_toEndOf="parent"

@@ -20,61 +20,76 @@ import java.util.List;
  * @since 2018/6/2
  */
 
-public class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolder> implements View.OnClickListener {
+public abstract class BaseAdapter<T, B extends ViewDataBinding> extends RecyclerView.Adapter<BaseAdapter.ViewHolder> {
 
-    public interface OnItemClickListener {
-        void onItemClick(View view , int position);
-    }
+    private B mBind;
 
-    private OnItemClickListener mOnItemClickListener;
+    private LifecycleOwner mLifecycleOwner;
 
-    @Override
-    public void onClick(View view) {
-        if (mOnItemClickListener != null) {
-            mOnItemClickListener.onItemClick(view, (int) view.getTag());
-        }
-    }
+    public MutableLiveData<List<T>> DataList = new MutableLiveData<>();
 
-    private MutableLiveData<List<T>> mList;
-    private List<T> getListValue(){
-        if (mList != null) return mList.getValue();
-        throw new NullPointerException();
-    }
+    private AdapterPresenter<B> mAdapterPresenter;
 
     private int mVariableId;
     private int mLayoutId;
 
-    public MutableLiveData<List<T>> getList() {
-        return mList;
+    private List<T> getListValue() {
+        if (DataList != null) return DataList.getValue();
+        throw new NullPointerException();
     }
 
-    public BaseAdapter(LifecycleOwner lifecycleOwner, int variableId, int layoutId) {
+    public BaseAdapter(int variableId, int layoutId) {
         this.mVariableId = variableId;
         this.mLayoutId = layoutId;
-        this.mList = new MutableLiveData<>();
-        this.mList.observe(lifecycleOwner, ts -> notifyDataSetChanged());
-        mList.setValue(new ArrayList<>());
+        DataList.setValue(new ArrayList<>());
+
+    }
+    public BaseAdapter(int variableId, int layoutId, BasePresenter<B> presenter) {
+        this.mVariableId = variableId;
+        this.mLayoutId = layoutId;
+        DataList.setValue(new ArrayList<>());
+        if (presenter != null) mAdapterPresenter = presenter;
+
+    }
+
+    public void setLifecycleOwner(LifecycleOwner lifecycleOwner) {
+        this.mLifecycleOwner = lifecycleOwner;
+    }
+
+    public interface AdapterPresenter<A extends ViewDataBinding> {
+        void setPresenter(A bind);
+    }
+
+    public void setAdapterPresenter(AdapterPresenter<B> adapterPresenter) {
+        mAdapterPresenter = adapterPresenter;
+    }
+
+    protected B getBinding() {
+        if (mBind != null) return mBind;
+        return null;
     }
 
     @NonNull
     @Override
     public ViewHolder<T> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), mLayoutId, parent, false);
-        ViewHolder<T> viewHolder = new ViewHolder<>(binding.getRoot());
-        viewHolder.setBinding(binding);
-        viewHolder.itemView.setOnClickListener(this);
-        return viewHolder;
+        mBind = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), mLayoutId, parent, false);
+        if (mAdapterPresenter != null) {
+            mAdapterPresenter.setPresenter(mBind);
+        }
+        if (mLifecycleOwner != null) {
+            mBind.setLifecycleOwner(mLifecycleOwner);
+        }
+        return new ViewHolder<>(mBind.getRoot(), mBind);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.itemView.setTag(position);
-        holder.binding.setVariable(mVariableId, getListValue().get(position));
+        setPosition(holder);
+        holder.getBinding().setVariable(mVariableId, getListValue().get(position));
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.mOnItemClickListener = listener;
-    }
+    protected abstract void setPosition(ViewHolder holder);
 
     /**
      * 刷新数据
@@ -86,26 +101,22 @@ public class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolder>
         getListValue().addAll(data);
     }
 
-
     @Override
     public int getItemCount() {
-        return mList == null ? 0 : getListValue().size();
+        return DataList == null ? 0 : getListValue().size();
     }
 
-    public class ViewHolder<B> extends RecyclerView.ViewHolder {
+    public class ViewHolder<C> extends RecyclerView.ViewHolder {
 
         private ViewDataBinding binding;
 
-        ViewHolder(View itemView) {
+        ViewHolder(View itemView, ViewDataBinding binding) {
             super(itemView);
-        }
-
-        public ViewDataBinding getBinding() {
-            return binding;
-        }
-
-        void setBinding(ViewDataBinding binding) {
             this.binding = binding;
+        }
+
+        ViewDataBinding getBinding() {
+            return binding;
         }
     }
 }

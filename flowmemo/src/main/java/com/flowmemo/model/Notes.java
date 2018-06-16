@@ -3,6 +3,8 @@ package com.flowmemo.model;
 
 import android.arch.lifecycle.MutableLiveData;
 
+import com.flowmemo.databinding.ItemNotesBinding;
+
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 import io.objectbox.annotation.Transient;

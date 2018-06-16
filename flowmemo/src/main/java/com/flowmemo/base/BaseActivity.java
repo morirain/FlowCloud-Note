@@ -1,18 +1,13 @@
 package com.flowmemo.base;
 
 
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 
 /**
  * Created by morirain on 2018/6/2.
@@ -38,11 +33,11 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         initViewModel();
         setViewModel();
         init(savedInstanceState);
+        if (getAdapter() != null) getAdapter().setLifecycleOwner(this);
     }
 
     private void initViewModel() {
         mViewModel = ViewModelProviders.of(this).get(getViewModelClass());
-        mViewModel.init();
     }
 
 
@@ -53,6 +48,10 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     protected abstract int getLayoutResId();
 
     protected abstract Class<V> getViewModelClass();
+
+    protected BaseAdapter getAdapter() {
+        return getViewModel().getAdapter();
+    }
 
     protected View getRoot() {
         return mBind.getRoot();

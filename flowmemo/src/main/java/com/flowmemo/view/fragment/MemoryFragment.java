@@ -9,7 +9,7 @@ import com.flowmemo.base.BaseFragment;
 import com.flowmemo.databinding.FragmentMemoryBinding;
 import com.flowmemo.viewmodel.MemoryViewModel;
 
-public class MemoryFragment extends BaseFragment<FragmentMemoryBinding, MemoryViewModel> implements View.OnClickListener, BaseAdapter.OnItemClickListener {
+public class MemoryFragment extends BaseFragment<FragmentMemoryBinding, MemoryViewModel> implements View.OnClickListener {
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -41,17 +41,6 @@ public class MemoryFragment extends BaseFragment<FragmentMemoryBinding, MemoryVi
         //if (view == getBinding().buttonNewNote) {
 
 //        }
-    }
-
-    /**
-     * MemoryItem 被点击
-     *
-     * @param view Item 的 View
-     * @param position 被点击的 Item 的位置
-     */
-    @Override
-    public void onItemClick(View view, int position) {
-
     }
 
     @Override

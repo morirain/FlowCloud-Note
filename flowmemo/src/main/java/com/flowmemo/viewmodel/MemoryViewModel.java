@@ -16,8 +16,7 @@ public class MemoryViewModel extends BaseViewModel {
 
     public MutableLiveData<String> inputText = new MutableLiveData<>();
 
-    @Override
-    protected void init() {
-
+    public MemoryViewModel() {
     }
+
 }

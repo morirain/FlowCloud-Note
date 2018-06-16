@@ -21,9 +21,4 @@ public class UserProfileViewModel extends BaseViewModel {
         userName.postValue("empty name");
         userEmail.postValue("empty@email.com");
     }
-
-    @Override
-    protected void init() {
-
-    }
 }

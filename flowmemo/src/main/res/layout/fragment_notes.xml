@@ -3,10 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.flowmemo.viewmodel.NotesViewModel" />
+        <variable
+            name="presenter"
+            type="com.flowmemo.presenter.NotesFragmentPresenter" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -34,7 +36,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/colorBackground"
-                android:overScrollMode="never" />
+                android:overScrollMode="never"
+                setAdapter="@{viewModel.Adapter}"/>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
         <android.support.v7.widget.CardView
@@ -68,7 +71,8 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:onClick="@{presenter::newNote}"/>
 
                 <ImageButton
                     android:id="@+id/button_new_photo_note"

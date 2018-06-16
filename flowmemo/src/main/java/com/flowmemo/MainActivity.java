@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.flowmemo.base.BaseAdapter;
+import com.flowmemo.databinding.ItemDrawerFolderBinding;
 import com.flowmemo.model.Folder;
 import com.flowmemo.viewmodel.FolderViewModel;
 import com.jaeger.library.StatusBarUtil;
@@ -33,7 +34,7 @@ import skin.support.content.res.SkinCompatUserThemeManager;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
 
-    private BaseAdapter<Folder> mFolderAdapter;
+    private BaseAdapter<Folder, ItemDrawerFolderBinding> mFolderAdapter;
 
     private DrawerLayout mDrawer;
 
@@ -85,10 +86,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mDrawerBinding.recyclerView.setLayoutManager(layoutManager);
 
-        mFolderAdapter = new BaseAdapter<>(this, BR.folder, R.layout.item_drawer_folder);
-        //mFolderAdapter.setOnItemClickListener(this);
-        mDrawerBinding.recyclerView.setAdapter(mFolderAdapter);
-        mFolderViewModel.setAdapter(mFolderAdapter);
+        //mFolderAdapter = new BaseAdapter<>(this, BR.folder, R.layout.item_drawer_folder);
+        //mFolderAdapter.setPresenter(this);
+        //mDrawerBinding.recyclerView.setAdapter(mFolderAdapter);
+        //mFolderViewModel.setAdapter(mFolderAdapter);
     }
 
     private void initFragment() {
