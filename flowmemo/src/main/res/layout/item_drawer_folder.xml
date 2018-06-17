@@ -7,11 +7,11 @@
 
         <variable
             name="folder"
-            type="com.flowmemo.model.Folder" />
+            type="com.morirain.flowmemo.model.Folder" />
 
         <variable
             name="presenter"
-            type="com.flowmemo.presenter.DrawerContentPresenter" />
+            type="com.morirain.flowmemo.presenter.DrawerContentPresenter" />
     </data>
 
     <android.support.constraint.ConstraintLayout

@@ -6,10 +6,10 @@
     <data>
         <variable
             name="notes"
-            type="com.flowmemo.model.Notes" />
+            type="com.morirain.flowmemo.model.Notes" />
         <variable
             name="presenter"
-            type="com.flowmemo.presenter.NotesPresenter" />
+            type="com.morirain.flowmemo.presenter.NotesPresenter" />
     </data>
 
     <android.support.v7.widget.CardView

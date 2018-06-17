@@ -7,19 +7,19 @@
 
         <variable
             name="viewModel"
-            type="com.flowmemo.viewmodel.MainViewModel" />
+            type="com.morirain.flowmemo.viewmodel.MainViewModel" />
 
         <variable
             name="folderViewModel"
-            type="com.flowmemo.viewmodel.FolderViewModel" />
+            type="com.morirain.flowmemo.viewmodel.FolderViewModel" />
 
         <variable
             name="userProfileViewModel"
-            type="com.flowmemo.viewmodel.UserProfileViewModel" />
+            type="com.morirain.flowmemo.viewmodel.UserProfileViewModel" />
 
         <variable
             name="presenter"
-            type="com.flowmemo.presenter.DrawerPresenter" />
+            type="com.morirain.flowmemo.presenter.DrawerPresenter" />
     </data>
 
     <android.support.v4.widget.DrawerLayout

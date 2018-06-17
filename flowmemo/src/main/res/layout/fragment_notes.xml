@@ -6,11 +6,11 @@
 
         <variable
             name="viewModel"
-            type="com.flowmemo.viewmodel.NotesViewModel" />
+            type="com.morirain.flowmemo.viewmodel.NotesViewModel" />
 
         <variable
             name="presenter"
-            type="com.flowmemo.presenter.NotesFragmentPresenter" />
+            type="com.morirain.flowmemo.presenter.NotesFragmentPresenter" />
     </data>
 
     <android.support.constraint.ConstraintLayout

@@ -12,7 +12,7 @@ android {
     }
     compileSdkVersion 27
     defaultConfig {
-        applicationId 'com.flowmemo'
+        applicationId 'com.morirain.flowmemo'
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 1001

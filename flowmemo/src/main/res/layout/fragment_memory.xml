@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.flowmemo.viewmodel.MemoryViewModel" />
+            type="com.morirain.flowmemo.viewmodel.MemoryViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
