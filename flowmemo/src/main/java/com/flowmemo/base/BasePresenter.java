@@ -12,7 +12,7 @@ import android.view.View;
  */
 
 
-public abstract class BasePresenter<B extends ViewDataBinding> implements View.OnClickListener, BaseAdapter.AdapterPresenter<B> {
+public abstract class BasePresenter<B extends ViewDataBinding> implements BaseAdapter.AdapterPresenter<B> {
     protected int getPosition(View view) {
         BaseAdapter.ViewHolder viewHolder = (BaseAdapter.ViewHolder) view.getTag();
         return (int) viewHolder.itemView.getTag();

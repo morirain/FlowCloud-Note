@@ -11,7 +11,7 @@
 
         <variable
             name="presenter"
-            type="com.flowmemo.presenter.DrawerPresenter" />
+            type="com.flowmemo.presenter.DrawerContentPresenter" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -19,7 +19,8 @@
         android:layout_height="48dp"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:foreground="?android:attr/selectableItemBackground"
+        android:onClick="@{presenter::onItemClick}">
 
         <ImageButton
             android:id="@+id/button_drawer_folder_more"

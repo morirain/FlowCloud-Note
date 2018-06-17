@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import com.flowmemo.base.BaseAdapter;
 import com.flowmemo.databinding.ItemDrawerFolderBinding;
 import com.flowmemo.model.Folder;
+import com.flowmemo.presenter.DrawerPresenter;
 import com.flowmemo.viewmodel.FolderViewModel;
 import com.jaeger.library.StatusBarUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -126,8 +127,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     @Override
-    protected void setViewModel() {
+    protected void setConnect() {
         getBinding().setViewModel(getViewModel());
+        getBinding().setPresenter(new DrawerPresenter());
     }
 
     @Override

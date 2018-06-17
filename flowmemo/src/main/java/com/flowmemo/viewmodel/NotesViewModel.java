@@ -10,7 +10,7 @@ import com.flowmemo.adapter.NotesAdapter;
 import com.flowmemo.base.BaseAdapter;
 import com.flowmemo.base.BaseViewModel;
 import com.flowmemo.model.Notes;
-import com.flowmemo.presenter.NotesFragmentPresenter;
+import com.flowmemo.presenter.NotesPresenter;
 import com.flowmemo.BR;
 
 /**
@@ -22,9 +22,9 @@ import com.flowmemo.BR;
 
 public class NotesViewModel extends BaseViewModel {
 
-    public NotesAdapter Adapter = new NotesAdapter(BR.notes, R.layout.item_notes, new NotesFragmentPresenter());
+    private NotesAdapter mAdapter = new NotesAdapter(BR.notes, R.layout.item_notes, new NotesPresenter());
 
-    private MutableLiveData<List<Notes>> mNotesList = Adapter.DataList;
+    private MutableLiveData<List<Notes>> mNotesList = mAdapter.DataList;
 
 
     public NotesViewModel() {
@@ -40,6 +40,6 @@ public class NotesViewModel extends BaseViewModel {
 
     @Override
     public BaseAdapter getAdapter() {
-        return Adapter;
+        return mAdapter;
     }
 }

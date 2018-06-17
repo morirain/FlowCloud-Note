@@ -17,6 +17,9 @@
             name="userProfileViewModel"
             type="com.flowmemo.viewmodel.UserProfileViewModel" />
 
+        <variable
+            name="presenter"
+            type="com.flowmemo.presenter.DrawerPresenter" />
     </data>
 
     <android.support.v4.widget.DrawerLayout
@@ -57,6 +60,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             app:userProfileViewModel="@{userProfileViewModel}"
-            app:viewModel="@{folderViewModel}" />
+            app:viewModel="@{folderViewModel}"
+            app:presenter="@{presenter}"/>
     </android.support.v4.widget.DrawerLayout>
 </layout>

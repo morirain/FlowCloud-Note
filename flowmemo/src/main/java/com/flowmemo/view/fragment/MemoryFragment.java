@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.flowmemo.R;
-import com.flowmemo.base.BaseAdapter;
 import com.flowmemo.base.BaseFragment;
 import com.flowmemo.databinding.FragmentMemoryBinding;
 import com.flowmemo.viewmodel.MemoryViewModel;
@@ -44,7 +43,7 @@ public class MemoryFragment extends BaseFragment<FragmentMemoryBinding, MemoryVi
     }
 
     @Override
-    protected void setViewModel() {
+    protected void setConnect() {
         getBinding().setViewModel(getViewModel());
     }
 

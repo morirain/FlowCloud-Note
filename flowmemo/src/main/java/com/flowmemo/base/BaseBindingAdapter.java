@@ -21,7 +21,7 @@ public class BaseBindingAdapter {
     public static void setPresenter(View view, View.OnLongClickListener clickListener) {
         view.setOnLongClickListener(clickListener);
     }*/
-    @BindingAdapter("setAdapter")
+    @BindingAdapter({"setAdapter"})
     public static void setAdapter(RecyclerView view, BaseAdapter baseAdapter) {
         view.setAdapter(baseAdapter);
     }

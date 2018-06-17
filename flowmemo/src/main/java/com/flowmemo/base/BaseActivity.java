@@ -31,7 +31,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         mBind.setLifecycleOwner(this);
 
         initViewModel();
-        setViewModel();
+        setConnect();
         init(savedInstanceState);
         if (getAdapter() != null) getAdapter().setLifecycleOwner(this);
     }
@@ -43,7 +43,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
 
     protected abstract void init(Bundle savedInstanceState);
 
-    protected abstract void setViewModel();
+    protected abstract void setConnect();
 
     protected abstract int getLayoutResId();
 
