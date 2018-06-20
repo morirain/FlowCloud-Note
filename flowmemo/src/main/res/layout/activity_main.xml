@@ -18,8 +18,8 @@
             type="com.morirain.flowmemo.viewmodel.UserProfileViewModel" />
 
         <variable
-            name="presenter"
-            type="com.morirain.flowmemo.presenter.DrawerPresenter" />
+            name="handler"
+            type="com.morirain.flowmemo.viewmodel.handler.DrawerContentHandler" />
     </data>
 
     <android.support.v4.widget.DrawerLayout
@@ -61,6 +61,6 @@
             android:layout_gravity="start"
             app:userProfileViewModel="@{userProfileViewModel}"
             app:viewModel="@{folderViewModel}"
-            app:presenter="@{presenter}"/>
+            app:handler="@{handler}"/>
     </android.support.v4.widget.DrawerLayout>
 </layout>

@@ -6,7 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import com.morirain.flowmemo.R;
 import com.morirain.flowmemo.base.BaseFragment;
 import com.morirain.flowmemo.databinding.FragmentNotesBinding;
-import com.morirain.flowmemo.presenter.NotesFragmentPresenter;
+import com.morirain.flowmemo.viewmodel.handler.NotesFragmentHandler;
 import com.morirain.flowmemo.viewmodel.NotesViewModel;
 
 public class NotesFragment extends BaseFragment<FragmentNotesBinding, NotesViewModel> {
@@ -24,7 +24,7 @@ public class NotesFragment extends BaseFragment<FragmentNotesBinding, NotesViewM
     @Override
     protected void setConnect() {
         getBinding().setViewModel(getViewModel());
-        getBinding().setPresenter(new NotesFragmentPresenter());
+        getBinding().setPresenter(new NotesFragmentHandler());
     }
 
     @Override

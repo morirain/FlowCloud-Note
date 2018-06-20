@@ -13,12 +13,12 @@ import android.view.View;
 
 
 public class BaseBindingAdapter {
-    /*@BindingAdapter("setPresenter")
-    public static void setPresenter(View view, View.OnClickListener clickListener) {
+    /*@BindingAdapter("setCommandHandler")
+    public static void setCommandHandler(View view, View.OnClickListener clickListener) {
         view.setOnClickListener(clickListener);
     }
-    @BindingAdapter("setPresenter")
-    public static void setPresenter(View view, View.OnLongClickListener clickListener) {
+    @BindingAdapter("setCommandHandler")
+    public static void setCommandHandler(View view, View.OnLongClickListener clickListener) {
         view.setOnLongClickListener(clickListener);
     }*/
     @BindingAdapter({"setAdapter"})

@@ -1,10 +1,8 @@
 package com.morirain.flowmemo.adapter;
 
 
-import android.support.annotation.NonNull;
-
 import com.morirain.flowmemo.base.BaseAdapter;
-import com.morirain.flowmemo.base.BasePresenter;
+import com.morirain.flowmemo.base.BaseCommandHandler;
 import com.morirain.flowmemo.databinding.ItemNotesBinding;
 import com.morirain.flowmemo.model.Notes;
 
@@ -17,7 +15,7 @@ import com.morirain.flowmemo.model.Notes;
 
 public class NotesAdapter extends BaseAdapter<Notes, ItemNotesBinding> {
 
-    public NotesAdapter(int variableId, int layoutId, BasePresenter<ItemNotesBinding> presenter) {
+    public NotesAdapter(int variableId, int layoutId, BaseCommandHandler<ItemNotesBinding> presenter) {
         super(variableId, layoutId, presenter);
     }
 

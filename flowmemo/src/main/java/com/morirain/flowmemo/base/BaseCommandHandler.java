@@ -2,7 +2,6 @@ package com.morirain.flowmemo.base;
 
 
 import android.databinding.ViewDataBinding;
-import android.util.SparseIntArray;
 import android.view.View;
 
 /**
@@ -12,7 +11,7 @@ import android.view.View;
  */
 
 
-public abstract class BasePresenter<B extends ViewDataBinding> implements BaseAdapter.AdapterPresenter<B> {
+public abstract class BaseCommandHandler<B extends ViewDataBinding> implements BaseAdapter.AdapterCommandHandler<B> {
     protected int getPosition(View view) {
         BaseAdapter.ViewHolder viewHolder = (BaseAdapter.ViewHolder) view.getTag();
         return (int) viewHolder.itemView.getTag();

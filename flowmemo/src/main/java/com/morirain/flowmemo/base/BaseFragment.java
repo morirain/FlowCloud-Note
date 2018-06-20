@@ -68,6 +68,6 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         return mViewModel;
     }
 
-    //protected abstract BasePresenter<T> getPresenter();
+    //protected abstract BaseCommandHandler<T> getPresenter();
 
 }

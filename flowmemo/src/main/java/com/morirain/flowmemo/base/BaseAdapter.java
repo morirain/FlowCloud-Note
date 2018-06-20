@@ -28,7 +28,7 @@ public abstract class BaseAdapter<T, B extends ViewDataBinding> extends Recycler
 
     public MutableLiveData<List<T>> DataList = new MutableLiveData<>();
 
-    private AdapterPresenter<B> mAdapterPresenter;
+    private AdapterCommandHandler<B> mAdapterCommandHandler;
 
     private int mVariableId;
     private int mLayoutId;
@@ -44,11 +44,11 @@ public abstract class BaseAdapter<T, B extends ViewDataBinding> extends Recycler
         DataList.setValue(new ArrayList<>());
 
     }
-    public BaseAdapter(int variableId, int layoutId, BasePresenter<B> presenter) {
+    public BaseAdapter(int variableId, int layoutId, BaseCommandHandler<B> presenter) {
         this.mVariableId = variableId;
         this.mLayoutId = layoutId;
         DataList.setValue(new ArrayList<>());
-        if (presenter != null) mAdapterPresenter = presenter;
+        if (presenter != null) mAdapterCommandHandler = presenter;
 
     }
 
@@ -56,12 +56,11 @@ public abstract class BaseAdapter<T, B extends ViewDataBinding> extends Recycler
         this.mLifecycleOwner = lifecycleOwner;
     }
 
-    public interface AdapterPresenter<A extends ViewDataBinding> {
-        void setPresenter(A bind);
+    public interface AdapterCommandHandler<A extends ViewDataBinding> {
     }
 
-    public void setAdapterPresenter(AdapterPresenter<B> adapterPresenter) {
-        mAdapterPresenter = adapterPresenter;
+    public void setCommandHandler(AdapterCommandHandler<B> adapterCommandHandler) {
+        mAdapterCommandHandler = adapterCommandHandler;
     }
 
     protected B getBinding() {
@@ -73,8 +72,8 @@ public abstract class BaseAdapter<T, B extends ViewDataBinding> extends Recycler
     @Override
     public ViewHolder<T> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mBind = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), mLayoutId, parent, false);
-        if (mAdapterPresenter != null) {
-            mAdapterPresenter.setPresenter(mBind);
+        if (mAdapterCommandHandler != null) {
+            //mAdapterCommandHandler.setCommandHandler(mBind);
         }
         if (mLifecycleOwner != null) {
             mBind.setLifecycleOwner(mLifecycleOwner);

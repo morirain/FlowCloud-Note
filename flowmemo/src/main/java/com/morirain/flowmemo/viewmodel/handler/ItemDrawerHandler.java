@@ -1,9 +1,9 @@
-package com.morirain.flowmemo.presenter;
+package com.morirain.flowmemo.viewmodel.handler;
 
 
 import android.view.View;
 
-import com.morirain.flowmemo.base.BasePresenter;
+import com.morirain.flowmemo.base.BaseCommandHandler;
 import com.morirain.flowmemo.databinding.ItemDrawerFolderBinding;
 import com.morirain.flowmemo.utils.LogUtil;
 
@@ -14,12 +14,8 @@ import com.morirain.flowmemo.utils.LogUtil;
  */
 
 
-public class DrawerContentPresenter extends BasePresenter<ItemDrawerFolderBinding> {
+public class ItemDrawerHandler extends BaseCommandHandler<ItemDrawerFolderBinding> {
 
-    @Override
-    public void setPresenter(ItemDrawerFolderBinding bind) {
-        bind.setPresenter(this);
-    }
 
     public void onItemClick(View view) {
         LogUtil.d(String.valueOf(getPosition(view)));

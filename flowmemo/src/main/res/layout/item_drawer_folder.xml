@@ -11,7 +11,7 @@
 
         <variable
             name="presenter"
-            type="com.morirain.flowmemo.presenter.DrawerContentPresenter" />
+            type="com.morirain.flowmemo.viewmodel.handler.ItemDrawerHandler" />
     </data>
 
     <android.support.constraint.ConstraintLayout

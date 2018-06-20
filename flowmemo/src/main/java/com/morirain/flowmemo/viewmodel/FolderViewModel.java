@@ -9,7 +9,7 @@ import com.morirain.flowmemo.adapter.FolderAdapter;
 import com.morirain.flowmemo.base.BaseAdapter;
 import com.morirain.flowmemo.base.BaseViewModel;
 import com.morirain.flowmemo.model.Folder;
-import com.morirain.flowmemo.presenter.DrawerContentPresenter;
+import com.morirain.flowmemo.viewmodel.handler.ItemDrawerHandler;
 
 
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.List;
 
 public class FolderViewModel extends BaseViewModel {
 
-    private FolderAdapter mAdapter = new FolderAdapter(BR.folder, R.layout.item_drawer_folder, new DrawerContentPresenter());
+    private FolderAdapter mAdapter = new FolderAdapter(BR.folder, R.layout.item_drawer_folder, new ItemDrawerHandler());
 
     private MutableLiveData<List<Folder>> mFolderList = mAdapter.DataList;
 

@@ -1,16 +1,16 @@
 package com.morirain.flowmemo;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
 import io.reactivex.disposables.Disposable;
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends AppCompatActivity {
 
     Disposable d;
 

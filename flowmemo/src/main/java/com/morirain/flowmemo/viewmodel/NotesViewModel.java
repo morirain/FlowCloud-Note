@@ -10,7 +10,7 @@ import com.morirain.flowmemo.adapter.NotesAdapter;
 import com.morirain.flowmemo.base.BaseAdapter;
 import com.morirain.flowmemo.base.BaseViewModel;
 import com.morirain.flowmemo.model.Notes;
-import com.morirain.flowmemo.presenter.NotesPresenter;
+import com.morirain.flowmemo.viewmodel.handler.ItemNotesHandler;
 import com.morirain.flowmemo.BR;
 
 /**
@@ -22,7 +22,7 @@ import com.morirain.flowmemo.BR;
 
 public class NotesViewModel extends BaseViewModel {
 
-    private NotesAdapter mAdapter = new NotesAdapter(BR.notes, R.layout.item_notes, new NotesPresenter());
+    private NotesAdapter mAdapter = new NotesAdapter(BR.notes, R.layout.item_notes, new ItemNotesHandler());
 
     private MutableLiveData<List<Notes>> mNotesList = mAdapter.DataList;
 

@@ -1,9 +1,9 @@
-package com.morirain.flowmemo.presenter;
+package com.morirain.flowmemo.viewmodel.handler;
 
 
 import android.view.View;
 
-import com.morirain.flowmemo.base.BasePresenter;
+import com.morirain.flowmemo.base.BaseCommandHandler;
 import com.morirain.flowmemo.databinding.DrawerContentBinding;
 import com.morirain.flowmemo.utils.LogUtil;
 
@@ -14,12 +14,7 @@ import com.morirain.flowmemo.utils.LogUtil;
  */
 
 
-public class DrawerPresenter extends BasePresenter<DrawerContentBinding> {
-    @Override
-    public void setPresenter(DrawerContentBinding bind) {
-        bind.setPresenter(this);
-    }
-
+public class DrawerContentHandler extends BaseCommandHandler<DrawerContentBinding> {
 
     public void onEditUserProfileClick(View view) {
         LogUtil.d("dasdas");

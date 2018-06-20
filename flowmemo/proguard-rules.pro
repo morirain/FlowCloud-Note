@@ -21,20 +21,30 @@
 #-renamesourcefileattribute SourceFile
 # Retain generic type information for use by reflection by converters and adapters.
 
--obfuscationdictionary proguard-dictionary.txt
--packageobfuscationdictionary proguard-dictionary.txt
--classobfuscationdictionary proguard-dictionary.txt
+# Dictionary
+#-obfuscationdictionary proguard-dictionary.txt
+#-packageobfuscationdictionary proguard-dictionary.txt
+#-classobfuscationdictionary proguard-dictionary.txt
 
-# retrofit
+# Retrofit
+# Retain generic type information for use by reflection by converters and adapters.
 -keepattributes Signature
 # Retain service method parameters.
--keepclassmembernames,allowobfuscation interface * {
+-keepclassmembers,allowshrinking,allowobfuscation interface * {
     @retrofit2.http.* <methods>;
 }
 # Ignore annotation used for build tooling.
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+# Ignore JSR 305 annotations for embedding nullability information.
+-dontwarn javax.annotation.**
 
-# okhttp3
+-dontnote retrofit2.Platform
+-dontnote retrofit2.Platform$IOS$MainThreadExecutor
+-dontwarn retrofit2.Platform$Java8
+-keepattributes Signature
+-keepattributes Exceptions
+
+# OkHttp3
 -dontwarn okhttp3.**
 -dontwarn okio.**
 -dontwarn javax.annotation.**
@@ -72,27 +82,24 @@
 -dontwarn org.eclipse.jgit.**
 -keep class org.eclipse.jgit.** { *; }
 -keep class org.eclipse.jgit.internal.JGitText.** { *; }
-
 -keep class org.eclipse.jgit.nls.TranslationBundle.** { *; }
-
 -keep class org.slf4j.** { *; }
 -keep class org.eclipse.jgit.nls.TranslationBundle.** { *; }
 -keep class org.eclipse.jgit.internal.JGitText.** { *; }
--keep class org.eclipse.jgit.lib.Repository.**
--keep class com.jcraft.jsch.jce.**
--keep class * extends com.jcraft.jsch.KeyExchange
--keep class com.jcraft.jsch.**
+-keep class org.eclipse.jgit.lib.Repository.** { *; }
+-keep class com.jcraft.jsch.jce.** { *; }
+-keep class * extends com.jcraft.jsch.KeyExchange { *; }
+-keep class com.jcraft.jsch.** { *; }
 -keep class org.apache.commons.io.FileUtils { public *** openOutputStream(...); }
 -keep class org.apache.commons.io.IOUtils  { public *** closeQuietly(...); public *** copy(...); }
 -keep class org.apache.commons.io.input.BoundedInputStream { *; }
 -keep class org.eclipse.jgit.transport.RemoteConfig { *** removeURI(...); }
 
-# BRVAH
--keep class com.chad.library.adapter.** {
-*;
-}
--keep public class * extends com.chad.library.adapter.base.BaseQuickAdapter
--keep public class * extends com.chad.library.adapter.base.BaseViewHolder
--keepclassmembers  class **$** extends com.chad.library.adapter.base.BaseViewHolder {
-     <init>(...);
-}
+# Project
+-keep class android.support.v4.widget.DrawerLayout { *; }
+-keep class android.support.test.espresso.IdlingResource { *; }
+-keep class android.support.test.espresso.IdlingRegistry { *; }
+-keep class com.google.common.base.Preconditions { *; }
+-keep class android.databinding.** { *; }
+-keep class android.arch.** { *; }
+-keep class com.morirain.flowmemo.SplashActivity

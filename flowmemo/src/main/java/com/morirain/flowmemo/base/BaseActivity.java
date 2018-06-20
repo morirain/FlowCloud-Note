@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import com.morirain.flowmemo.BR;
 
 /**
  * Created by morirain on 2018/6/2.
@@ -31,6 +32,8 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         mBind.setLifecycleOwner(this);
 
         initViewModel();
+        setViewModel();
+        setHandler();
         setConnect();
         init(savedInstanceState);
         if (getAdapter() != null) getAdapter().setLifecycleOwner(this);
@@ -40,14 +43,24 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         mViewModel = ViewModelProviders.of(this).get(getViewModelClass());
     }
 
+    private void setViewModel() {
+        mBind.setVariable(BR.viewModel, mViewModel);
+    }
+
+    private void setHandler() {
+        mBind.setVariable(BR.handler, getHandler());
+    }
 
     protected abstract void init(Bundle savedInstanceState);
+
 
     protected abstract void setConnect();
 
     protected abstract int getLayoutResId();
 
     protected abstract Class<V> getViewModelClass();
+
+    protected abstract BaseCommandHandler getHandler();
 
     protected BaseAdapter getAdapter() {
         return getViewModel().getAdapter();

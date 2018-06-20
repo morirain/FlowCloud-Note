@@ -1,10 +1,8 @@
 package com.morirain.flowmemo.viewmodel;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
 
 import com.morirain.flowmemo.base.BaseViewModel;
+import com.morirain.flowmemo.utils.LogUtil;
 
 
 /**
@@ -17,5 +15,6 @@ import com.morirain.flowmemo.base.BaseViewModel;
 public class MainViewModel extends BaseViewModel {
 
     public MainViewModel() {
+        LogUtil.e("dsadsa");
     }
 }

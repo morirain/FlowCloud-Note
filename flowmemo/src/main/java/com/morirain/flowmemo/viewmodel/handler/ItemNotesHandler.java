@@ -1,9 +1,9 @@
-package com.morirain.flowmemo.presenter;
+package com.morirain.flowmemo.viewmodel.handler;
 
 
 import android.view.View;
 
-import com.morirain.flowmemo.base.BasePresenter;
+import com.morirain.flowmemo.base.BaseCommandHandler;
 import com.morirain.flowmemo.databinding.ItemNotesBinding;
 import com.morirain.flowmemo.utils.LogUtil;
 
@@ -14,12 +14,7 @@ import com.morirain.flowmemo.utils.LogUtil;
  */
 
 
-public class NotesPresenter extends BasePresenter<ItemNotesBinding> {
-
-    @Override
-    public void setPresenter(ItemNotesBinding bind) {
-        bind.setPresenter(this);
-    }
+public class ItemNotesHandler extends BaseCommandHandler<ItemNotesBinding> {
 
     public void onItemClick(View view) {
         LogUtil.d(String.valueOf(getPosition(view)));

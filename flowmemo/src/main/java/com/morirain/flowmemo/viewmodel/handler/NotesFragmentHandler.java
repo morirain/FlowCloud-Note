@@ -1,9 +1,9 @@
-package com.morirain.flowmemo.presenter;
+package com.morirain.flowmemo.viewmodel.handler;
 
 
 import android.view.View;
 
-import com.morirain.flowmemo.base.BasePresenter;
+import com.morirain.flowmemo.base.BaseCommandHandler;
 import com.morirain.flowmemo.databinding.FragmentNotesBinding;
 import com.morirain.flowmemo.utils.LogUtil;
 
@@ -14,11 +14,7 @@ import com.morirain.flowmemo.utils.LogUtil;
  */
 
 
-public class NotesFragmentPresenter extends BasePresenter<FragmentNotesBinding> {
-    @Override
-    public void setPresenter(FragmentNotesBinding bind) {
-        bind.setPresenter(this);
-    }
+public class NotesFragmentHandler extends BaseCommandHandler<FragmentNotesBinding> {
 
     public void onNewNoteClick(View view) {
         LogUtil.d("dasdas");

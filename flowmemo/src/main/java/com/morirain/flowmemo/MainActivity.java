@@ -12,11 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.morirain.flowmemo.base.BaseAdapter;
+import com.morirain.flowmemo.base.BaseCommandHandler;
 import com.morirain.flowmemo.databinding.ItemDrawerFolderBinding;
 import com.morirain.flowmemo.model.Folder;
-import com.morirain.flowmemo.presenter.DrawerPresenter;
 import com.morirain.flowmemo.viewmodel.FolderViewModel;
 import com.jaeger.library.StatusBarUtil;
+import com.morirain.flowmemo.viewmodel.handler.DrawerContentHandler;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
@@ -31,7 +32,6 @@ import com.morirain.flowmemo.view.fragment.MemoryFragment;
 import com.morirain.flowmemo.view.fragment.NotesFragment;
 import com.morirain.flowmemo.viewmodel.MainViewModel;
 import com.morirain.flowmemo.viewmodel.UserProfileViewModel;
-import skin.support.content.res.SkinCompatUserThemeManager;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
 
@@ -88,7 +88,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         mDrawerBinding.recyclerView.setLayoutManager(layoutManager);
 
         //mFolderAdapter = new BaseAdapter<>(this, BR.folder, R.layout.item_drawer_folder);
-        //mFolderAdapter.setPresenter(this);
+        //mFolderAdapter.setCommandHandler(this);
         //mDrawerBinding.recyclerView.setAdapter(mFolderAdapter);
         //mFolderViewModel.setAdapter(mFolderAdapter);
     }
@@ -128,8 +128,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     protected void setConnect() {
-        getBinding().setViewModel(getViewModel());
-        getBinding().setPresenter(new DrawerPresenter());
     }
 
     @Override
@@ -140,6 +138,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     protected Class<MainViewModel> getViewModelClass() {
         return MainViewModel.class;
+    }
+
+    @Override
+    protected BaseCommandHandler getHandler() {
+        return new DrawerContentHandler();
     }
 
 
