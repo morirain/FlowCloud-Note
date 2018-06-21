@@ -11,9 +11,11 @@ import android.view.View;
  */
 
 
-public abstract class BaseCommandHandler<B extends ViewDataBinding> implements BaseAdapter.AdapterCommandHandler<B> {
+public abstract class BaseCommandHandler {
     protected int getPosition(View view) {
-        BaseAdapter.ViewHolder viewHolder = (BaseAdapter.ViewHolder) view.getTag();
-        return (int) viewHolder.itemView.getTag();
+        //BaseAdapter.ViewHolder viewHolder = (BaseAdapter.ViewHolder) view.getTag();
+        //return (int) viewHolder.itemView.getTag();
+        BaseAdapter.ViewHolder viewHolder = (BaseAdapter.ViewHolder) view.getRootView().getTag();
+        return viewHolder.getDataPosition();
     }
 }

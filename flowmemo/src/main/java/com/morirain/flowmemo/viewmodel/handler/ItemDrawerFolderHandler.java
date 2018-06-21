@@ -14,7 +14,7 @@ import com.morirain.flowmemo.utils.LogUtil;
  */
 
 
-public class ItemDrawerHandler extends BaseCommandHandler<ItemDrawerFolderBinding> {
+public class ItemDrawerFolderHandler extends BaseCommandHandler {
 
 
     public void onItemClick(View view) {

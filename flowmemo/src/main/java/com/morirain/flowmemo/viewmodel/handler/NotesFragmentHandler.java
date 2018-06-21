@@ -14,7 +14,7 @@ import com.morirain.flowmemo.utils.LogUtil;
  */
 
 
-public class NotesFragmentHandler extends BaseCommandHandler<FragmentNotesBinding> {
+public class NotesFragmentHandler extends BaseCommandHandler {
 
     public void onNewNoteClick(View view) {
         LogUtil.d("dasdas");

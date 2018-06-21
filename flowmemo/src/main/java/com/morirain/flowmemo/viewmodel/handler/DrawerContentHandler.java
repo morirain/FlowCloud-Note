@@ -14,7 +14,7 @@ import com.morirain.flowmemo.utils.LogUtil;
  */
 
 
-public class DrawerContentHandler extends BaseCommandHandler<DrawerContentBinding> {
+public class DrawerContentHandler extends BaseCommandHandler {
 
     public void onEditUserProfileClick(View view) {
         LogUtil.d("dasdas");

@@ -13,16 +13,8 @@ import android.view.View;
 
 
 public class BaseBindingAdapter {
-    /*@BindingAdapter("setCommandHandler")
-    public static void setCommandHandler(View view, View.OnClickListener clickListener) {
-        view.setOnClickListener(clickListener);
-    }
-    @BindingAdapter("setCommandHandler")
-    public static void setCommandHandler(View view, View.OnLongClickListener clickListener) {
-        view.setOnLongClickListener(clickListener);
-    }*/
-    @BindingAdapter({"setAdapter"})
+    /*@BindingAdapter({"setAdapter"})
     public static void setAdapter(RecyclerView view, BaseAdapter baseAdapter) {
-        view.setAdapter(baseAdapter);
-    }
+        if (view != null && baseAdapter != null) view.setAdapter(baseAdapter);
+    }*/
 }

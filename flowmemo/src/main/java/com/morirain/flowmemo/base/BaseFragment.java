@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.morirain.flowmemo.BR;
+
 
 /**
  * @author morirain
@@ -33,26 +35,35 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         mBind = DataBindingUtil.inflate(inflater, getLayoutResId(), container, false);
         mBind.setLifecycleOwner(this);
 
-        initViewModel();
-        setConnect();
+        if (getViewModelClass() != null) initViewModel();
+        if (getHandler() != null) setHandler();
+        setCustomViewModelConnect();
         init(savedInstanceState);
-        if (getAdapter() != null) getAdapter().setLifecycleOwner(this);
         return mBind.getRoot();
     }
 
     private void initViewModel() {
         mViewModel = ViewModelProviders.of(this).get(getViewModelClass());
+        setViewModel(BR.viewModel, mViewModel);
+    }
+
+    protected void setViewModel(int br, @NonNull BaseViewModel viewModel) {
+        mBind.setVariable(br, viewModel);
+    }
+
+    private void setHandler() {
+        mBind.setVariable(BR.handler, getHandler());
     }
 
     protected abstract void init(Bundle savedInstanceState);
 
-    protected abstract void setConnect();
+    protected abstract void setCustomViewModelConnect();
 
     protected abstract int getLayoutResId();
 
-    protected BaseAdapter getAdapter() {
-        return getViewModel().getAdapter();
-    }
+    protected abstract Class<V> getViewModelClass();
+
+    protected abstract BaseCommandHandler getHandler();
 
     protected View getRoot() {
         return mBind.getRoot();
@@ -62,12 +73,8 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         return mBind;
     }
 
-    protected abstract Class<V> getViewModelClass();
-
     protected final V getViewModel() {
         return mViewModel;
     }
-
-    //protected abstract BaseCommandHandler<T> getPresenter();
 
 }

@@ -8,6 +8,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -35,7 +36,7 @@ import com.morirain.flowmemo.viewmodel.UserProfileViewModel;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
 
-    private BaseAdapter<Folder, ItemDrawerFolderBinding> mFolderAdapter;
+    private BaseAdapter<Folder, ItemDrawerFolderBinding> mFolderAdapter= new BaseAdapter<>(this, BR.folder, R.layout.item_drawer_folder);
 
     private DrawerLayout mDrawer;
 
@@ -48,10 +49,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        mFolderViewModel = ViewModelProviders.of(this).get(FolderViewModel.class);
-        mUserProfileViewModel = ViewModelProviders.of(this).get(UserProfileViewModel.class);
-        getBinding().setFolderViewModel(mFolderViewModel);
-        getBinding().setUserProfileViewModel(mUserProfileViewModel);
 
         initToolbar();
         initFragment();
@@ -83,14 +80,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private void initDrawer() {
         mDrawerBinding = getBinding().drawerContent;
         mDrawer = (DrawerLayout) getBinding().getRoot();
+        RecyclerView drawerRecyclerView = mDrawerBinding.recyclerView;
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        mDrawerBinding.recyclerView.setLayoutManager(layoutManager);
-
-        //mFolderAdapter = new BaseAdapter<>(this, BR.folder, R.layout.item_drawer_folder);
-        //mFolderAdapter.setCommandHandler(this);
-        //mDrawerBinding.recyclerView.setAdapter(mFolderAdapter);
-        //mFolderViewModel.setAdapter(mFolderAdapter);
+        drawerRecyclerView.setLayoutManager(layoutManager);
+        drawerRecyclerView.setLayoutManager(layoutManager);
+        drawerRecyclerView.setAdapter(mFolderAdapter);
+        mFolderViewModel.setAdapter(mFolderAdapter);
     }
 
     private void initFragment() {
@@ -103,7 +99,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), fragmentList);
         getBinding().vpFragment.setAdapter(pagerAdapter);
         getBinding().vpFragment.setCurrentItem(0);
-        //getSupportFragmentManager().beginTransaction().replace(R.id.vp_fragment, fragment).commit();
     }
 
 
@@ -127,7 +122,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     @Override
-    protected void setConnect() {
+    protected void setCustomViewModelConnect() {
+        mFolderViewModel = ViewModelProviders.of(this).get(FolderViewModel.class);
+        mUserProfileViewModel = ViewModelProviders.of(this).get(UserProfileViewModel.class);
+        setViewModel(BR.folderViewModel, mFolderViewModel);
+        setViewModel(BR.userProfileViewModel, mUserProfileViewModel);
     }
 
     @Override

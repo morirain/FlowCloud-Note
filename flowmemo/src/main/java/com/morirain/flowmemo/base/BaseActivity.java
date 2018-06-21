@@ -1,10 +1,10 @@
 package com.morirain.flowmemo.base;
 
-
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -31,20 +31,19 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         mBind = DataBindingUtil.setContentView(this, getLayoutResId());
         mBind.setLifecycleOwner(this);
 
-        initViewModel();
-        setViewModel();
-        setHandler();
-        setConnect();
+        if (getViewModelClass() != null) initViewModel();
+        if (getHandler() != null) setHandler();
+        setCustomViewModelConnect();
         init(savedInstanceState);
-        if (getAdapter() != null) getAdapter().setLifecycleOwner(this);
     }
 
     private void initViewModel() {
         mViewModel = ViewModelProviders.of(this).get(getViewModelClass());
+        setViewModel(BR.viewModel, mViewModel);
     }
 
-    private void setViewModel() {
-        mBind.setVariable(BR.viewModel, mViewModel);
+    protected void setViewModel(int br, @NonNull BaseViewModel viewModel) {
+        mBind.setVariable(br, viewModel);
     }
 
     private void setHandler() {
@@ -53,18 +52,13 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
 
     protected abstract void init(Bundle savedInstanceState);
 
-
-    protected abstract void setConnect();
+    protected abstract void setCustomViewModelConnect();
 
     protected abstract int getLayoutResId();
 
     protected abstract Class<V> getViewModelClass();
 
     protected abstract BaseCommandHandler getHandler();
-
-    protected BaseAdapter getAdapter() {
-        return getViewModel().getAdapter();
-    }
 
     protected View getRoot() {
         return mBind.getRoot();
@@ -73,7 +67,6 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     protected final T getBinding() {
         return mBind;
     }
-
     protected final V getViewModel() {
         return mViewModel;
     }

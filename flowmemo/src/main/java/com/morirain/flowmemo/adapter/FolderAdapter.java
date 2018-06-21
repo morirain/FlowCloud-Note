@@ -1,6 +1,8 @@
 package com.morirain.flowmemo.adapter;
 
 
+import android.arch.lifecycle.LifecycleOwner;
+
 import com.morirain.flowmemo.base.BaseAdapter;
 import com.morirain.flowmemo.base.BaseCommandHandler;
 import com.morirain.flowmemo.databinding.ItemDrawerFolderBinding;
@@ -14,13 +16,12 @@ import com.morirain.flowmemo.model.Folder;
 
 
 public class FolderAdapter extends BaseAdapter<Folder, ItemDrawerFolderBinding> {
-
-    public FolderAdapter(int variableId, int layoutId, BaseCommandHandler<ItemDrawerFolderBinding> presenter) {
-        super(variableId, layoutId, presenter);
+    public FolderAdapter(LifecycleOwner lifecycleOwner, int variableId, int layoutId) {
+        super(lifecycleOwner, variableId, layoutId);
     }
 
-    @Override
+    /*@Override
     protected void setPosition(ViewHolder holder) {
         getBinding().buttonDrawerFolderMore.setTag(holder);
-    }
+    }*/
 }

@@ -10,8 +10,8 @@
             type="com.morirain.flowmemo.model.Folder" />
 
         <variable
-            name="presenter"
-            type="com.morirain.flowmemo.viewmodel.handler.ItemDrawerHandler" />
+            name="handler"
+            type="com.morirain.flowmemo.viewmodel.handler.ItemDrawerFolderHandler" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -20,7 +20,7 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        android:onClick="@{presenter::onItemClick}">
+        android:onClick="@{handler::onItemClick}">
 
         <ImageButton
             android:id="@+id/button_drawer_folder_more"
@@ -29,7 +29,7 @@
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{presenter::onClickMore}"
+            android:onClick="@{handler::onClickMore}"
             android:padding="6dp"
             android:src="@drawable/ic_more_horiz_black_24dp"
             app:layout_constraintEnd_toEndOf="parent"

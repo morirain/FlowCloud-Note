@@ -4,11 +4,12 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.morirain.flowmemo.R;
+import com.morirain.flowmemo.base.BaseCommandHandler;
 import com.morirain.flowmemo.base.BaseFragment;
 import com.morirain.flowmemo.databinding.FragmentMemoryBinding;
 import com.morirain.flowmemo.viewmodel.MemoryViewModel;
 
-public class MemoryFragment extends BaseFragment<FragmentMemoryBinding, MemoryViewModel> implements View.OnClickListener {
+public class MemoryFragment extends BaseFragment<FragmentMemoryBinding, MemoryViewModel> {
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -27,23 +28,10 @@ public class MemoryFragment extends BaseFragment<FragmentMemoryBinding, MemoryVi
     }
 
     private void initRecyclerView() {
-
-    }
-
-    /**
-     * Bottom 被点击
-     *
-     * @param view 被点击 的 View
-     */
-    @Override
-    public void onClick(View view) {
-        //if (view == getBinding().buttonNewNote) {
-
-//        }
     }
 
     @Override
-    protected void setConnect() {
+    protected void setCustomViewModelConnect() {
         getBinding().setViewModel(getViewModel());
     }
 
@@ -55,6 +43,11 @@ public class MemoryFragment extends BaseFragment<FragmentMemoryBinding, MemoryVi
     @Override
     protected Class<MemoryViewModel> getViewModelClass() {
         return MemoryViewModel.class;
+    }
+
+    @Override
+    protected BaseCommandHandler getHandler() {
+        return null;
     }
 
 

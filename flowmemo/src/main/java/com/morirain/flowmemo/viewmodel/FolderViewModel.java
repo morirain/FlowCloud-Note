@@ -1,15 +1,11 @@
 package com.morirain.flowmemo.viewmodel;
 
 
-import android.arch.lifecycle.MutableLiveData;
-
-import com.morirain.flowmemo.BR;
-import com.morirain.flowmemo.R;
-import com.morirain.flowmemo.adapter.FolderAdapter;
 import com.morirain.flowmemo.base.BaseAdapter;
 import com.morirain.flowmemo.base.BaseViewModel;
+import com.morirain.flowmemo.databinding.ItemDrawerFolderBinding;
 import com.morirain.flowmemo.model.Folder;
-import com.morirain.flowmemo.viewmodel.handler.ItemDrawerHandler;
+import com.morirain.flowmemo.viewmodel.handler.ItemDrawerFolderHandler;
 
 
 import java.util.List;
@@ -23,22 +19,23 @@ import java.util.List;
 
 public class FolderViewModel extends BaseViewModel {
 
-    private FolderAdapter mAdapter = new FolderAdapter(BR.folder, R.layout.item_drawer_folder, new ItemDrawerHandler());
+    private BaseAdapter mAdapter;// = new FolderAdapter(BR.folder, R.layout.item_drawer_folder, new ItemDrawerFolderHandler());
 
-    private MutableLiveData<List<Folder>> mFolderList = mAdapter.DataList;
+    private List<Folder> mList;// = mAdapter.mDataList;
 
 
     public FolderViewModel() {
-        getFolderData();
     }
 
-    private void getFolderData() {
+    public void setAdapter(BaseAdapter<Folder, ItemDrawerFolderBinding> adapter){
+        mAdapter = adapter;
+        mAdapter.setHandler(new ItemDrawerFolderHandler());
+        mList = adapter.getDataList().getValue();
+        getListData();
+    }
+
+    private void getListData() {
         Folder notes = new Folder("所有笔记", null);
-        mFolderList.getValue().add(notes);
-    }
-
-    @Override
-    public BaseAdapter getAdapter() {
-        return mAdapter;
+        mList.add(notes);
     }
 }

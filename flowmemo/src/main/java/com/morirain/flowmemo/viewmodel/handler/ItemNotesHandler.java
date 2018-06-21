@@ -14,7 +14,7 @@ import com.morirain.flowmemo.utils.LogUtil;
  */
 
 
-public class ItemNotesHandler extends BaseCommandHandler<ItemNotesBinding> {
+public class ItemNotesHandler extends BaseCommandHandler {
 
     public void onItemClick(View view) {
         LogUtil.d(String.valueOf(getPosition(view)));
