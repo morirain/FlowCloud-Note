@@ -8,9 +8,11 @@ import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.morirain.flowmemo.BR;
+import com.morirain.flowmemo.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +23,10 @@ import java.util.List;
  * @since 2018/6/2
  */
 
-public class BaseAdapter<T, B extends ViewDataBinding> extends RecyclerView.Adapter<BaseAdapter.ViewHolder> {
+public class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolder> {
 
     // Binding
-    private B mBind;
+    private ViewDataBinding mBind;
     // Lifecycle
     private LifecycleOwner mLifecycleOwner;
     // List Data
@@ -45,26 +47,24 @@ public class BaseAdapter<T, B extends ViewDataBinding> extends RecyclerView.Adap
         return mDataList;
     }
 
-    /*public BaseAdapter(int variableId, int layoutId) {
-            this.mVariableId = variableId;
-            this.mLayoutId = layoutId;
-            mDataList.setValue(new ArrayList<>());
-        }*/
-    public BaseAdapter(LifecycleOwner lifecycleOwner, int variableId, int layoutId) {
+    public BaseAdapter(LifecycleOwner lifecycleOwner, int layoutId) {
         this.mLifecycleOwner = lifecycleOwner;
-        this.mVariableId = variableId;
+        this.mVariableId = BR.item;
         this.mLayoutId = layoutId;
-        mDataList.setValue(new ArrayList<>());
-
+        this.mDataList.setValue(new ArrayList<>());
     }
 
     public void setHandler(BaseCommandHandler handler) {
         mAdapterHandler = handler;
     }
 
+    public void setVariableId(int variableId) {
+        this.mVariableId = variableId;
+    }
+
     @NonNull
     @Override
-    public ViewHolder<B> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder<ViewDataBinding> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mBind = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), mLayoutId, parent, false);
         if (mLifecycleOwner != null) mBind.setLifecycleOwner(mLifecycleOwner);
         return new ViewHolder<>(mBind);
@@ -72,7 +72,7 @@ public class BaseAdapter<T, B extends ViewDataBinding> extends RecyclerView.Adap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //holder.itemView.setTag(holder);
+        holder.itemView.setTag(position);
         holder.getBinding().setVariable(mVariableId, getListValue().get(position));
         if (mAdapterHandler != null) holder.getBinding().setVariable(BR.handler, mAdapterHandler);
         holder.getBinding().executePendingBindings();
@@ -87,18 +87,26 @@ public class BaseAdapter<T, B extends ViewDataBinding> extends RecyclerView.Adap
 
         private D binding;
 
+        private void setViewChildTag(View view) {
+            if (view instanceof ViewGroup) {
+                ViewGroup viewGroup = (ViewGroup) view;
+                for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                    View child = viewGroup.getChildAt(i);
+                    if (child.isClickable() || child.isLongClickable()) child.setTag(this);
+                    setViewChildTag(child);
+                }
+            }
+        }
+
         ViewHolder(D binding) {
             super(binding.getRoot());
             this.binding = binding;
-            binding.getRoot().setTag(this);
+            // setTag(this)
+            setViewChildTag(itemView);
         }
 
         D getBinding() {
             return binding;
-        }
-
-        int getDataPosition() {
-            return getLayoutPosition();
         }
     }
 }

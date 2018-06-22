@@ -30,7 +30,8 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        if (getLayoutResId() <= 0) throw new AssertionError("Subclass must provide a valid layout resource id");
+        if (getLayoutResId() <= 0)
+            throw new AssertionError("Subclass must provide a valid layout resource id");
 
         mBind = DataBindingUtil.inflate(inflater, getLayoutResId(), container, false);
         mBind.setLifecycleOwner(this);
@@ -43,12 +44,13 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     }
 
     private void initViewModel() {
-        mViewModel = ViewModelProviders.of(this).get(getViewModelClass());
-        setViewModel(BR.viewModel, mViewModel);
+        mViewModel = getNewViewModel(BR.viewModel, getViewModelClass());
     }
 
-    protected void setViewModel(int br, @NonNull BaseViewModel viewModel) {
+    protected <G extends BaseViewModel> G getNewViewModel(int br, @NonNull Class<G> modelClass) {
+        G viewModel = ViewModelProviders.of(this).get(modelClass);
         mBind.setVariable(br, viewModel);
+        return viewModel;
     }
 
     private void setHandler() {

@@ -26,7 +26,7 @@ public class NotesViewModel extends BaseViewModel {
     public NotesViewModel() {
     }
 
-    public void setAdapter(BaseAdapter<Notes, ItemNotesBinding> adapter){
+    public void setAdapter(BaseAdapter<Notes> adapter){
         mAdapter = adapter;
         mAdapter.setHandler(new ItemNotesHandler());
         mList = adapter.getDataList().getValue();

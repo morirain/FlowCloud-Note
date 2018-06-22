@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="notes"
+            name="item"
             type="com.morirain.flowmemo.model.Notes" />
         <variable
             name="handler"
@@ -51,7 +51,7 @@
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="@{notes.noteLabel}" />
+                tools:text="@{item.noteLabel}" />
 
             <TextView
                 android:id="@+id/tv_note_content"
@@ -65,7 +65,7 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_note_label"
-                tools:text="@{notes.noteContent}" />
+                tools:text="@{item.noteContent}" />
 
             <TextView
                 android:id="@+id/tv_note_last_update_time"
@@ -78,7 +78,7 @@
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_note_content"
-                tools:text="@{notes.noteLastUpdateTime}" />
+                tools:text="@{item.noteLastUpdateTime}" />
 
             <ImageButton
                 android:id="@+id/button_notes_more"

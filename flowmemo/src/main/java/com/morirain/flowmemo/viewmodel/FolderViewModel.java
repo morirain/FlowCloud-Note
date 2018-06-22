@@ -27,7 +27,7 @@ public class FolderViewModel extends BaseViewModel {
     public FolderViewModel() {
     }
 
-    public void setAdapter(BaseAdapter<Folder, ItemDrawerFolderBinding> adapter){
+    public void setAdapter(BaseAdapter<Folder> adapter){
         mAdapter = adapter;
         mAdapter.setHandler(new ItemDrawerFolderHandler());
         mList = adapter.getDataList().getValue();

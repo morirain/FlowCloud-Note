@@ -1,12 +1,12 @@
 package com.morirain.flowmemo;
 
 import android.Manifest;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -14,7 +14,6 @@ import android.view.MenuItem;
 
 import com.morirain.flowmemo.base.BaseAdapter;
 import com.morirain.flowmemo.base.BaseCommandHandler;
-import com.morirain.flowmemo.databinding.ItemDrawerFolderBinding;
 import com.morirain.flowmemo.model.Folder;
 import com.morirain.flowmemo.viewmodel.FolderViewModel;
 import com.jaeger.library.StatusBarUtil;
@@ -36,7 +35,7 @@ import com.morirain.flowmemo.viewmodel.UserProfileViewModel;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
 
-    private BaseAdapter<Folder, ItemDrawerFolderBinding> mFolderAdapter= new BaseAdapter<>(this, BR.folder, R.layout.item_drawer_folder);
+    private BaseAdapter<Folder> mFolderAdapter = new BaseAdapter<>(this, R.layout.item_drawer_folder);
 
     private DrawerLayout mDrawer;
 
@@ -45,6 +44,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private FolderViewModel mFolderViewModel;
 
     private UserProfileViewModel mUserProfileViewModel;
+
+    // for drawer
+    private ActionBarDrawerToggle mDrawerToggle;
 
 
     @Override
@@ -87,6 +89,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         drawerRecyclerView.setLayoutManager(layoutManager);
         drawerRecyclerView.setAdapter(mFolderAdapter);
         mFolderViewModel.setAdapter(mFolderAdapter);
+
+        // DrawerToggle
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
+        mDrawer.addDrawerListener(mDrawerToggle);
     }
 
     private void initFragment() {
@@ -101,6 +107,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         getBinding().vpFragment.setCurrentItem(0);
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -123,10 +134,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     protected void setCustomViewModelConnect() {
-        mFolderViewModel = ViewModelProviders.of(this).get(FolderViewModel.class);
-        mUserProfileViewModel = ViewModelProviders.of(this).get(UserProfileViewModel.class);
-        setViewModel(BR.folderViewModel, mFolderViewModel);
-        setViewModel(BR.userProfileViewModel, mUserProfileViewModel);
+        mFolderViewModel = getNewViewModel(BR.folderViewModel, FolderViewModel.class);
+        mUserProfileViewModel = getNewViewModel(BR.userProfileViewModel, UserProfileViewModel.class);
     }
 
     @Override

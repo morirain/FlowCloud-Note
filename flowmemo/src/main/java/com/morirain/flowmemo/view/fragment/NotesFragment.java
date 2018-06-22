@@ -10,17 +10,14 @@ import com.morirain.flowmemo.base.BaseAdapter;
 import com.morirain.flowmemo.base.BaseCommandHandler;
 import com.morirain.flowmemo.base.BaseFragment;
 import com.morirain.flowmemo.databinding.FragmentNotesBinding;
-import com.morirain.flowmemo.databinding.ItemNotesBinding;
 import com.morirain.flowmemo.model.Notes;
 import com.morirain.flowmemo.viewmodel.NotesViewModel;
 import com.morirain.flowmemo.viewmodel.handler.NotesFragmentHandler;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class NotesFragment extends BaseFragment<FragmentNotesBinding, NotesViewModel> {
 
-    private BaseAdapter<Notes, ItemNotesBinding> mAdapter = new BaseAdapter<>(this, BR.notes, R.layout.item_notes);
+    private BaseAdapter<Notes> mAdapter = new BaseAdapter<>(this, R.layout.item_notes);
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -37,8 +34,6 @@ public class NotesFragment extends BaseFragment<FragmentNotesBinding, NotesViewM
 
     @Override
     protected void setCustomViewModelConnect() {
-        //getBinding().setViewModel(getViewModel());
-        //getBinding().setPresenter(new NotesFragmentHandler());
     }
 
     @Override
