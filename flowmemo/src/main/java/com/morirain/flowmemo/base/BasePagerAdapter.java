@@ -1,4 +1,4 @@
-package com.morirain.flowmemo.adapter;
+package com.morirain.flowmemo.base;
 
 
 import android.support.v4.app.Fragment;
@@ -14,11 +14,11 @@ import java.util.List;
  */
 
 
-public class PagerAdapter extends FragmentPagerAdapter {
+public class BasePagerAdapter extends FragmentPagerAdapter {
 
     private List<Fragment> mFragmentList;
 
-    public PagerAdapter(FragmentManager fm, List<Fragment> fragmentList) {
+    public BasePagerAdapter(FragmentManager fm, List<Fragment> fragmentList) {
         super(fm);
         this.mFragmentList = fragmentList;
     }

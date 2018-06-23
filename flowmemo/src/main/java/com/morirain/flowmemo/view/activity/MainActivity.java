@@ -1,4 +1,4 @@
-package com.morirain.flowmemo;
+package com.morirain.flowmemo.view.activity;
 
 import android.Manifest;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.morirain.flowmemo.BR;
+import com.morirain.flowmemo.R;
 import com.morirain.flowmemo.base.BaseAdapter;
 import com.morirain.flowmemo.base.BaseCommandHandler;
 import com.morirain.flowmemo.model.Folder;
@@ -24,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
-import com.morirain.flowmemo.adapter.PagerAdapter;
+import com.morirain.flowmemo.base.BasePagerAdapter;
 import com.morirain.flowmemo.base.BaseActivity;
 import com.morirain.flowmemo.databinding.ActivityMainBinding;
 import com.morirain.flowmemo.databinding.DrawerContentBinding;
@@ -96,14 +98,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     private void initFragment() {
-        Fragment notesFragment = new NotesFragment();
-        Fragment memoryFragment = new MemoryFragment();
         List<Fragment> fragmentList = new ArrayList<>();
-        fragmentList.add(notesFragment);
-        fragmentList.add(memoryFragment);
+        fragmentList.add(new NotesFragment());
+        fragmentList.add(new MemoryFragment());
 
-        PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), fragmentList);
-        getBinding().vpFragment.setAdapter(pagerAdapter);
+        BasePagerAdapter basePagerAdapter = new BasePagerAdapter(getSupportFragmentManager(), fragmentList);
+        getBinding().vpFragment.setAdapter(basePagerAdapter);
         getBinding().vpFragment.setCurrentItem(0);
     }
 

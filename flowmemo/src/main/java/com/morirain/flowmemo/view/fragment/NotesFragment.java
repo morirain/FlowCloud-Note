@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.morirain.flowmemo.BR;
 import com.morirain.flowmemo.R;
 import com.morirain.flowmemo.base.BaseAdapter;
 import com.morirain.flowmemo.base.BaseCommandHandler;
@@ -12,7 +11,7 @@ import com.morirain.flowmemo.base.BaseFragment;
 import com.morirain.flowmemo.databinding.FragmentNotesBinding;
 import com.morirain.flowmemo.model.Notes;
 import com.morirain.flowmemo.viewmodel.NotesViewModel;
-import com.morirain.flowmemo.viewmodel.handler.NotesFragmentHandler;
+import com.morirain.flowmemo.viewmodel.handler.FragmentNotesHandler;
 
 
 public class NotesFragment extends BaseFragment<FragmentNotesBinding, NotesViewModel> {
@@ -48,6 +47,6 @@ public class NotesFragment extends BaseFragment<FragmentNotesBinding, NotesViewM
 
     @Override
     protected BaseCommandHandler getHandler() {
-        return new NotesFragmentHandler();
+        return new FragmentNotesHandler(this);
     }
 }

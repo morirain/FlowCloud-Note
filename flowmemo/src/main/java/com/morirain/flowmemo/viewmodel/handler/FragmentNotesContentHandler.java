@@ -13,17 +13,9 @@ import com.morirain.flowmemo.base.BaseCommandHandler;
  */
 
 
-public class NotesFragmentHandler extends BaseCommandHandler {
+public class FragmentNotesContentHandler extends BaseCommandHandler {
 
-    public void onNewNoteClick(View view) {
-        LogUtils.d("dasdas");
-    }
-
-    public void onNewPhotoClick(View view) {
-        LogUtils.d("dasdas");
-    }
-
-    public void onNewVoiceClick(View view) {
+    public void onSaveClick(View view) {
         LogUtils.d("dasdas");
     }
 }

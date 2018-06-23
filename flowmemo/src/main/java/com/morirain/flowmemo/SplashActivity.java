@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.morirain.flowmemo.view.activity.MainActivity;
+
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
@@ -20,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
         d = Completable.timer(1, TimeUnit.MILLISECONDS).subscribe(() -> {
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(intent);
-            SplashActivity.this.finish();
+            this.finish();
         });
     }
 

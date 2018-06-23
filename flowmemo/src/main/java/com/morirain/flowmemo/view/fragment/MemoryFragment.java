@@ -14,7 +14,6 @@ public class MemoryFragment extends BaseFragment<FragmentMemoryBinding, MemoryVi
     @Override
     protected void init(Bundle savedInstanceState) {
 
-
         getViewModel().inputText.observe(this, message -> {
             if (message != null && message.length() > 0) {
                 getBinding().buttonSend.setVisibility(View.VISIBLE);
@@ -32,7 +31,6 @@ public class MemoryFragment extends BaseFragment<FragmentMemoryBinding, MemoryVi
 
     @Override
     protected void setCustomViewModelConnect() {
-        getBinding().setViewModel(getViewModel());
     }
 
     @Override

@@ -4,14 +4,20 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.morirain.flowmemo.BR;
+
+import java.io.Serializable;
 
 
 /**
@@ -21,7 +27,7 @@ import com.morirain.flowmemo.BR;
  */
 
 
-public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel> extends Fragment {
+public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel> extends Fragment implements Serializable {
 
     private T mBind;
 

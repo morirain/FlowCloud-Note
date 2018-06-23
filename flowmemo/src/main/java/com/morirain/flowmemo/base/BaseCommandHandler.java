@@ -1,7 +1,11 @@
 package com.morirain.flowmemo.base;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import com.morirain.flowmemo.view.activity.PageJumpActivity;
 
 /**
  * @author morirain
@@ -18,5 +22,11 @@ public abstract class BaseCommandHandler {
             return (int) viewHolder.itemView.getTag();
         }
         return (int) view.getTag();
+    }
+
+    protected void pageJump(Activity from, BaseFragment to) {
+        Intent intent = new Intent(from, PageJumpActivity.class);
+        intent.putExtra("fragment", to);
+        from.startActivity(intent);
     }
 }

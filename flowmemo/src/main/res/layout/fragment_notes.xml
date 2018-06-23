@@ -10,7 +10,7 @@
 
         <variable
             name="handler"
-            type="com.morirain.flowmemo.viewmodel.handler.NotesFragmentHandler" />
+            type="com.morirain.flowmemo.viewmodel.handler.FragmentNotesHandler" />
     </data>
 
     <android.support.constraint.ConstraintLayout
