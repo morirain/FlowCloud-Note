@@ -59,6 +59,7 @@ public class NotesContentFragment extends BaseFragment<FragmentNotesContentBindi
         return true;
     }
 
+
     @Override
     protected void setCustomViewModelConnect() {
     }

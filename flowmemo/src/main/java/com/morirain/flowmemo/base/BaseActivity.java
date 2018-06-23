@@ -82,7 +82,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     public void switchFragment(int containerViewId, Fragment from, Fragment toHide) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         if (!from.isAdded()) {
-            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            fragmentTransaction//.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .add(containerViewId, from)
                     .show(from);
         } else {

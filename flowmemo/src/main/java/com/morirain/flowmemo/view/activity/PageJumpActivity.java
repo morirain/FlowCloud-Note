@@ -29,6 +29,12 @@ public class PageJumpActivity extends BaseActivity<ActivityPageJumpBinding, Page
     }
 
     @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0, R.anim.slide_out_down);
+    }
+
+    @Override
     protected void setCustomViewModelConnect() {
     }
 
