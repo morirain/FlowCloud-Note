@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.morirain.flowmemo.BR;
-import com.morirain.flowmemo.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;

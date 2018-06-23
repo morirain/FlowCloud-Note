@@ -2,7 +2,6 @@ package com.morirain.flowmemo.viewmodel;
 
 
 import com.morirain.flowmemo.base.BaseViewModel;
-import com.morirain.flowmemo.utils.LogUtil;
 
 
 /**
@@ -15,6 +14,6 @@ import com.morirain.flowmemo.utils.LogUtil;
 public class MainViewModel extends BaseViewModel {
 
     public MainViewModel() {
-        LogUtil.e("dsadsa");
+
     }
 }

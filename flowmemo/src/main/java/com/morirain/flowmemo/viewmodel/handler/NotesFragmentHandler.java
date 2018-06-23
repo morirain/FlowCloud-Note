@@ -3,9 +3,8 @@ package com.morirain.flowmemo.viewmodel.handler;
 
 import android.view.View;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.morirain.flowmemo.base.BaseCommandHandler;
-import com.morirain.flowmemo.databinding.FragmentNotesBinding;
-import com.morirain.flowmemo.utils.LogUtil;
 
 /**
  * @author morirain
@@ -17,14 +16,14 @@ import com.morirain.flowmemo.utils.LogUtil;
 public class NotesFragmentHandler extends BaseCommandHandler {
 
     public void onNewNoteClick(View view) {
-        LogUtil.d("dasdas");
+        LogUtils.d("dasdas");
     }
 
     public void onNewPhotoClick(View view) {
-        LogUtil.d("dasdas");
+        LogUtils.d("dasdas");
     }
 
     public void onNewVoiceClick(View view) {
-        LogUtil.d("dasdas");
+        LogUtils.d("dasdas");
     }
 }

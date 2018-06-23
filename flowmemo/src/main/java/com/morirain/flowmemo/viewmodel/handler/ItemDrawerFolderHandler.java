@@ -3,9 +3,8 @@ package com.morirain.flowmemo.viewmodel.handler;
 
 import android.view.View;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.morirain.flowmemo.base.BaseCommandHandler;
-import com.morirain.flowmemo.databinding.ItemDrawerFolderBinding;
-import com.morirain.flowmemo.utils.LogUtil;
 
 /**
  * @author morirain
@@ -18,11 +17,11 @@ public class ItemDrawerFolderHandler extends BaseCommandHandler {
 
 
     public void onItemClick(View view) {
-        LogUtil.d(String.valueOf(getPosition(view)));
+        LogUtils.d(String.valueOf(getPosition(view)));
     }
 
     public void onClickMore(View view) {
-        LogUtil.d(String.valueOf(getPosition(view)));
+        LogUtils.d(String.valueOf(getPosition(view)));
     }
 
 }

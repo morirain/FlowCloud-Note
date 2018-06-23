@@ -3,9 +3,8 @@ package com.morirain.flowmemo.viewmodel.handler;
 
 import android.view.View;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.morirain.flowmemo.base.BaseCommandHandler;
-import com.morirain.flowmemo.databinding.ItemNotesBinding;
-import com.morirain.flowmemo.utils.LogUtil;
 
 /**
  * @author morirain
@@ -17,10 +16,10 @@ import com.morirain.flowmemo.utils.LogUtil;
 public class ItemNotesHandler extends BaseCommandHandler {
 
     public void onItemClick(View view) {
-        LogUtil.d(String.valueOf(getPosition(view)));
+        LogUtils.d(String.valueOf(getPosition(view)));
     }
 
     public void onItemMoreClick(View view) {
-        LogUtil.d(String.valueOf(getPosition(view)));
+        LogUtils.d(String.valueOf(getPosition(view)));
     }
 }

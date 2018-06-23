@@ -3,9 +3,8 @@ package com.morirain.flowmemo.viewmodel.handler;
 
 import android.view.View;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.morirain.flowmemo.base.BaseCommandHandler;
-import com.morirain.flowmemo.databinding.DrawerContentBinding;
-import com.morirain.flowmemo.utils.LogUtil;
 
 /**
  * @author morirain
@@ -17,22 +16,22 @@ import com.morirain.flowmemo.utils.LogUtil;
 public class DrawerContentHandler extends BaseCommandHandler {
 
     public void onEditUserProfileClick(View view) {
-        LogUtil.d("dasdas");
+        LogUtils.d("dasdas");
     }
 
     public void onEditRemoteClick(View view) {
-        LogUtil.d("dasdas");
+        LogUtils.d("dasdas");
     }
 
     public void onNewFolderClick(View view) {
-        LogUtil.d("dasdas");
+        LogUtils.d("dasdas");
     }
 
     public void onHistoryClick(View view) {
-        LogUtil.d("dasdas");
+        LogUtils.d("dasdas");
     }
 
     public void onFormatClick(View view) {
-        LogUtil.d("dasdas");
+        LogUtils.d("dasdas");
     }
 }

@@ -6,6 +6,8 @@ import android.content.Context;
 
 import io.objectbox.BoxStore;
 import io.objectbox.android.AndroidObjectBrowser;
+
+import com.blankj.utilcode.util.Utils;
 import com.morirain.flowmemo.BuildConfig;
 import com.morirain.flowmemo.model.MyObjectBox;
 import skin.support.SkinCompatManager;
@@ -35,6 +37,9 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         appContext = getApplicationContext();
+
+        // init AndroidUtilCode
+        Utils.init(appContext);
 
         // init ObjectBox
         boxStore = MyObjectBox.builder().androidContext(this).build();
