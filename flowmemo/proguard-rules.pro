@@ -95,10 +95,6 @@
 -keep class org.apache.commons.io.input.BoundedInputStream { *; }
 -keep class org.eclipse.jgit.transport.RemoteConfig { *** removeURI(...); }
 
-# AndPermission
--dontwarn com.yanzhenjie.permission.**
--keep class com.yanzhenjie.permission.** { *;}
-
 # Project
 -keep class android.support.v4.widget.DrawerLayout { *; }
 -keep class android.support.test.espresso.IdlingResource { *; }

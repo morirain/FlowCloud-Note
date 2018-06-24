@@ -1,5 +1,6 @@
 package com.morirain.flowmemo.view.activity;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -8,7 +9,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -21,10 +21,12 @@ import com.morirain.flowmemo.model.Folder;
 import com.morirain.flowmemo.viewmodel.FolderViewModel;
 import com.jaeger.library.StatusBarUtil;
 import com.morirain.flowmemo.viewmodel.handler.DrawerContentHandler;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.disposables.Disposable;
 import com.morirain.flowmemo.base.BasePagerAdapter;
 import com.morirain.flowmemo.base.BaseActivity;
 import com.morirain.flowmemo.databinding.ActivityMainBinding;
@@ -33,8 +35,6 @@ import com.morirain.flowmemo.view.fragment.MemoryFragment;
 import com.morirain.flowmemo.view.fragment.NotesFragment;
 import com.morirain.flowmemo.viewmodel.MainViewModel;
 import com.morirain.flowmemo.viewmodel.UserProfileViewModel;
-import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.Permission;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
 
@@ -62,18 +62,16 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         initFragment();
         initDrawer();
 
-        AndPermission.with(this)
-                .runtime()
-                .permission(
-                        Permission.Group.STORAGE,
-                        Permission.Group.CAMERA,
-                        Permission.Group.MICROPHONE
-                ).onGranted(data -> {
-        })
-                .onDenied(data -> {
+        RxPermissions rxPermissions = new RxPermissions(this);
+        Disposable subscribe = rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(granted -> {
+                    if (granted) {
+                        // 用户已经同意该权限
+                    } else {
+                        // 用户拒绝了该权限，并且选中『不再询问』
 
-                })
-                .start();
+                    }
+                });
     }
 
     private void initToolbar() {
