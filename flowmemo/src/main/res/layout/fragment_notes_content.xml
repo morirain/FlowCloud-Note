@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.morirain.flowmemo.viewmodel.NotesContentViewModel"/>
+        <variable
+            name="handler"
+            type="com.morirain.flowmemo.viewmodel.handler.FragmentNotesContentHandler"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -19,11 +23,39 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
+
+        <FrameLayout
+            android:id="@+id/et_notes_content_markdown_parent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{handler::onRequestFocusClick}"
+            app:layout_constraintBottom_toTopOf="@+id/toolbar_notes_content_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_notes_content" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_notes_content">
+
+            <com.yydcdut.markdown.MarkdownEditText
+                android:id="@+id/et_notes_content_markdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@null" />
+        </FrameLayout>
+
+        <include
+            android:id="@+id/toolbar_notes_content_bottom"
+            layout="@layout/toolbar_notes_content_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
     </android.support.constraint.ConstraintLayout>
 </layout>

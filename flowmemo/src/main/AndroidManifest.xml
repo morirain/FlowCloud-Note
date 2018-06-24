@@ -23,7 +23,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activity.MainActivity"/>
-        <activity android:name=".view.activity.PageJumpActivity" />
+        <activity android:name=".view.activity.PageJumpActivity"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

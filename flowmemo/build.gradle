@@ -27,6 +27,7 @@ android {
             // Uses new built-in shrinker http://tools.android.com/tech-docs/new-build-system/built-in-shrinker
             minifyEnabled true
             useProguard false
+            aaptOptions.cruncherEnabled = false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
             signingConfig signingConfigs.morirain
@@ -73,6 +74,7 @@ dependencies {
     implementation 'com.android.support:design:28.0.0-alpha3'
     implementation 'com.android.support:cardview-v7:28.0.0-alpha3'
     implementation 'com.android.support:support-annotations:28.0.0-alpha3'
+    implementation 'com.android.support:recyclerview-v7:28.0.0-alpha3'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -133,6 +135,11 @@ dependencies {
     /** material-dialogs */
     /* https://github.com/afollestad/material-dialogs */
     //implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+
+    /** RxMarkdown */
+    /* https://github.com/yydcdut/RxMarkdown */
+    implementation 'com.yydcdut:markdown-processor:0.1.2'
+    //implementation 'com.yydcdut:rxmarkdown-wrapper:0.1.2'
 
     /** StatusBarUtil */
     /* https://github.com/laobie/StatusBarUtil */

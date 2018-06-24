@@ -14,6 +14,8 @@ import com.morirain.flowmemo.base.BaseFragment;
 import com.morirain.flowmemo.viewmodel.NotesContentViewModel;
 import com.morirain.flowmemo.databinding.FragmentNotesContentBinding;
 import com.morirain.flowmemo.viewmodel.handler.FragmentNotesContentHandler;
+import com.yydcdut.markdown.MarkdownProcessor;
+import com.yydcdut.markdown.syntax.edit.EditFactory;
 
 /**
  * @author morirain
@@ -30,16 +32,33 @@ public class NotesContentFragment extends BaseFragment<FragmentNotesContentBindi
     protected void init(Bundle savedInstanceState) {
         mActivity = (BaseActivity) getActivity();
         initToolbar();
+        initEdit();
     }
 
     private void initToolbar() {
         setHasOptionsMenu(true);
         mActivity.setSupportActionBar(getBinding().toolbarNotesContent.toolbar);
+
+        // show home
         ActionBar actionBar = mActivity.getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        // title clearFocus
+        getBinding().toolbarNotesContent.etToolbarNotesContentTitle.clearFocus();
+    }
+
+    private void initEdit() {
+        MarkdownProcessor markdownProcessor = new MarkdownProcessor(mActivity);
+        //markdownProcessor.config(markdownConfiguration);
+        markdownProcessor.factory(EditFactory.create());
+        markdownProcessor.live(getBinding().etNotesContentMarkdown);
+        requestFocus();
+    }
+
+    public void requestFocus() {
+        getBinding().etNotesContentMarkdown.requestFocus();
     }
 
     @Override
@@ -76,6 +95,6 @@ public class NotesContentFragment extends BaseFragment<FragmentNotesContentBindi
 
     @Override
     protected BaseCommandHandler getHandler() {
-        return new FragmentNotesContentHandler();
+        return new FragmentNotesContentHandler(this);
     }
 }

@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.morirain.flowmemo.base.BaseCommandHandler;
+import com.morirain.flowmemo.view.fragment.NotesContentFragment;
 
 /**
  * @author morirain
@@ -15,7 +16,17 @@ import com.morirain.flowmemo.base.BaseCommandHandler;
 
 public class FragmentNotesContentHandler extends BaseCommandHandler {
 
+    private NotesContentFragment mFragment;
+
+    public FragmentNotesContentHandler(NotesContentFragment fragment) {
+        mFragment = fragment;
+    }
+
     public void onSaveClick(View view) {
         LogUtils.d("dasdas");
+    }
+
+    public void onRequestFocusClick(View view) {
+        mFragment.requestFocus();
     }
 }
