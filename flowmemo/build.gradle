@@ -27,6 +27,7 @@ android {
             // Uses new built-in shrinker http://tools.android.com/tech-docs/new-build-system/built-in-shrinker
             minifyEnabled true
             useProguard false
+            //shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
             signingConfig signingConfigs.morirain
@@ -98,7 +99,7 @@ dependencies {
 
     /** RxPermissions */
     /* https://github.com/tbruyelle/RxPermissions */
-    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+    //implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
 
     /** RxBinding*/
     /* https://github.com/JakeWharton/RxBinding */
@@ -124,6 +125,10 @@ dependencies {
     //implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     //implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     //implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+
+    /** AndPermission */
+    /* https://github.com/yanzhenjie/AndPermission */
+    implementation 'com.yanzhenjie:permission:2.0.0-rc11'
 
     /** Dagger2 */
     /* https://github.com/google/dagger */
