@@ -8,8 +8,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.morirain.flowmemo.BR;
 import com.morirain.flowmemo.R;
@@ -48,6 +50,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     // for drawer
     private ActionBarDrawerToggle mDrawerToggle;
+
+    // for back
+    private long mKeyTime = 0;
 
 
     @Override
@@ -133,6 +138,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        long mNowTime = System.currentTimeMillis();//获取第一次按键时间
+        if ((mNowTime - mKeyTime) > 1500) {//比较两次按键时间差
+            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            mKeyTime = mNowTime;
+        } else {//退出程序
+            this.finish();
+            System.exit(0);
+        }
+    }
     @Override
     protected void setCustomViewModelConnect() {
         mFolderViewModel = getNewViewModel(BR.folderViewModel, FolderViewModel.class);
