@@ -6,7 +6,7 @@ import android.view.View;
 import com.blankj.utilcode.util.LogUtils;
 import com.morirain.flowmemo.base.BaseCommandHandler;
 import com.morirain.flowmemo.base.BaseFragment;
-import com.morirain.flowmemo.view.fragment.NotesContentFragment;
+import com.morirain.flowmemo.ui.fragment.NotesContentFragment;
 
 /**
  * @author morirain

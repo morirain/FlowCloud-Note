@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.morirain.flowmemo.view.activity.MainActivity;
+import com.morirain.flowmemo.ui.activity.MainActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -19,7 +19,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        d = Completable.timer(1, TimeUnit.MILLISECONDS).subscribe(() -> {
+        d = Completable.timer(1, TimeUnit.MICROSECONDS).subscribe(() -> {
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(intent);
             this.finish();

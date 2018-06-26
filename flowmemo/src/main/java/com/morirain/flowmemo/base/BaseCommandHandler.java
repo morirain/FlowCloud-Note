@@ -2,11 +2,13 @@ package com.morirain.flowmemo.base;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.databinding.ViewDataBinding;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.morirain.flowmemo.R;
-import com.morirain.flowmemo.view.activity.PageJumpActivity;
+import com.morirain.flowmemo.ui.activity.PageJumpActivity;
 
 /**
  * @author morirain
@@ -29,6 +31,6 @@ public abstract class BaseCommandHandler {
         Intent intent = new Intent(from, PageJumpActivity.class);
         intent.putExtra("fragment", to);
         from.startActivity(intent);
-        from.overridePendingTransition(R.anim.slide_in_up, R.anim.anim_hold);
+        //from.overridePendingTransition(R.anim.slide_in_up, R.anim.anim_hold);
     }
 }

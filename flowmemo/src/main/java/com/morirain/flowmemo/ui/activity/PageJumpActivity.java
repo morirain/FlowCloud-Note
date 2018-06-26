@@ -1,4 +1,4 @@
-package com.morirain.flowmemo.view.activity;
+package com.morirain.flowmemo.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,7 +31,7 @@ public class PageJumpActivity extends BaseActivity<ActivityPageJumpBinding, Page
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(0, R.anim.slide_out_down);
+        //overridePendingTransition(0, R.anim.slide_out_down);
     }
 
     @Override

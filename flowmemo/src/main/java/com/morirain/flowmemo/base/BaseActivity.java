@@ -71,7 +71,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         return mBind.getRoot();
     }
 
-    protected final T getBinding() {
+    public final T getBinding() {
         return mBind;
     }
 

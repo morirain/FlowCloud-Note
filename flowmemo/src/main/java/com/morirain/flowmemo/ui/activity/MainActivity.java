@@ -1,6 +1,5 @@
-package com.morirain.flowmemo.view.activity;
+package com.morirain.flowmemo.ui.activity;
 
-import android.Manifest;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -21,20 +20,20 @@ import com.morirain.flowmemo.model.Folder;
 import com.morirain.flowmemo.viewmodel.FolderViewModel;
 import com.jaeger.library.StatusBarUtil;
 import com.morirain.flowmemo.viewmodel.handler.DrawerContentHandler;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.disposables.Disposable;
 import com.morirain.flowmemo.base.BasePagerAdapter;
 import com.morirain.flowmemo.base.BaseActivity;
 import com.morirain.flowmemo.databinding.ActivityMainBinding;
 import com.morirain.flowmemo.databinding.DrawerContentBinding;
-import com.morirain.flowmemo.view.fragment.MemoryFragment;
-import com.morirain.flowmemo.view.fragment.NotesFragment;
+import com.morirain.flowmemo.ui.fragment.MemoryFragment;
+import com.morirain.flowmemo.ui.fragment.NotesFragment;
 import com.morirain.flowmemo.viewmodel.MainViewModel;
 import com.morirain.flowmemo.viewmodel.UserProfileViewModel;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
 
@@ -62,16 +61,16 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         initFragment();
         initDrawer();
 
-        RxPermissions rxPermissions = new RxPermissions(this);
-        Disposable subscribe = rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe(granted -> {
-                    if (granted) {
-                        // 用户已经同意该权限
-                    } else {
-                        // 用户拒绝了该权限，并且选中『不再询问』
-
-                    }
-                });
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.Group.STORAGE, Permission.Group.MICROPHONE, Permission.Group.CAMERA)
+                .onGranted(permissions -> {
+                    // Storage permission are allowed.
+                })
+                .onDenied(permissions -> {
+                    // Storage permission are not allowed.
+                })
+                .start();
     }
 
     private void initToolbar() {

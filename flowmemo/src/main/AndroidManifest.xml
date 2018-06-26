@@ -22,8 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.MainActivity"/>
-        <activity android:name=".view.activity.PageJumpActivity"
+        <activity android:name=".ui.activity.MainActivity"/>
+        <activity android:name=".ui.activity.PageJumpActivity"
             android:windowSoftInputMode="adjustResize" />
     </application>
 

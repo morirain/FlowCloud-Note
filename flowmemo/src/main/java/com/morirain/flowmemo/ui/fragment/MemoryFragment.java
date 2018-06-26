@@ -1,4 +1,4 @@
-package com.morirain.flowmemo.view.fragment;
+package com.morirain.flowmemo.ui.fragment;
 
 import android.os.Bundle;
 import android.view.View;

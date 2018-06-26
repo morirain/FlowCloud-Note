@@ -6,7 +6,7 @@ android {
         morirain {
             keyAlias 'morirain'
             keyPassword 'morirain'
-            storeFile file('C:/Users/Administrator/morirainkey.jks')
+            storeFile file('D:/Project/morirainkey.jks')
             storePassword 'morirain'
         }
     }
@@ -100,8 +100,8 @@ dependencies {
 
     /** RxPermissions */
     /* https://github.com/tbruyelle/RxPermissions */
-    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
-
+    //implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+    implementation 'com.yanzhenjie:permission:2.0.0-rc11'
     /** RxBinding*/
     /* https://github.com/JakeWharton/RxBinding */
     //implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
