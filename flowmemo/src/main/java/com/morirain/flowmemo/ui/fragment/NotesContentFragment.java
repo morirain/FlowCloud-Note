@@ -64,7 +64,7 @@ public class NotesContentFragment extends BaseFragment<FragmentNotesContentBindi
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        //inflater.inflate(R.menu.toolbar, menu);
+        inflater.inflate(R.menu.toolbar_notes_content, menu);
     }
 
     @Override
@@ -72,6 +72,10 @@ public class NotesContentFragment extends BaseFragment<FragmentNotesContentBindi
         switch (item.getItemId()) {
             case android.R.id.home:
                 mActivity.onBackPressed();
+                break;
+            case R.id.menu_toolbar_notes_content_undo:
+                break;
+            case R.id.menu_toolbar_notes_content_redo:
                 break;
             default:
         }
