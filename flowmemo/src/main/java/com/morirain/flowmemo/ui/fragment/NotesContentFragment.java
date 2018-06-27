@@ -31,22 +31,7 @@ public class NotesContentFragment extends BaseFragment<FragmentNotesContentBindi
     @Override
     protected void init(Bundle savedInstanceState) {
         mActivity = (BaseActivity) getActivity();
-        initToolbar();
         initEdit();
-    }
-
-    private void initToolbar() {
-        setHasOptionsMenu(true);
-        mActivity.setSupportActionBar(getBinding().toolbarNotesContent.toolbar);
-
-        // show home
-        ActionBar actionBar = mActivity.getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayShowTitleEnabled(false);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-        // title clearFocus
-        getBinding().toolbarNotesContent.etToolbarNotesContentTitle.clearFocus();
     }
 
     private void initEdit() {
@@ -59,27 +44,6 @@ public class NotesContentFragment extends BaseFragment<FragmentNotesContentBindi
 
     public void requestFocus() {
         getBinding().etNotesContentMarkdown.requestFocus();
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.toolbar_notes_content, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mActivity.onBackPressed();
-                break;
-            case R.id.menu_toolbar_notes_content_undo:
-                break;
-            case R.id.menu_toolbar_notes_content_redo:
-                break;
-            default:
-        }
-        return true;
     }
 
 

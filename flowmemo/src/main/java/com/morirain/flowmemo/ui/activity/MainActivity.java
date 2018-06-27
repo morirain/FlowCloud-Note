@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
         AndPermission.with(this)
                 .runtime()
-                .permission(Permission.Group.STORAGE, Permission.Group.MICROPHONE, Permission.Group.CAMERA)
+                .permission(Permission.Group.STORAGE)//, Permission.Group.MICROPHONE, Permission.Group.CAMERA)
                 .onGranted(permissions -> {
                     // Storage permission are allowed.
                 })

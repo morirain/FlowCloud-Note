@@ -6,7 +6,7 @@ import android.view.View;
 import com.blankj.utilcode.util.LogUtils;
 import com.morirain.flowmemo.base.BaseCommandHandler;
 import com.morirain.flowmemo.base.BaseFragment;
-import com.morirain.flowmemo.ui.fragment.NotesContentFragment;
+import com.morirain.flowmemo.ui.fragment.NotesContentParentFragment;
 
 /**
  * @author morirain
@@ -19,14 +19,14 @@ public class FragmentNotesHandler extends BaseCommandHandler {
 
     private BaseFragment mFragment;
 
-    private NotesContentFragment mFragmentNotesContent;
+    private NotesContentParentFragment mFragmentNotesContent;
 
     public FragmentNotesHandler(BaseFragment fragment) {
         this.mFragment = fragment;
     }
 
     public void onNewNoteClick(View view) {
-        if (mFragmentNotesContent == null) mFragmentNotesContent = new NotesContentFragment();
+        if (mFragmentNotesContent == null) mFragmentNotesContent = new NotesContentParentFragment();
         pageJump(mFragment.getActivity(), mFragmentNotesContent);
     }
 
