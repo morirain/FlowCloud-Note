@@ -5,10 +5,10 @@ import android.os.Bundle;
 import com.morirain.flowmemo.R;
 import com.morirain.flowmemo.base.BaseCommandHandler;
 import com.morirain.flowmemo.base.BaseFragment;
-import com.morirain.flowmemo.viewmodel.NotesContentPreviewViewModel;
 import com.morirain.flowmemo.databinding.FragmentNotesContentPreviewBinding;
+import com.morirain.flowmemo.viewmodel.NotesContentViewModel;
 
-public class NotesContentPreviewFragment extends BaseFragment<FragmentNotesContentPreviewBinding, NotesContentPreviewViewModel> {
+public class NotesContentPreviewFragment extends BaseFragment<FragmentNotesContentPreviewBinding, NotesContentViewModel> {
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -24,8 +24,8 @@ public class NotesContentPreviewFragment extends BaseFragment<FragmentNotesConte
     }
 
     @Override
-    protected Class<NotesContentPreviewViewModel> getViewModelClass() {
-        return NotesContentPreviewViewModel.class;
+    protected Class<NotesContentViewModel> getViewModelClass() {
+        return NotesContentViewModel.class;
     }
 
     @Override

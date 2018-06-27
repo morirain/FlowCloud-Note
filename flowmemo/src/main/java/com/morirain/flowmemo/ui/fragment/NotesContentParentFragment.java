@@ -13,12 +13,12 @@ import com.morirain.flowmemo.base.BaseCommandHandler;
 import com.morirain.flowmemo.base.BaseFragment;
 import com.morirain.flowmemo.base.BasePagerAdapter;
 import com.morirain.flowmemo.databinding.FragmentNotesContentParentBinding;
-import com.morirain.flowmemo.viewmodel.NotesContentParentViewModel;
+import com.morirain.flowmemo.viewmodel.NotesContentViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotesContentParentFragment extends BaseFragment<FragmentNotesContentParentBinding, NotesContentParentViewModel> {
+public class NotesContentParentFragment extends BaseFragment<FragmentNotesContentParentBinding, NotesContentViewModel> {
 
     BaseActivity mActivity;
 
@@ -77,8 +77,8 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
         return R.layout.fragment_notes_content_parent;
     }
     @Override
-    protected Class getViewModelClass() {
-        return NotesContentParentViewModel.class;
+    protected Class<NotesContentViewModel> getViewModelClass() {
+        return NotesContentViewModel.class;
     }
     @Override
     protected BaseCommandHandler getHandler() {
