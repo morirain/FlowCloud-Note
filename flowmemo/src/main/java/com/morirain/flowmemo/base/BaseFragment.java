@@ -54,7 +54,13 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     }
 
     protected <G extends BaseViewModel> G getNewViewModel(int br, @NonNull Class<G> modelClass) {
-        G viewModel = ViewModelProviders.of(this).get(modelClass);
+        G viewModel;
+        if (getActivity() != null) {
+            // Share ViewModel
+            viewModel = ViewModelProviders.of(getActivity()).get(modelClass);
+        } else {
+            viewModel = ViewModelProviders.of(this).get(modelClass);
+        }
         mBind.setVariable(br, viewModel);
         return viewModel;
     }

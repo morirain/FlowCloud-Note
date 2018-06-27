@@ -16,6 +16,7 @@ import com.morirain.flowmemo.viewmodel.NotesContentViewModel;
 import com.morirain.flowmemo.viewmodel.handler.FragmentNotesContentHandler;
 import com.yydcdut.markdown.MarkdownProcessor;
 import com.yydcdut.markdown.syntax.edit.EditFactory;
+import com.yydcdut.markdown.syntax.text.TextFactory;
 
 /**
  * @author morirain

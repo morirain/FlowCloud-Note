@@ -1,6 +1,8 @@
 package com.morirain.flowmemo.viewmodel;
 
 
+import android.arch.lifecycle.MutableLiveData;
+
 import com.morirain.flowmemo.base.BaseViewModel;
 
 
@@ -12,6 +14,8 @@ import com.morirain.flowmemo.base.BaseViewModel;
 
 
 public class NotesContentViewModel extends BaseViewModel {
+
+    public MutableLiveData<String> notesContent = new MutableLiveData<>();
 
     public NotesContentViewModel() {
 
