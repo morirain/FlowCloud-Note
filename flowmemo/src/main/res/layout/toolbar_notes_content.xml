@@ -18,12 +18,22 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="0px"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+                <requestFocus />
+            </LinearLayout>
+
             <EditText
                 android:id="@+id/et_toolbar_notes_content_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|start"
                 android:text="标题"
+                android:layout_gravity="center|start"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:textColor="@color/colorText"
                 android:textSize="20sp"
                 android:background="@null"/>

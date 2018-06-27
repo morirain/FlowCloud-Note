@@ -50,15 +50,23 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
             @Override
             public void onPageScrolled(int i, float v, int i1) {
             }
+
             @Override
             public void onPageSelected(int i) {
             }
+
             @Override
             public void onPageScrollStateChanged(int i) {
-                if (i == 2 && getBinding().vpFragment.getCurrentItem() == 1) {
-                    InputMethodManager imm = (InputMethodManager) BaseApplication.getAppContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (imm != null)
-                        imm.hideSoftInputFromWindow(getBinding().vpFragment.getWindowToken(), 0);
+                int currentItem = getBinding().vpFragment.getCurrentItem();
+                if (i == 2) {
+                    if (currentItem == 1) {
+                        InputMethodManager imm = (InputMethodManager) BaseApplication.getAppContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        if (imm != null)
+                            imm.hideSoftInputFromWindow(getBinding().vpFragment.getWindowToken(), 0);
+                        getBinding().getRoot().clearFocus();
+                    } else if (currentItem == 0) {
+                        getBinding().vpFragment.requestFocus();
+                    }
                 }
 
             }
