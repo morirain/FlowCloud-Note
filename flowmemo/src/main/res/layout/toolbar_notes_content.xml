@@ -18,13 +18,13 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="0px"
                 android:layout_height="0px"
                 android:focusable="true"
                 android:focusableInTouchMode="true">
                 <requestFocus />
-            </LinearLayout>
+            </FrameLayout>
 
             <EditText
                 android:id="@+id/et_toolbar_notes_content_title"
