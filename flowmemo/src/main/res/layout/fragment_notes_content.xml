@@ -19,7 +19,7 @@
         android:background="@color/colorBackground">
 
         <android.support.v4.widget.NestedScrollView
-            android:id="@+id/et_notes_content_markdown_parent"
+            android:id="@+id/nsv_notes_content_markdown_parent"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/toolbar_notes_content_bottom"
