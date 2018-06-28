@@ -3,6 +3,7 @@ package com.morirain.flowmemo.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;

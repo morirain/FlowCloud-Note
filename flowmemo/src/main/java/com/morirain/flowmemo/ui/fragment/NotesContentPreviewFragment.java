@@ -1,6 +1,7 @@
 package com.morirain.flowmemo.ui.fragment;
 
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 
 import com.morirain.flowmemo.R;
 import com.morirain.flowmemo.base.BaseCommandHandler;
@@ -25,6 +26,8 @@ public class NotesContentPreviewFragment extends BaseFragment<FragmentNotesConte
             getViewModel().notesContent.observe(this, content ->
                     getBinding().tvNotesContentMarkdown.setText(markdownProcessor.parse(content)));
         }
+
+
     }
 
     @Override
