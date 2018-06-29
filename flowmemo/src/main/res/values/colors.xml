@@ -5,6 +5,7 @@
     <color name="colorAccent">#009688</color>
 
     <color name="colorBackground">#ffffff</color>
+    <color name="colorEditViewBackground">#f5f5f5</color>
     <color name="colorRecyclerViewItem">#ffffff</color>
     <color name="colorText">#212121</color>
     <color name="colorTextLight">#616161</color>

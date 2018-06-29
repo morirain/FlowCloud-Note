@@ -16,46 +16,51 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackground">
+        android:background="@null">
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nsv_notes_content_markdown_parent"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/toolbar_notes_content_bottom"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            app:layout_constraintBottom_toTopOf="@+id/frameLayout"
             app:layout_constraintTop_toTopOf="parent">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="true"
-                android:focusable="true"
-                android:onClick="@{handler::onRequestFocusClick}">
 
-                <com.yydcdut.markdown.MarkdownEditText
-                    android:id="@+id/et_notes_content_markdown"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginEnd="24dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="24dp"
-                    android:background="@null"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:scrollbars="vertical"
-                    android:text="@={viewModel.notesContent}" />
-            </FrameLayout>
+            <com.yydcdut.markdown.MarkdownEditText
+                android:id="@+id/et_notes_content_markdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:background="@null"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:text="@={viewModel.notesContent}" />
+
 
         </android.support.v4.widget.NestedScrollView>
 
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@null"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{handler::onRequestFocusClick}"
+            app:layout_constraintBottom_toTopOf="@+id/toolbar_notes_content_bottom"
+            app:layout_constraintTop_toBottomOf="@+id/nsv_notes_content_markdown_parent" />
         <include
             android:id="@+id/toolbar_notes_content_bottom"
             layout="@layout/toolbar_notes_content_bottom"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:background="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

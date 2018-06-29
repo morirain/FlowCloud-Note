@@ -1,6 +1,8 @@
 package com.morirain.flowmemo.ui.fragment;
 
+import android.animation.ArgbEvaluator;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -26,6 +28,9 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
 
     private BaseActivity mActivity;
 
+    // 渐变处理
+    private int mEndColor;
+
     @Override
     protected void init(Bundle savedInstanceState) {
         mActivity = (BaseActivity) getActivity();
@@ -44,11 +49,33 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
         getBinding().vpFragment.setCurrentItem(0);
     }
 
+    private int getColor(int colorResources) {
+        int color = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            color = mActivity.getResources().getColor(colorResources, mActivity.getTheme());
+        } else {
+            color = mActivity.getResources().getColor(colorResources);
+        }
+        return color;
+    }
+
+
     // hide SoftInput
     private void initListener() {
+        int mColors[] = {getColor(R.color.colorEditViewBackground), getColor(R.color.colorBackground)};
         getBinding().vpFragment.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int i, float v, int i1) {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                ArgbEvaluator evaluator = new ArgbEvaluator();
+                //给布局设置初始颜色
+                getBinding().vpFragment.setBackgroundColor(mColors[position]);
+                //计算不同页面的结束颜色，最后一张的颜色是第一个颜色，其他的分别加一
+                mEndColor = position == mColors.length - 1 ? mColors[0] : mColors[position + 1];
+                //根据positionOffset得到渐变色，因为positionOffset本身为0~1之间的小数所以无需多做处理了
+                int evaluate = (int) evaluator.evaluate(positionOffset, mColors[position], mEndColor);
+
+                //最后设置渐变背景色给布局
+                getBinding().vpFragment.setBackgroundColor(evaluate);
             }
 
             @Override
@@ -64,6 +91,11 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
                         if (imm != null)
                             imm.hideSoftInputFromWindow(getBinding().vpFragment.getWindowToken(), 0);
                         getBinding().getRoot().clearFocus();
+                        /*ValueAnimator colorAnim = ObjectAnimator.ofInt(getBinding().vpFragment,"backgroundColor", R.color.colorEditViewBackground);
+                        colorAnim.setDuration(2000);
+                        colorAnim.setEvaluator(new ArgbEvaluator()); colorAnim.setRepeatCount(ValueAnimator.INFINITE);
+                        colorAnim.setRepeatMode(ValueAnimator.REVERSE);
+                        colorAnim.start();*/
                     } else if (currentItem == 0) {
                         getBinding().vpFragment.requestFocus();
                     }

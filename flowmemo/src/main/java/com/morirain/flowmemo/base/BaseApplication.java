@@ -10,6 +10,9 @@ import io.objectbox.android.AndroidObjectBrowser;
 import com.blankj.utilcode.util.Utils;
 import com.morirain.flowmemo.BuildConfig;
 import com.morirain.flowmemo.model.MyObjectBox;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
+
 import skin.support.SkinCompatManager;
 import skin.support.app.SkinCardViewInflater;
 import skin.support.constraint.app.SkinConstraintViewInflater;
@@ -23,28 +26,40 @@ import skin.support.design.app.SkinMaterialViewInflater;
 
 public class BaseApplication extends Application {
 
-    private static Context appContext;
+    private static Context sAppContext;
 
     public static Context getAppContext() {
-        return appContext;
+        return sAppContext;
     }
 
     public static final boolean EXTERNAL_DIR = false;
 
-    private BoxStore boxStore;
+    private BoxStore mBoxStore;
+
+    public static RefWatcher sRefWatcher;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        appContext = getApplicationContext();
+        sAppContext = getApplicationContext();
+
+        // init LeakCanary
+        if (BuildConfig.DEBUG) {
+            if (LeakCanary.isInAnalyzerProcess(this)) {
+                // This process is dedicated to LeakCanary for heap analysis.
+                // You should not init your app in this process.
+                return;
+            }
+            sRefWatcher = LeakCanary.install(this);
+        }
 
         // init AndroidUtilCode
-        Utils.init(appContext);
+        Utils.init(sAppContext);
 
         // init ObjectBox
-        boxStore = MyObjectBox.builder().androidContext(this).build();
+        mBoxStore = MyObjectBox.builder().androidContext(this).build();
         if (BuildConfig.DEBUG) {
-            new AndroidObjectBrowser(boxStore).start(this);
+            new AndroidObjectBrowser(mBoxStore).start(this);
         }
 
         // init Skin

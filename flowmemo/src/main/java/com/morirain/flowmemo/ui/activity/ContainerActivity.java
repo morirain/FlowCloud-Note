@@ -3,18 +3,13 @@ package com.morirain.flowmemo.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 
 import com.jaeger.library.StatusBarUtil;
 import com.morirain.flowmemo.R;
 import com.morirain.flowmemo.base.BaseActivity;
 import com.morirain.flowmemo.base.BaseCommandHandler;
-import com.morirain.flowmemo.base.BasePagerAdapter;
-import com.morirain.flowmemo.databinding.ActivityPageJumpBinding;
+import com.morirain.flowmemo.databinding.ActivityContainerBinding;
 import com.morirain.flowmemo.viewmodel.PageJumpViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author morirain
@@ -23,13 +18,13 @@ import java.util.List;
  */
 
 
-public class ContainerActivity extends BaseActivity<ActivityPageJumpBinding, PageJumpViewModel> {
+public class ContainerActivity extends BaseActivity<ActivityContainerBinding, PageJumpViewModel> {
 
     @Override
     protected void init(Bundle savedInstanceState) {
         Intent intent = getIntent();
         Fragment fragment = (Fragment) intent.getSerializableExtra("fragment");
-        if (fragment != null) switchFragment(getBinding().pageJumpContent.getId(), fragment, null);
+        if (fragment != null) switchFragment(getBinding().container.getId(), fragment, null);
 
         StatusBarUtil.setLightMode(this);
     }
@@ -46,7 +41,7 @@ public class ContainerActivity extends BaseActivity<ActivityPageJumpBinding, Pag
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_page_jump;
+        return R.layout.activity_container;
     }
 
     @Override
