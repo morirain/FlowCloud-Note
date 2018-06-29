@@ -23,7 +23,7 @@ import java.util.List;
  */
 
 
-public class PageJumpActivity extends BaseActivity<ActivityPageJumpBinding, PageJumpViewModel> {
+public class ContainerActivity extends BaseActivity<ActivityPageJumpBinding, PageJumpViewModel> {
 
     @Override
     protected void init(Bundle savedInstanceState) {
