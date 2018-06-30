@@ -82,7 +82,7 @@ dependencies {
 
     /** AndroidUtilCode */
     /* https://github.com/Blankj/AndroidUtilCode */
-    implementation 'com.blankj:utilcode:1.15.0'
+    implementation 'com.blankj:utilcode:1.17.2'
 
     /** Lifecycle */
     implementation 'android.arch.lifecycle:runtime:1.1.1'
