@@ -90,7 +90,7 @@ dependencies {
     implementation 'android.arch.lifecycle:common-java8:1.1.1'
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
 
-    /** leakcanary */
+    /** LeakCanary */
     /* https://github.com/square/leakcanary */
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
@@ -101,11 +101,7 @@ dependencies {
 
     /** RxJava */
     /* https://github.com/ReactiveX/RxJava */
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.14'
-
-    /** RxPermissions */
-    /* https://github.com/tbruyelle/RxPermissions */
-    //implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
 
     /** AndPermission */
     /* https://github.com/yanzhenjie/AndPermission */
