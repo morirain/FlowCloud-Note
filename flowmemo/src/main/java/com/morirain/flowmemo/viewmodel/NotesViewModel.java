@@ -7,6 +7,8 @@ import com.morirain.flowmemo.base.BaseAdapter;
 import com.morirain.flowmemo.base.BaseViewModel;
 import com.morirain.flowmemo.databinding.ItemNotesBinding;
 import com.morirain.flowmemo.model.Notes;
+import com.morirain.flowmemo.model.repository.NoteLibraryRepository;
+import com.morirain.flowmemo.utils.SingletonFactory;
 import com.morirain.flowmemo.viewmodel.handler.ItemNotesHandler;
 
 /**
@@ -22,6 +24,7 @@ public class NotesViewModel extends BaseViewModel {
 
     private List<Notes> mList;
 
+    private NoteLibraryRepository mNoteLibraryRepository = SingletonFactory.getInstace(NoteLibraryRepository.class);
 
     public NotesViewModel() {
     }
@@ -34,9 +37,6 @@ public class NotesViewModel extends BaseViewModel {
     }
 
     private void getListData() {
-        for (int i = 0; i < 100; i++) {
-            Notes notes = new Notes("Label", "Content", "Just Now");
-            mList.add(notes);
-        }
+        mList.addAll(mNoteLibraryRepository.getCurrentFolder().getNotesList());
     }
 }

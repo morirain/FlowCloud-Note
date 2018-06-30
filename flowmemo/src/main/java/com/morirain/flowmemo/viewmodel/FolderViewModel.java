@@ -3,8 +3,9 @@ package com.morirain.flowmemo.viewmodel;
 
 import com.morirain.flowmemo.base.BaseAdapter;
 import com.morirain.flowmemo.base.BaseViewModel;
-import com.morirain.flowmemo.databinding.ItemDrawerFolderBinding;
 import com.morirain.flowmemo.model.Folder;
+import com.morirain.flowmemo.model.repository.NoteLibraryRepository;
+import com.morirain.flowmemo.utils.SingletonFactory;
 import com.morirain.flowmemo.viewmodel.handler.ItemDrawerFolderHandler;
 
 
@@ -19,10 +20,11 @@ import java.util.List;
 
 public class FolderViewModel extends BaseViewModel {
 
-    private BaseAdapter mAdapter;// = new FolderAdapter(BR.folder, R.layout.item_drawer_folder, new ItemDrawerFolderHandler());
+    private BaseAdapter mAdapter;
 
-    private List<Folder> mList;// = mAdapter.mDataList;
+    private List<Folder> mList;
 
+    private NoteLibraryRepository mNoteLibraryRepository = SingletonFactory.getInstace(NoteLibraryRepository.class);
 
     public FolderViewModel() {
     }
@@ -35,7 +37,7 @@ public class FolderViewModel extends BaseViewModel {
     }
 
     private void getListData() {
-        Folder notes = new Folder("所有笔记", null);
-        mList.add(notes);
+        mList.addAll(mNoteLibraryRepository.getFolderList());
     }
+
 }

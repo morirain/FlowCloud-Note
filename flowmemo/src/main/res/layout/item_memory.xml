@@ -16,7 +16,7 @@
         android:foreground="?android:attr/selectableItemBackground"
         android:minHeight="32dp"
         android:minWidth="64dp"
-        app:cardBackgroundColor="@color/colorRecyclerViewItem"
+        app:cardBackgroundColor="@color/colorNotesItem"
         app:cardCornerRadius="12dp"
         app:cardElevation="2dp"
         app:cardMaxElevation="4dp">

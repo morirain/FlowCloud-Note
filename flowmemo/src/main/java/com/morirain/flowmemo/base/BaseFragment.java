@@ -51,15 +51,14 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     }
 
     protected <G extends BaseViewModel> G getNewViewModel(int br, @NonNull Class<G> modelClass) {
-        G viewModel;
+        // Share ViewModel
         if (getActivity() != null) {
-            // Share ViewModel
+            G viewModel;
             viewModel = ViewModelProviders.of(getActivity()).get(modelClass);
-        } else {
-            viewModel = ViewModelProviders.of(this).get(modelClass);
+            mBind.setVariable(br, viewModel);
+            return viewModel;
         }
-        mBind.setVariable(br, viewModel);
-        return viewModel;
+        throw new IllegalStateException("Fragment " + this + " not attached to an activity.");
     }
 
     private void setHandler() {
