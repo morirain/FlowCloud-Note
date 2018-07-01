@@ -26,10 +26,14 @@ public class Notes{
     public MutableLiveData<String> noteContent = new MutableLiveData<>();
     @Transient
     public MutableLiveData<String> noteLastUpdateTime = new MutableLiveData<>();
+    @Transient
+    public MutableLiveData<String> notePreview = new MutableLiveData<>();
 
-    public Notes(String noteLabel, String noteContent, String noteLastUpdateTime) {
+
+    public Notes(String noteLabel, String noteContent, String noteLastUpdateTime, String notePreview) {
         this.noteLabel.setValue(noteLabel);
         this.noteContent.setValue(noteContent);
         this.noteLastUpdateTime.setValue(noteLastUpdateTime);
+        this.notePreview.setValue(notePreview);
     }
 }

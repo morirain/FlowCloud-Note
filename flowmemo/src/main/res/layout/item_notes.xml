@@ -74,7 +74,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/button_notes_more"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_note_label"
-                tools:text="@{item.noteContent}" />
+                tools:text="@{item.notePreview}" />
 
             <TextView
                 android:id="@+id/tv_note_last_update_time"
