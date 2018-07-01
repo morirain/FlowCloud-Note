@@ -16,5 +16,5 @@ public class ApplicationConfig {
 
     public final static File FLOWMEMO_ROOT_PATH = new File(EXTERNAL_STORAGE, "FlowMemo");
 
-    public final static int NOTE_CONTENT_PREVIEW_LENGTH = 255;
+    public final static int NOTE_CONTENT_PREVIEW_LENGTH = 128;
 }

@@ -3,6 +3,7 @@ package com.morirain.flowmemo.viewmodel;
 
 import java.util.List;
 
+import com.morirain.flowmemo.adapter.NotesAdapter;
 import com.morirain.flowmemo.base.BaseAdapter;
 import com.morirain.flowmemo.base.BaseViewModel;
 import com.morirain.flowmemo.databinding.ItemNotesBinding;
@@ -20,7 +21,7 @@ import com.morirain.flowmemo.viewmodel.handler.ItemNotesHandler;
 
 public class NotesViewModel extends BaseViewModel {
 
-    private BaseAdapter mAdapter;// = new NotesAdapter(BR.notes, R.layout.item_notes, new ItemNotesHandler());
+    private NotesAdapter mAdapter;
 
     private List<Notes> mList;
 
@@ -29,7 +30,7 @@ public class NotesViewModel extends BaseViewModel {
     public NotesViewModel() {
     }
 
-    public void setAdapter(BaseAdapter<Notes> adapter){
+    public void setAdapter(NotesAdapter adapter){
         mAdapter = adapter;
         mAdapter.setHandler(new ItemNotesHandler());
         mList = adapter.getDataList().getValue();
@@ -37,6 +38,6 @@ public class NotesViewModel extends BaseViewModel {
     }
 
     private void getListData() {
-        mList.addAll(mNoteLibraryRepository.getCurrentFolder().getNotesList());
+        //mList.addAll(mNoteLibraryRepository.getCurrentFolder().getValue().getNotesList());
     }
 }

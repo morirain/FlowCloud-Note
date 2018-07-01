@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
@@ -50,13 +51,7 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
     }
 
     private int getColor(int colorResources) {
-        int color = 0;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            color = mActivity.getResources().getColor(colorResources, mActivity.getTheme());
-        } else {
-            color = mActivity.getResources().getColor(colorResources);
-        }
-        return color;
+        return ContextCompat.getColor(mActivity, colorResources);
     }
 
 

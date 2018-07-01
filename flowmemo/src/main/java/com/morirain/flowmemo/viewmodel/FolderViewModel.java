@@ -1,6 +1,9 @@
 package com.morirain.flowmemo.viewmodel;
 
 
+import android.arch.lifecycle.MutableLiveData;
+
+import com.morirain.flowmemo.adapter.FolderAdapter;
 import com.morirain.flowmemo.base.BaseAdapter;
 import com.morirain.flowmemo.base.BaseViewModel;
 import com.morirain.flowmemo.model.Folder;
@@ -20,7 +23,7 @@ import java.util.List;
 
 public class FolderViewModel extends BaseViewModel {
 
-    private BaseAdapter mAdapter;
+    private FolderAdapter mAdapter;
 
     private List<Folder> mList;
 
@@ -29,9 +32,9 @@ public class FolderViewModel extends BaseViewModel {
     public FolderViewModel() {
     }
 
-    public void setAdapter(BaseAdapter<Folder> adapter){
+    public void setAdapter(FolderAdapter adapter){
         mAdapter = adapter;
-        mAdapter.setHandler(new ItemDrawerFolderHandler());
+        mAdapter.setHandler(new ItemDrawerFolderHandler(mNoteLibraryRepository));
         mList = adapter.getDataList().getValue();
         getListData();
     }

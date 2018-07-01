@@ -1,5 +1,6 @@
 package com.morirain.flowmemo.model.repository;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.text.TextUtils;
 
 import com.blankj.utilcode.util.FileIOUtils;
@@ -32,7 +33,7 @@ public class NoteLibraryRepository {
 
     private List<Folder> mFolderList = new ArrayList<>();
 
-    private Folder mCurrentFolder;
+    private MutableLiveData<Folder> mCurrentFolder = new MutableLiveData<>();
 
     public NoteLibraryRepository() {
         mFolderList.add(new Folder("所有笔记"));
@@ -71,7 +72,6 @@ public class NoteLibraryRepository {
         String label = FileUtils.getFileNameNoExtension(noteFile);
         String content = getNoteContentPreview(noteFile);
         String lastModified = TimeUtils.millis2String(FileUtils.getFileLastModified(noteFile));
-        LogUtils.d(noteFile);
         return new Notes(label, content, lastModified);
     }
 
@@ -92,11 +92,16 @@ public class NoteLibraryRepository {
         return mFolderList.get(UNCLASSIFIED_FOLDER);
     }
 
-    public Folder getCurrentFolder() {
+    public MutableLiveData<Folder> getCurrentFolder() {
         return mCurrentFolder;
     }
 
-    public void setCurrentFolder(Folder currentFolder) {
-        mCurrentFolder = currentFolder;
+    public void setCurrentFolder(Folder folder) {
+        Folder currentFolder = mCurrentFolder.getValue();
+        if (currentFolder != folder) {
+            if (currentFolder != null) currentFolder.setSelected(false);
+            folder.setSelected(true);
+            mCurrentFolder.postValue(folder);
+        }
     }
 }

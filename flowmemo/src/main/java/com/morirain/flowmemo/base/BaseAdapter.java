@@ -37,13 +37,17 @@ public class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolder>
     // Layout Id
     private int mLayoutId;
 
-    private List<T> getListValue() {
+    protected List<T> getListValue() {
         if (mDataList != null) return mDataList.getValue();
         throw new NullPointerException();
     }
 
     public MutableLiveData<List<T>> getDataList() {
         return mDataList;
+    }
+
+    protected LifecycleOwner getLifecycleOwner() {
+        return mLifecycleOwner;
     }
 
     public BaseAdapter(LifecycleOwner lifecycleOwner, int layoutId) {

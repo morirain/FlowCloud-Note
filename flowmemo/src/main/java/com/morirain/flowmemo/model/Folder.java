@@ -29,6 +29,8 @@ public class Folder {
     public MutableLiveData<File> folderDir = new MutableLiveData<>();
     @Transient
     private List<Notes> mNotesList = new ArrayList<>();
+    @Transient
+    private MutableLiveData<Boolean> mIsSelected = new MutableLiveData<>();
 
     public Folder(String folderName) {
         this.folderName.postValue(folderName);
@@ -42,5 +44,13 @@ public class Folder {
 
     public List<Notes> getNotesList() {
         return mNotesList;
+    }
+
+    public MutableLiveData<Boolean> isSelected() {
+        return mIsSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        mIsSelected.postValue(selected);
     }
 }

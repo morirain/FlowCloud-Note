@@ -14,9 +14,8 @@ import android.widget.Toast;
 
 import com.morirain.flowmemo.BR;
 import com.morirain.flowmemo.R;
-import com.morirain.flowmemo.base.BaseAdapter;
+import com.morirain.flowmemo.adapter.FolderAdapter;
 import com.morirain.flowmemo.base.BaseCommandHandler;
-import com.morirain.flowmemo.model.Folder;
 import com.morirain.flowmemo.viewmodel.FolderViewModel;
 import com.jaeger.library.StatusBarUtil;
 import com.morirain.flowmemo.viewmodel.handler.DrawerContentHandler;
@@ -37,7 +36,7 @@ import com.yanzhenjie.permission.Permission;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
 
-    private BaseAdapter<Folder> mFolderAdapter = new BaseAdapter<>(this, R.layout.item_drawer_folder);
+    private FolderAdapter mFolderAdapter = new FolderAdapter(this, R.layout.item_drawer_folder);
 
     private DrawerLayout mDrawer;
 
@@ -90,7 +89,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         RecyclerView drawerRecyclerView = mDrawerBinding.recyclerView;
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        drawerRecyclerView.setLayoutManager(layoutManager);
         drawerRecyclerView.setLayoutManager(layoutManager);
         drawerRecyclerView.setAdapter(mFolderAdapter);
         mFolderViewModel.setAdapter(mFolderAdapter);

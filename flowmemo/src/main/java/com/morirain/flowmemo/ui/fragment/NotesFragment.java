@@ -5,6 +5,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.morirain.flowmemo.R;
+import com.morirain.flowmemo.adapter.NotesAdapter;
 import com.morirain.flowmemo.base.BaseAdapter;
 import com.morirain.flowmemo.base.BaseCommandHandler;
 import com.morirain.flowmemo.base.BaseFragment;
@@ -16,7 +17,7 @@ import com.morirain.flowmemo.viewmodel.handler.FragmentNotesHandler;
 
 public class NotesFragment extends BaseFragment<FragmentNotesBinding, NotesViewModel> {
 
-    private BaseAdapter<Notes> mAdapter = new BaseAdapter<>(this, R.layout.item_notes);
+    private NotesAdapter mAdapter = new NotesAdapter(this, R.layout.item_notes);
 
     @Override
     protected void init(Bundle savedInstanceState) {

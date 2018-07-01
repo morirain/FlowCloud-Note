@@ -20,7 +20,8 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        android:onClick="@{handler::onItemClick}">
+        android:onClick="@{handler::onItemClick}"
+        android:background="@color/colorFolderItem">
 
         <ImageButton
             android:id="@+id/button_drawer_folder_more"
@@ -50,7 +51,7 @@
             android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#f5f5f5"
+            android:background="#e6e6e6"
             app:layout_constraintBottom_toBottomOf="parent" />
     </android.support.constraint.ConstraintLayout>
 </layout>

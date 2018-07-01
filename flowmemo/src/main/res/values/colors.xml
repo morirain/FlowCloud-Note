@@ -7,6 +7,8 @@
     <color name="colorBackground">#fafafa</color>
     <color name="colorEditViewBackground">#f0f0f0</color>
     <color name="colorNotesItem">#fafafa</color>
+    <color name="colorFolderItem">#fafafa</color>
+    <color name="colorFolderItemSelected">#e6e6e6</color>
     <color name="colorText">#212121</color>
     <color name="colorTextLight">#616161</color>
 </resources>
