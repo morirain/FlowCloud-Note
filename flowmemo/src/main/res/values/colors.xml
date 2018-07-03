@@ -11,4 +11,5 @@
     <color name="colorFolderItemSelected">#e6e6e6</color>
     <color name="colorText">#212121</color>
     <color name="colorTextLight">#616161</color>
+    <color name="colorButton">#323232</color>
 </resources>

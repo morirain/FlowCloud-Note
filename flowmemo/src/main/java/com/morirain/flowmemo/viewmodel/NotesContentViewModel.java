@@ -4,7 +4,6 @@ package com.morirain.flowmemo.viewmodel;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.morirain.flowmemo.base.BaseViewModel;
-import com.morirain.flowmemo.model.Notes;
 import com.morirain.flowmemo.utils.SingleLiveEvent;
 
 
@@ -17,14 +16,16 @@ import com.morirain.flowmemo.utils.SingleLiveEvent;
 
 public class NotesContentViewModel extends BaseViewModel {
 
-    public MutableLiveData<String> notesTitle = new MutableLiveData<>();
+    public MutableLiveData<String> notesLabel = new MutableLiveData<>();
 
     public MutableLiveData<String> notesContent = new MutableLiveData<>();
 
     public SingleLiveEvent<Void> requestFocusEvent = new SingleLiveEvent<>();
 
+    public SingleLiveEvent<Boolean> isContentChangeEvent = new SingleLiveEvent<>();
+
     public NotesContentViewModel() {
-        notesTitle.postValue("标题");
+        notesLabel.postValue("标题");
     }
 
     public void onRequestFocusClick() {

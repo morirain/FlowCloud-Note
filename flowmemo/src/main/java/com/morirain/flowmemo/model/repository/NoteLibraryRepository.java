@@ -75,7 +75,8 @@ public class NoteLibraryRepository {
         String content = getNoteContent(noteFile);
         String lastModified = TimeUtils.millis2String(FileUtils.getFileLastModified(noteFile));
         String preview = getNotePreview(content);
-        return new Notes(label, content, lastModified, preview);
+        String notePath = noteFile.getAbsolutePath();
+        return new Notes(label, content, lastModified, preview, notePath);
     }
 
     private String getNoteContent(File noteFile) {

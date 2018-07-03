@@ -32,7 +32,7 @@
                 android:id="@+id/et_toolbar_notes_content_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@={viewModel.notesTitle}"
+                android:text="@={viewModel.notesLabel}"
                 android:layout_gravity="center|start"
                 android:focusable="true"
                 android:focusableInTouchMode="true"

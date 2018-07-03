@@ -14,26 +14,28 @@ import io.objectbox.annotation.Transient;
  * E-Mail Address：morirain.dev@outlook.com
  */
 
-@Entity
+
 public class Notes{
 
-    @Id
+
     long boxId;
 
-    @Transient
+
     public MutableLiveData<String> noteLabel = new MutableLiveData<>();
-    @Transient
+
     public MutableLiveData<String> noteContent = new MutableLiveData<>();
-    @Transient
+
     public MutableLiveData<String> noteLastUpdateTime = new MutableLiveData<>();
-    @Transient
+
     public MutableLiveData<String> notePreview = new MutableLiveData<>();
 
+    public String notePath;
 
-    public Notes(String noteLabel, String noteContent, String noteLastUpdateTime, String notePreview) {
+    public Notes(String noteLabel, String noteContent, String noteLastUpdateTime, String notePreview, String notePath) {
         this.noteLabel.setValue(noteLabel);
         this.noteContent.setValue(noteContent);
         this.noteLastUpdateTime.setValue(noteLastUpdateTime);
         this.notePreview.setValue(notePreview);
+        this.notePath = notePath;
     }
 }

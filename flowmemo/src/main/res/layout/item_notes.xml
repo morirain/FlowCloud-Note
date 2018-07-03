@@ -18,11 +18,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
@@ -32,7 +32,7 @@
         app:cardElevation="2dp"
         app:cardMaxElevation="0dp"
         app:cardUseCompatPadding="true"
-        app:contentPadding="4dp">
+        app:contentPadding="8dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -67,7 +67,7 @@
                 android:layout_marginStart="8dp"
                 android:ellipsize="end"
                 android:lineSpacingExtra="2dp"
-                android:maxLines="3"
+                android:maxLines="4"
                 android:text="@{item.notePreview}"
                 android:textColor="@color/colorTextLight"
                 android:textSize="12sp"

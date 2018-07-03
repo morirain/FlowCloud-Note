@@ -104,6 +104,12 @@ dependencies {
     /* https://github.com/ReactiveX/RxJava */
     implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
 
+    /** AutoDispose */
+    /* https://github.com/uber/AutoDispose */
+    implementation 'com.uber.autodispose:autodispose:0.8.0'
+    implementation 'com.uber.autodispose:autodispose-android:0.8.0'
+    implementation 'com.uber.autodispose:autodispose-android-archcomponents:0.8.0'
+
     /** AndPermission */
     /* https://github.com/yanzhenjie/AndPermission */
     implementation 'com.yanzhenjie:permission:2.0.0-rc11'
@@ -141,6 +147,10 @@ dependencies {
     /** material-dialogs */
     /* https://github.com/afollestad/material-dialogs */
     //implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+
+    /** material-menu */
+    /* https://github.com/balysv/material-menu */
+    implementation 'com.balysv.materialmenu:material-menu:2.0.0'
 
     /** RxMarkdown */
     /* https://github.com/yydcdut/RxMarkdown */

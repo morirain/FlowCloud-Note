@@ -7,11 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 
+import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.morirain.flowmemo.R;
 import com.morirain.flowmemo.base.BaseActivity;
 import com.morirain.flowmemo.base.BaseApplication;
@@ -20,9 +22,14 @@ import com.morirain.flowmemo.base.BasePagerAdapter;
 import com.morirain.flowmemo.databinding.FragmentNotesContentParentBinding;
 import com.morirain.flowmemo.model.Notes;
 import com.morirain.flowmemo.viewmodel.NotesContentViewModel;
+import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Completable;
 
 public class NotesContentParentFragment extends BaseFragment<FragmentNotesContentParentBinding, NotesContentViewModel> {
 
@@ -30,11 +37,18 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
 
     private static final String ARG_PARAM_NOTE_CONTENT = "noteContent";
 
+    private static final String ARG_PARAM_NOTE_PATH = "notePath";
+
     private BaseActivity mActivity;
+
+    // for drawer
+    private MaterialMenuDrawable mMenuDrawable;
 
     private String mNoteLabel;
 
     private String mNoteContent;
+
+    private String mNotePath;
 
     // 渐变处理
     private int mEndColor;
@@ -45,6 +59,7 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
             Bundle args = new Bundle();
             args.putString(ARG_PARAM_NOTE_LABEL, note.noteLabel.getValue());
             args.putString(ARG_PARAM_NOTE_CONTENT, note.noteContent.getValue());
+            args.putString(ARG_PARAM_NOTE_PATH, note.notePath);
             fragment.setArguments(args);
         }
         return fragment;
@@ -55,7 +70,9 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
         if (getArguments() != null) {
             mNoteLabel = getArguments().getString(ARG_PARAM_NOTE_LABEL);
             mNoteContent = getArguments().getString(ARG_PARAM_NOTE_CONTENT);
+            mNotePath = getArguments().getString(ARG_PARAM_NOTE_PATH);
             getViewModel().notesContent.setValue(mNoteContent);
+            getViewModel().notesLabel.setValue(mNoteLabel);
         }
     }
 
@@ -66,6 +83,7 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
         initFragment();
         initListener();
         initToolbar();
+        initEvent();
     }
 
     private void initFragment() {
@@ -76,12 +94,6 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
         getBinding().vpFragment.setAdapter(basePagerAdapter);
         getBinding().vpFragment.setCurrentItem(0);
     }
-
-    private int getColor(int colorResources) {
-        return ContextCompat.getColor(mActivity, colorResources);
-    }
-
-    // hide SoftInput
 
     private void initListener() {
         int mColors[] = {getColor(R.color.colorEditViewBackground), getColor(R.color.colorBackground)};
@@ -129,7 +141,15 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
 
     private void initToolbar() {
         setHasOptionsMenu(true);
-        mActivity.setSupportActionBar(getBinding().toolbarNotesContentParent.toolbar);
+
+        mMenuDrawable = new MaterialMenuDrawable(getContext(), getColor(R.color.colorButton), MaterialMenuDrawable.Stroke.THIN);
+        mMenuDrawable.setIconState(MaterialMenuDrawable.IconState.ARROW);
+
+        Toolbar toolbar = getBinding().toolbarNotesContentParent.toolbar;
+        toolbar.setNavigationIcon(mMenuDrawable);
+
+        mActivity.setSupportActionBar(toolbar);
+
         // show home
         ActionBar actionBar = mActivity.getSupportActionBar();
         if (actionBar != null) {
@@ -138,6 +158,22 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
         }
         // title clearFocus
         getBinding().toolbarNotesContentParent.etToolbarNotesContentTitle.clearFocus();
+    }
+
+    private void initEvent() {
+        getViewModel().isContentChangeEvent.observe(this, aBoolean -> {
+                    if (aBoolean == null) aBoolean = false;
+                    if (aBoolean) {
+                        mMenuDrawable.animateIconState(MaterialMenuDrawable.IconState.CHECK);
+                    } else {
+                        mMenuDrawable.animateIconState(MaterialMenuDrawable.IconState.ARROW);
+                    }
+                }
+        );
+    }
+
+    private int getColor(int colorResources) {
+        return ContextCompat.getColor(mActivity, colorResources);
     }
 
     @Override
