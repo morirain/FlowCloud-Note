@@ -1,16 +1,12 @@
 package com.morirain.flowmemo.viewmodel;
 
 
-import java.util.List;
-
 import com.morirain.flowmemo.adapter.NotesAdapter;
-import com.morirain.flowmemo.base.BaseAdapter;
 import com.morirain.flowmemo.base.BaseViewModel;
-import com.morirain.flowmemo.databinding.ItemNotesBinding;
 import com.morirain.flowmemo.model.Notes;
 import com.morirain.flowmemo.model.repository.NoteLibraryRepository;
+import com.morirain.flowmemo.utils.SingleLiveEvent;
 import com.morirain.flowmemo.utils.SingletonFactory;
-import com.morirain.flowmemo.viewmodel.handler.ItemNotesHandler;
 
 /**
  * @author morirain
@@ -21,23 +17,31 @@ import com.morirain.flowmemo.viewmodel.handler.ItemNotesHandler;
 
 public class NotesViewModel extends BaseViewModel {
 
-    private NotesAdapter mAdapter;
+//    private NotesAdapter mAdapter;
+//
+//    private List<Notes> mList;
 
-    private List<Notes> mList;
+    private NoteLibraryRepository mNoteLibraryRepository = SingletonFactory.getInstance(NoteLibraryRepository.class);
 
-    private NoteLibraryRepository mNoteLibraryRepository = SingletonFactory.getInstace(NoteLibraryRepository.class);
+    public SingleLiveEvent<Notes> notesClickEvent = new SingleLiveEvent<>();
+
+    public SingleLiveEvent<Void> newNotesClickEvent = new SingleLiveEvent<>();
 
     public NotesViewModel() {
     }
 
     public void setAdapter(NotesAdapter adapter){
-        mAdapter = adapter;
+        /*mAdapter = adapter;
         mAdapter.setHandler(new ItemNotesHandler());
         mList = adapter.getDataList().getValue();
-        getListData();
+        getListData();*/
     }
 
-    private void getListData() {
-        //mList.addAll(mNoteLibraryRepository.getCurrentFolder().getValue().getNotesList());
+    public void onNewNoteClick() {
+        newNotesClickEvent.call();
+    }
+
+    public void onItemClick(Notes notes) {
+        notesClickEvent.setValue(notes);
     }
 }

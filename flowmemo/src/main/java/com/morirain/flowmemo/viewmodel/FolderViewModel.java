@@ -1,15 +1,11 @@
 package com.morirain.flowmemo.viewmodel;
 
 
-import android.arch.lifecycle.MutableLiveData;
-
 import com.morirain.flowmemo.adapter.FolderAdapter;
-import com.morirain.flowmemo.base.BaseAdapter;
 import com.morirain.flowmemo.base.BaseViewModel;
 import com.morirain.flowmemo.model.Folder;
 import com.morirain.flowmemo.model.repository.NoteLibraryRepository;
 import com.morirain.flowmemo.utils.SingletonFactory;
-import com.morirain.flowmemo.viewmodel.handler.ItemDrawerFolderHandler;
 
 
 import java.util.List;
@@ -27,20 +23,22 @@ public class FolderViewModel extends BaseViewModel {
 
     private List<Folder> mList;
 
-    private NoteLibraryRepository mNoteLibraryRepository = SingletonFactory.getInstace(NoteLibraryRepository.class);
+    private NoteLibraryRepository mRepository = SingletonFactory.getInstance(NoteLibraryRepository.class);
 
     public FolderViewModel() {
     }
 
     public void setAdapter(FolderAdapter adapter){
-        mAdapter = adapter;
-        mAdapter.setHandler(new ItemDrawerFolderHandler(mNoteLibraryRepository));
+       /* mAdapter = adapter;
         mList = adapter.getDataList().getValue();
-        getListData();
+        getListData();*/
     }
 
     private void getListData() {
-        mList.addAll(mNoteLibraryRepository.getFolderList());
+        //mList.addAll(mRepository.getFolderList());
     }
 
+    public void onItemClick(Folder folder) {
+        mRepository.setCurrentFolder(folder);
+    }
 }

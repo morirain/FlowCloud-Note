@@ -1,23 +1,18 @@
 package com.morirain.flowmemo.ui.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.text.method.ScrollingMovementMethod;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 
 import com.morirain.flowmemo.R;
 import com.morirain.flowmemo.base.BaseActivity;
-import com.morirain.flowmemo.base.BaseCommandHandler;
+import com.morirain.flowmemo.base.BaseApplication;
 import com.morirain.flowmemo.base.BaseFragment;
 import com.morirain.flowmemo.databinding.FragmentNotesContentBinding;
 import com.morirain.flowmemo.viewmodel.NotesContentViewModel;
-import com.morirain.flowmemo.viewmodel.handler.FragmentNotesContentHandler;
 import com.yydcdut.markdown.MarkdownProcessor;
 import com.yydcdut.markdown.syntax.edit.EditFactory;
-import com.yydcdut.markdown.syntax.text.TextFactory;
 
 /**
  * @author morirain
@@ -34,6 +29,7 @@ public class NotesContentFragment extends BaseFragment<FragmentNotesContentBindi
     protected void init(Bundle savedInstanceState) {
         mActivity = (BaseActivity) getActivity();
         initEdit();
+        initEvent();
     }
 
     private void initEdit() {
@@ -44,13 +40,23 @@ public class NotesContentFragment extends BaseFragment<FragmentNotesContentBindi
         requestFocus();
     }
 
+    private void initEvent() {
+        getViewModel().requestFocusEvent.observe(this, o -> {
+            requestFocus();
+            InputMethodManager inputMethodManager = (InputMethodManager) BaseApplication.getAppContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (inputMethodManager != null) {
+                inputMethodManager.showSoftInput(getBinding().etNotesContentMarkdown, 0);
+            }
+        });
+    }
+
     public void requestFocus() {
         getBinding().etNotesContentMarkdown.requestFocus();
     }
 
-
     @Override
-    protected void setCustomViewModelConnect() {
+    protected void setArguments() {
+
     }
 
     @Override
@@ -63,8 +69,4 @@ public class NotesContentFragment extends BaseFragment<FragmentNotesContentBindi
         return NotesContentViewModel.class;
     }
 
-    @Override
-    protected BaseCommandHandler getHandler() {
-        return new FragmentNotesContentHandler(this);
-    }
 }

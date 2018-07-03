@@ -1,10 +1,8 @@
 package com.morirain.flowmemo.ui.fragment;
 
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 
 import com.morirain.flowmemo.R;
-import com.morirain.flowmemo.base.BaseCommandHandler;
 import com.morirain.flowmemo.base.BaseFragment;
 import com.morirain.flowmemo.databinding.FragmentNotesContentPreviewBinding;
 import com.morirain.flowmemo.viewmodel.NotesContentViewModel;
@@ -27,11 +25,11 @@ public class NotesContentPreviewFragment extends BaseFragment<FragmentNotesConte
                     getBinding().tvNotesContentMarkdown.setText(markdownProcessor.parse(content)));
         }
 
-
     }
 
     @Override
-    protected void setCustomViewModelConnect() {
+    protected void setArguments() {
+
     }
 
     @Override
@@ -44,8 +42,4 @@ public class NotesContentPreviewFragment extends BaseFragment<FragmentNotesConte
         return NotesContentViewModel.class;
     }
 
-    @Override
-    protected BaseCommandHandler getHandler() {
-        return null;
-    }
 }

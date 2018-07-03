@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.morirain.flowmemo.viewmodel.NotesContentViewModel" />
     </data>
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,6 +15,7 @@
         <include
             android:id="@+id/toolbar_notes_content_parent"
             layout="@layout/toolbar_notes_content"
+            app:viewModel="@{viewModel}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -16,7 +16,7 @@ public class SingletonFactory {
     private static Map<Class, Object> sInstances = new ConcurrentHashMap<>();
 
     @SuppressWarnings("unchecked")
-    public static <E> E getInstace(Class<E> className) {
+    public static <E> E getInstance(Class<E> className) {
         Object instance = sInstances.get(className);
         if (instance == null) {
             synchronized (SingletonFactory.class) {

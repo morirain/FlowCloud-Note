@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.morirain.flowmemo.viewmodel.NotesContentViewModel" />
     </data>
 
     <android.support.design.widget.AppBarLayout
@@ -30,7 +32,7 @@
                 android:id="@+id/et_toolbar_notes_content_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="标题"
+                android:text="@={viewModel.notesTitle}"
                 android:layout_gravity="center|start"
                 android:focusable="true"
                 android:focusableInTouchMode="true"

@@ -5,7 +5,7 @@
     <color name="colorAccent">#009688</color>
 
     <color name="colorBackground">#fafafa</color>
-    <color name="colorEditViewBackground">#f0f0f0</color>
+    <color name="colorEditViewBackground">#ebebeb</color>
     <color name="colorNotesItem">#fafafa</color>
     <color name="colorFolderItem">#fafafa</color>
     <color name="colorFolderItemSelected">#e6e6e6</color>

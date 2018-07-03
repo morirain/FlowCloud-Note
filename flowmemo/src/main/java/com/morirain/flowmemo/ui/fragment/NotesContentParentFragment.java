@@ -2,7 +2,6 @@ package com.morirain.flowmemo.ui.fragment;
 
 import android.animation.ArgbEvaluator;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -16,10 +15,10 @@ import android.view.inputmethod.InputMethodManager;
 import com.morirain.flowmemo.R;
 import com.morirain.flowmemo.base.BaseActivity;
 import com.morirain.flowmemo.base.BaseApplication;
-import com.morirain.flowmemo.base.BaseCommandHandler;
 import com.morirain.flowmemo.base.BaseFragment;
 import com.morirain.flowmemo.base.BasePagerAdapter;
 import com.morirain.flowmemo.databinding.FragmentNotesContentParentBinding;
+import com.morirain.flowmemo.model.Notes;
 import com.morirain.flowmemo.viewmodel.NotesContentViewModel;
 
 import java.util.ArrayList;
@@ -27,10 +26,38 @@ import java.util.List;
 
 public class NotesContentParentFragment extends BaseFragment<FragmentNotesContentParentBinding, NotesContentViewModel> {
 
+    private static final String ARG_PARAM_NOTE_LABEL = "noteLabel";
+
+    private static final String ARG_PARAM_NOTE_CONTENT = "noteContent";
+
     private BaseActivity mActivity;
+
+    private String mNoteLabel;
+
+    private String mNoteContent;
 
     // 渐变处理
     private int mEndColor;
+
+    public static NotesContentParentFragment getInstance(Notes note) {
+        NotesContentParentFragment fragment = new NotesContentParentFragment();
+        if (note != null) {
+            Bundle args = new Bundle();
+            args.putString(ARG_PARAM_NOTE_LABEL, note.noteLabel.getValue());
+            args.putString(ARG_PARAM_NOTE_CONTENT, note.noteContent.getValue());
+            fragment.setArguments(args);
+        }
+        return fragment;
+    }
+
+    @Override
+    protected void setArguments() {
+        if (getArguments() != null) {
+            mNoteLabel = getArguments().getString(ARG_PARAM_NOTE_LABEL);
+            mNoteContent = getArguments().getString(ARG_PARAM_NOTE_CONTENT);
+            getViewModel().notesContent.setValue(mNoteContent);
+        }
+    }
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -54,8 +81,8 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
         return ContextCompat.getColor(mActivity, colorResources);
     }
 
-
     // hide SoftInput
+
     private void initListener() {
         int mColors[] = {getColor(R.color.colorEditViewBackground), getColor(R.color.colorBackground)};
         getBinding().vpFragment.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -135,10 +162,6 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
     }
 
     @Override
-    protected void setCustomViewModelConnect() {
-    }
-
-    @Override
     protected int getLayoutResId() {
         return R.layout.fragment_notes_content_parent;
     }
@@ -148,8 +171,4 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
         return NotesContentViewModel.class;
     }
 
-    @Override
-    protected BaseCommandHandler getHandler() {
-        return null;
-    }
 }

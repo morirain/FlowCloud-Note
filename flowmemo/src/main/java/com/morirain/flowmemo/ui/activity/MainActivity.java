@@ -15,10 +15,8 @@ import android.widget.Toast;
 import com.morirain.flowmemo.BR;
 import com.morirain.flowmemo.R;
 import com.morirain.flowmemo.adapter.FolderAdapter;
-import com.morirain.flowmemo.base.BaseCommandHandler;
 import com.morirain.flowmemo.viewmodel.FolderViewModel;
 import com.jaeger.library.StatusBarUtil;
-import com.morirain.flowmemo.viewmodel.handler.DrawerContentHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +53,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        mFolderViewModel = getNewViewModel(BR.folderViewModel, FolderViewModel.class);
+        mUserProfileViewModel = getNewViewModel(BR.userProfileViewModel, UserProfileViewModel.class);
 
         initToolbar();
         initFragment();
@@ -92,6 +92,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         drawerRecyclerView.setLayoutManager(layoutManager);
         drawerRecyclerView.setAdapter(mFolderAdapter);
         mFolderViewModel.setAdapter(mFolderAdapter);
+        mFolderAdapter.setViewModel(mFolderViewModel);
 
         // DrawerToggle
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
@@ -135,19 +136,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     public void onBackPressed() {
-        long mNowTime = System.currentTimeMillis();//获取第一次按键时间
-        if ((mNowTime - mKeyTime) > 1500) {//比较两次按键时间差
-            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
-            mKeyTime = mNowTime;
-        } else {//退出程序
-            this.finish();
-            System.exit(0);
+        if (mDrawer.isDrawerOpen(getBinding().drawerContent.getRoot())) {
+            mDrawer.closeDrawers();
+        } else {
+            long mNowTime = System.currentTimeMillis();//获取第一次按键时间
+            if ((mNowTime - mKeyTime) > 1500) {//比较两次按键时间差
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                mKeyTime = mNowTime;
+            } else {
+                super.onBackPressed();
+            }
         }
-    }
-    @Override
-    protected void setCustomViewModelConnect() {
-        mFolderViewModel = getNewViewModel(BR.folderViewModel, FolderViewModel.class);
-        mUserProfileViewModel = getNewViewModel(BR.userProfileViewModel, UserProfileViewModel.class);
     }
 
     @Override
@@ -158,11 +157,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     protected Class<MainViewModel> getViewModelClass() {
         return MainViewModel.class;
-    }
-
-    @Override
-    protected BaseCommandHandler getHandler() {
-        return new DrawerContentHandler();
     }
 
 }

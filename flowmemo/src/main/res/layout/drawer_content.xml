@@ -12,9 +12,6 @@
         <variable
             name="userProfileViewModel"
             type="com.morirain.flowmemo.viewmodel.UserProfileViewModel" />
-        <variable
-            name="handler"
-            type="com.morirain.flowmemo.viewmodel.handler.DrawerContentHandler" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -57,7 +54,6 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:onClick="@{handler::onHistoryClick}"
                     android:padding="16dp"
                     android:src="@drawable/ic_access_time_black_24dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -71,7 +67,6 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:onClick="@{handler::onNewFolderClick}"
                     android:padding="16dp"
                     android:src="@drawable/ic_create_new_folder_black_24dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -85,7 +80,6 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:onClick="@{handler::onFormatClick}"
                     android:padding="16dp"
                     android:src="@drawable/ic_format_line_spacing_black_24dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -101,7 +95,6 @@
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{handler::onEditRemoteClick}"
             android:padding="16dp"
             android:src="@drawable/ic_cloud_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -154,7 +147,6 @@
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{handler::onEditUserProfileClick}"
             android:padding="16dp"
             android:src="@drawable/ic_create_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"

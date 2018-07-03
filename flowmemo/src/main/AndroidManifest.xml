@@ -24,7 +24,7 @@
         </activity>
         <activity android:name=".ui.activity.MainActivity"/>
         <activity android:name=".ui.activity.ContainerActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
 </manifest>

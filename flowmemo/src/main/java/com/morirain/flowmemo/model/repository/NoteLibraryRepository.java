@@ -28,19 +28,24 @@ public class NoteLibraryRepository {
 
     private final static int UNCLASSIFIED_FOLDER = 1;
 
-    private List<Folder> mFolderList = new ArrayList<>();
+    private MutableLiveData<List<Folder>> mFolderList = new MutableLiveData<>();
 
     private MutableLiveData<Folder> mCurrentFolder = new MutableLiveData<>();
 
     public NoteLibraryRepository() {
-        mFolderList.add(new Folder("所有笔记"));
-        mFolderList.add(new Folder("未分类"));
+        getFolderListValue().add(new Folder("所有笔记"));
+        getFolderListValue().add(new Folder("未分类"));
         setCurrentFolder(getAllFolder());
         scanRootFolder();
     }
 
-    public List<Folder> getFolderList() {
+    public MutableLiveData<List<Folder>> getFolderList() {
         return mFolderList;
+    }
+
+    public List<Folder> getFolderListValue() {
+        if (mFolderList.getValue() == null) mFolderList.setValue(new ArrayList<>());
+        return mFolderList.getValue();
     }
 
     public List<Folder> scanRootFolder() {
@@ -51,7 +56,7 @@ public class NoteLibraryRepository {
                 isEmpty = false;
                 if (FileUtils.isDir(file)) {
                     // Filter
-                    if (!file.getName().equals(".git")) mFolderList.add(new Folder(file));
+                    if (!file.getName().equals(".git")) getFolderListValue().add(new Folder(file));
                 } else {
                     if (FileUtils.getFileExtension(file).equals("md")) {
                         Notes note = getNoteFromFile(file);
@@ -62,7 +67,7 @@ public class NoteLibraryRepository {
             }
             if (isEmpty) JGit.with(root).init().call();
         }
-        return mFolderList;
+        return getFolderListValue();
     }
 
     public Notes getNoteFromFile(File noteFile) {
@@ -87,11 +92,11 @@ public class NoteLibraryRepository {
     }
 
     public Folder getAllFolder() {
-        return mFolderList.get(ALL_FOLDER);
+        return getFolderListValue().get(ALL_FOLDER);
     }
 
     public Folder getUnclassifiedFolder() {
-        return mFolderList.get(UNCLASSIFIED_FOLDER);
+        return getFolderListValue().get(UNCLASSIFIED_FOLDER);
     }
 
     public MutableLiveData<Folder> getCurrentFolder() {

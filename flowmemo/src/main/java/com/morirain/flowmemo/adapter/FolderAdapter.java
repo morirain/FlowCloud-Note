@@ -20,10 +20,17 @@ import com.morirain.flowmemo.utils.SingletonFactory;
 
 public class FolderAdapter extends BaseAdapter<Folder> {
 
-    private NoteLibraryRepository mRepository = SingletonFactory.getInstace(NoteLibraryRepository.class);
+    private NoteLibraryRepository mRepository = SingletonFactory.getInstance(NoteLibraryRepository.class);
 
     public FolderAdapter(LifecycleOwner lifecycleOwner, int layoutId) {
         super(lifecycleOwner, layoutId);
+        mRepository.getFolderList().observe(lifecycleOwner, folders -> {
+            if (folders != null) {
+                getListValue().clear();
+                getListValue().addAll(folders);
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -31,13 +38,12 @@ public class FolderAdapter extends BaseAdapter<Folder> {
         super.onBindViewHolder(holder, position);
         getListValue().get(position)
                 .isSelected()
-                .observe(getLifecycleOwner(),
-                        aBoolean -> {
-                            if (aBoolean != null && aBoolean) {
-                                holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorFolderItemSelected));
-                            } else {
-                                holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorFolderItem));
-                            }
-                        });
+                .observe(getLifecycleOwner(), aBoolean -> {
+                    if (aBoolean != null && aBoolean) {
+                        holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorFolderItemSelected));
+                    } else {
+                        holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorFolderItem));
+                    }
+                });
     }
 }

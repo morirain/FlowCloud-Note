@@ -30,8 +30,8 @@ public class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolder>
     private LifecycleOwner mLifecycleOwner;
     // List Data
     private MutableLiveData<List<T>> mDataList = new MutableLiveData<>();
-    // onClickHandler
-    private BaseCommandHandler mAdapterHandler;
+    // viewModel
+    private BaseViewModel mViewModel;
     // BR Id
     private int mVariableId;
     // Layout Id
@@ -57,8 +57,8 @@ public class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolder>
         this.mDataList.setValue(new ArrayList<>());
     }
 
-    public void setHandler(BaseCommandHandler handler) {
-        mAdapterHandler = handler;
+    public void setViewModel(BaseViewModel viewModel) {
+        mViewModel = viewModel;
     }
 
     public void setVariableId(int variableId) {
@@ -77,7 +77,7 @@ public class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolder>
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.itemView.setTag(position);
         holder.getBinding().setVariable(mVariableId, getListValue().get(position));
-        if (mAdapterHandler != null) holder.getBinding().setVariable(BR.handler, mAdapterHandler);
+        if (mViewModel != null) holder.getBinding().setVariable(BR.viewModel, mViewModel);
         holder.getBinding().executePendingBindings();
     }
 

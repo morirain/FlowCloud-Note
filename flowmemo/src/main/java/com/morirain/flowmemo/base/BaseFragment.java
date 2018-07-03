@@ -1,6 +1,7 @@
 package com.morirain.flowmemo.base;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
 
 import com.morirain.flowmemo.BR;
 import com.morirain.flowmemo.BuildConfig;
+import com.morirain.flowmemo.ui.activity.ContainerActivity;
+import com.morirain.flowmemo.utils.SingleLiveEvent;
 
 import java.io.Serializable;
 
@@ -40,8 +43,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         mBind.setLifecycleOwner(this);
 
         if (getViewModelClass() != null) initViewModel();
-        if (getHandler() != null) setHandler();
-        setCustomViewModelConnect();
+        setArguments();
         init(savedInstanceState);
         return mBind.getRoot();
     }
@@ -61,25 +63,19 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         throw new IllegalStateException("Fragment " + this + " not attached to an activity.");
     }
 
-    private void setHandler() {
-        mBind.setVariable(BR.handler, getHandler());
-    }
-
     protected abstract void init(Bundle savedInstanceState);
 
-    protected abstract void setCustomViewModelConnect();
+    protected abstract void setArguments();
 
     protected abstract int getLayoutResId();
 
     protected abstract Class<V> getViewModelClass();
 
-    protected abstract BaseCommandHandler getHandler();
-
     protected View getRoot() {
         return mBind.getRoot();
     }
 
-    public final T getBinding() {
+    protected final T getBinding() {
         return mBind;
     }
 
@@ -94,4 +90,12 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
             BaseApplication.sRefWatcher.watch(this);
         }
     }
+
+    public void switchActivity(BaseFragment fragment) {
+        Intent intent = new Intent(getActivity(), ContainerActivity.class);
+        intent.putExtra("fragment", fragment.hashCode());
+        ContainerActivity.setFragment(fragment.hashCode(), fragment);
+        startActivity(intent);
+    }
+
 }

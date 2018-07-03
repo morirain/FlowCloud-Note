@@ -2,12 +2,12 @@ package com.morirain.flowmemo.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.util.SparseArray;
 
 import com.jaeger.library.StatusBarUtil;
 import com.morirain.flowmemo.R;
 import com.morirain.flowmemo.base.BaseActivity;
-import com.morirain.flowmemo.base.BaseCommandHandler;
+import com.morirain.flowmemo.base.BaseFragment;
 import com.morirain.flowmemo.databinding.ActivityContainerBinding;
 import com.morirain.flowmemo.viewmodel.PageJumpViewModel;
 
@@ -20,11 +20,15 @@ import com.morirain.flowmemo.viewmodel.PageJumpViewModel;
 
 public class ContainerActivity extends BaseActivity<ActivityContainerBinding, PageJumpViewModel> {
 
+    public static SparseArray<BaseFragment> sFragmentMap = new SparseArray<>();
+
     @Override
     protected void init(Bundle savedInstanceState) {
+        int key = 0;
         Intent intent = getIntent();
-        Fragment fragment = (Fragment) intent.getSerializableExtra("fragment");
-        if (fragment != null) switchFragment(getBinding().container.getId(), fragment, null);
+        if (intent != null) key = getIntent().getIntExtra("fragment", 0);
+        if (key != 0) switchFragment(getBinding().container.getId(), sFragmentMap.get(key), null);
+        sFragmentMap.remove(key);
 
         StatusBarUtil.setLightMode(this);
     }
@@ -35,8 +39,8 @@ public class ContainerActivity extends BaseActivity<ActivityContainerBinding, Pa
         //overridePendingTransition(0, R.anim.slide_out_down);
     }
 
-    @Override
-    protected void setCustomViewModelConnect() {
+    public static void setFragment(int key, BaseFragment fragment) {
+        sFragmentMap.put(key, fragment);
     }
 
     @Override
@@ -47,10 +51,5 @@ public class ContainerActivity extends BaseActivity<ActivityContainerBinding, Pa
     @Override
     protected Class<PageJumpViewModel> getViewModelClass() {
         return PageJumpViewModel.class;
-    }
-
-    @Override
-    protected BaseCommandHandler getHandler() {
-        return null;
     }
 }

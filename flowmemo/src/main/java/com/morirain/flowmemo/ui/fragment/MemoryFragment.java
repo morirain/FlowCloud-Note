@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.morirain.flowmemo.R;
-import com.morirain.flowmemo.base.BaseCommandHandler;
 import com.morirain.flowmemo.base.BaseFragment;
 import com.morirain.flowmemo.databinding.FragmentMemoryBinding;
 import com.morirain.flowmemo.viewmodel.MemoryViewModel;
@@ -30,7 +29,7 @@ public class MemoryFragment extends BaseFragment<FragmentMemoryBinding, MemoryVi
     }
 
     @Override
-    protected void setCustomViewModelConnect() {
+    protected void setArguments() {
     }
 
     @Override
@@ -42,11 +41,5 @@ public class MemoryFragment extends BaseFragment<FragmentMemoryBinding, MemoryVi
     protected Class<MemoryViewModel> getViewModelClass() {
         return MemoryViewModel.class;
     }
-
-    @Override
-    protected BaseCommandHandler getHandler() {
-        return null;
-    }
-
 
 }
