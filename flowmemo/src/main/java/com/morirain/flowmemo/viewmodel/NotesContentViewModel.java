@@ -24,6 +24,12 @@ public class NotesContentViewModel extends BaseViewModel {
 
     public SingleLiveEvent<Boolean> isContentChangeEvent = new SingleLiveEvent<>();
 
+    public SingleLiveEvent<String> setDefaultContentEvent = new SingleLiveEvent<>();
+
+    public SingleLiveEvent<Void> onUndoClickEvent = new SingleLiveEvent<>();
+
+    public SingleLiveEvent<Void> onRedoClickEvent = new SingleLiveEvent<>();
+
     public NotesContentViewModel() {
         notesLabel.postValue("标题");
     }

@@ -105,9 +105,9 @@
 -dontwarn org.junit.**
 
 # Dictionary
-#-obfuscationdictionary proguard-dictionary.txt
-#-packageobfuscationdictionary proguard-dictionary.txt
-#-classobfuscationdictionary proguard-dictionary.txt
+-obfuscationdictionary proguard-dictionary.txt
+-packageobfuscationdictionary proguard-dictionary.txt
+-classobfuscationdictionary proguard-dictionary.txt
 
 # Retrofit
 # Retain generic type information for use by reflection by converters and adapters.

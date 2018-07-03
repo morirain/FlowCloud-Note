@@ -22,14 +22,9 @@ import com.morirain.flowmemo.base.BasePagerAdapter;
 import com.morirain.flowmemo.databinding.FragmentNotesContentParentBinding;
 import com.morirain.flowmemo.model.Notes;
 import com.morirain.flowmemo.viewmodel.NotesContentViewModel;
-import com.uber.autodispose.AutoDispose;
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Completable;
 
 public class NotesContentParentFragment extends BaseFragment<FragmentNotesContentParentBinding, NotesContentViewModel> {
 
@@ -73,6 +68,7 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
             mNotePath = getArguments().getString(ARG_PARAM_NOTE_PATH);
             getViewModel().notesContent.setValue(mNoteContent);
             getViewModel().notesLabel.setValue(mNoteLabel);
+            getViewModel().setDefaultContentEvent.setValue(mNoteContent);
         }
     }
 
@@ -189,8 +185,10 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
                 mActivity.onBackPressed();
                 break;
             case R.id.menu_toolbar_notes_content_undo:
+                getViewModel().onUndoClickEvent.call();
                 break;
             case R.id.menu_toolbar_notes_content_redo:
+                getViewModel().onRedoClickEvent.call();
                 break;
             default:
         }
