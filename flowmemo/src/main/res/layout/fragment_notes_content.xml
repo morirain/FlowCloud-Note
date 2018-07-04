@@ -22,31 +22,24 @@
             android:fillViewport="true"
             app:layout_constraintBottom_toTopOf="@+id/toolbar_notes_content_bottom"
             app:layout_constraintTop_toTopOf="parent">
-            <FrameLayout
-                android:id="@+id/frameLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:clickable="true"
-                android:focusable="true"
-                android:onClick="@{() -> viewModel.onRequestFocusClick()}">
 
                 <com.yydcdut.markdown.MarkdownEditText
                     android:id="@+id/et_notes_content_markdown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:minHeight="384dp"
+                    android:gravity="top"
                     android:layout_marginBottom="16dp"
                     android:layout_marginEnd="24dp"
                     android:layout_marginLeft="24dp"
                     android:layout_marginRight="24dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="24dp"
+                    android:paddingBottom="48dp"
                     android:background="@null"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:text="@={viewModel.notesContent}" />
-
-            </FrameLayout>
 
         </ScrollView>
 

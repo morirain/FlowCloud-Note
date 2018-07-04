@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
 import io.reactivex.disposables.Disposable;
+import me.ele.uetool.UETool;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -19,6 +20,9 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // init UETool
+        if(BuildConfig.DEBUG) UETool.showUETMenu();
+
         d = Completable.timer(1, TimeUnit.MICROSECONDS).subscribe(() -> {
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(intent);

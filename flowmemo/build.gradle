@@ -208,13 +208,9 @@ dependencies {
 
     //implementation 'com.google.code.gson:gson:2.8.4'
 
-    /** AutoEx */
-
-    /* https://github.com/BolexLiu/AutoEx */
-
-    //debugImplementation 'com.github.BolexLiu.AutoEx:AutoEx-Lib:v1.0.7' //debug包
-
-    //releaseImplementation 'com.github.BolexLiu.AutoEx:AutoEx-Lib-No-Op:v1.0.7' //release包
+    /** UETool */
+    /* https://github.com/eleme/UETool */
+    debugImplementation 'me.ele:uetool:1.0.15'
 }
 
 apply plugin: 'io.objectbox'

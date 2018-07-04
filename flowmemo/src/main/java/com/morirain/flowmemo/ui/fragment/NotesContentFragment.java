@@ -48,25 +48,13 @@ public class NotesContentFragment extends BaseFragment<FragmentNotesContentBindi
         getViewModel().setDefaultContentEvent.observe(this, mEditTextMonitor::setDefaultText);
 
         // 监听有无修改
-        /*mEditTextMonitor.isUndoHistoryEmpty.observe(this, b -> {
-            if (b == null || !b) {
-                getViewModel().isContentChangeEvent.setValue(true);
-            } else {
-                getViewModel().isContentChangeEvent.setValue(false);
-            }
-        });*/
+        mEditTextMonitor.setIsChangeListener(isChange ->
+                getViewModel().isContentChangeEvent.setValue(isChange)
+        );
         requestFocus();
     }
 
     private void initEvent() {
-        getViewModel().requestFocusEvent.observe(this, o -> {
-            requestFocus();
-            InputMethodManager inputMethodManager = (InputMethodManager) BaseApplication.getAppContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (inputMethodManager != null) {
-                inputMethodManager.showSoftInput(getBinding().etNotesContentMarkdown, 0);
-            }
-        });
-
         getViewModel().onUndoClickEvent.observe(this, o -> mEditTextMonitor.undo());
         getViewModel().onRedoClickEvent.observe(this, o -> mEditTextMonitor.redo());
     }

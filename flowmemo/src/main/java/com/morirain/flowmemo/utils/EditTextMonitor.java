@@ -16,6 +16,10 @@ import java.util.Stack;
 
 public class EditTextMonitor {
 
+    public interface IsChange {
+        void isChange(boolean isChange);
+    }
+
     //操作序号(一次编辑可能对应多个操作，如替换文字，就是删除+插入)
     private int index;
     //撤销栈
@@ -27,6 +31,12 @@ public class EditTextMonitor {
     private EditText mEditText;
     //自动操作标志，防止重复回调,导致无限撤销
     private boolean mFlag = false;
+    //如果文本不一致的回调
+    private IsChange mIsChange;
+    private boolean mChanged = false;
+    private String mDefaultContent;
+    //设置时间延迟 以获得更好的效果
+    private int mTime;
 
     public EditTextMonitor(@NonNull EditText editText) {
         this.mEditable = editText.getText();
@@ -34,11 +44,36 @@ public class EditTextMonitor {
         editText.addTextChangedListener(new Watcher());
     }
 
-    protected void onEditableChanged(Editable s) {
+    public void setIsChangeListener(IsChange isChange) {
+        mIsChange = isChange;
+    }
+
+    private void onEditableChanged(Editable s) {
 
     }
 
-    protected void onTextChanged(Editable s) {
+    private void onTextChanged(Editable s) {
+        if (s == null) s = mEditable;
+        if (mIsChange != null && mDefaultContent != null) {
+            boolean changeBefore = !mDefaultContent.contentEquals(s);
+            if (changeBefore != mChanged) {
+                mChanged = changeBefore;
+                mIsChange.isChange(changeBefore);
+            }
+        }
+    }
+
+
+    /**
+     * 首次设置文本
+     * Set default text.
+     */
+    public final void setDefaultText(String text) {
+        clearHistory();
+        mFlag = true;
+        mEditable.replace(0, mEditable.length(), text);
+        mDefaultContent = text;
+        mFlag = false;
     }
 
     /**
@@ -50,7 +85,6 @@ public class EditTextMonitor {
         mUndoHistory.clear();
         mRedoHistory.clear();
     }
-
 
     /**
      * 撤销
@@ -81,6 +115,7 @@ public class EditTextMonitor {
         if (!mUndoHistory.empty() && mUndoHistory.peek().mIndex == action.mIndex) {
             undo();
         }
+        onTextChanged(null);
     }
 
     /**
@@ -109,17 +144,7 @@ public class EditTextMonitor {
         //判断是否是下一个动作是否和本动作是同一个操作
         if (!mRedoHistory.empty() && mRedoHistory.peek().mIndex == action.mIndex)
             redo();
-    }
-
-    /**
-     * 首次设置文本
-     * Set default text.
-     */
-    public final void setDefaultText(CharSequence text) {
-        clearHistory();
-        mFlag = true;
-        mEditable.replace(0, mEditable.length(), text);
-        mFlag = false;
+        onTextChanged(null);
     }
 
     private class Watcher implements TextWatcher {

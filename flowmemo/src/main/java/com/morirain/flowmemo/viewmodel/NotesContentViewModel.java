@@ -20,8 +20,6 @@ public class NotesContentViewModel extends BaseViewModel {
 
     public MutableLiveData<String> notesContent = new MutableLiveData<>();
 
-    public SingleLiveEvent<Void> requestFocusEvent = new SingleLiveEvent<>();
-
     public SingleLiveEvent<Boolean> isContentChangeEvent = new SingleLiveEvent<>();
 
     public SingleLiveEvent<String> setDefaultContentEvent = new SingleLiveEvent<>();
@@ -34,7 +32,4 @@ public class NotesContentViewModel extends BaseViewModel {
         notesLabel.postValue("标题");
     }
 
-    public void onRequestFocusClick() {
-        requestFocusEvent.call();
-    }
 }
