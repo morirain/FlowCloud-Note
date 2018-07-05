@@ -2,16 +2,19 @@ package com.morirain.flowmemo.base;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.database.DatabaseUtils;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.morirain.flowmemo.BR;
 import com.morirain.flowmemo.BuildConfig;
 import com.morirain.flowmemo.ui.activity.ContainerActivity;
@@ -33,19 +36,34 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
 
     private V mViewModel;
 
+    private View mView;
+
+    private boolean mAdded = false;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         if (getLayoutResId() <= 0)
             throw new AssertionError("Subclass must provide a valid layout resource id");
 
-        mBind = DataBindingUtil.inflate(inflater, getLayoutResId(), container, false);
-        mBind.setLifecycleOwner(this);
+
+        if (mView == null) mView = inflater.inflate(getLayoutResId(), container, false);
+        mBind = DataBindingUtil.bind(mView);
+        if (mBind != null) mBind.setLifecycleOwner(this);
 
         if (getViewModelClass() != null) initViewModel();
         setArguments();
+
         init(savedInstanceState);
-        return mBind.getRoot();
+        return mView;
+    }
+
+    public void setAdded(boolean added) {
+        mAdded = added;
+    }
+
+    public boolean getAdded() {
+        return mAdded;
     }
 
     private void initViewModel() {

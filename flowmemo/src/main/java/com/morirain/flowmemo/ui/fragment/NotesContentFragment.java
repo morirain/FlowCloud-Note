@@ -1,12 +1,15 @@
 package com.morirain.flowmemo.ui.fragment;
 
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.inputmethod.InputMethodManager;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.morirain.flowmemo.R;
 import com.morirain.flowmemo.base.BaseActivity;
 import com.morirain.flowmemo.base.BaseApplication;
@@ -17,6 +20,8 @@ import com.morirain.flowmemo.viewmodel.NotesContentViewModel;
 import com.yydcdut.markdown.MarkdownProcessor;
 import com.yydcdut.markdown.syntax.edit.EditFactory;
 
+import java.lang.ref.SoftReference;
+
 /**
  * @author morirain
  * @email morirain.dev@outlook.com
@@ -26,22 +31,23 @@ import com.yydcdut.markdown.syntax.edit.EditFactory;
 
 public class NotesContentFragment extends BaseFragment<FragmentNotesContentBinding, NotesContentViewModel> {
 
-    private BaseActivity mActivity;
-
     private EditTextMonitor mEditTextMonitor;
+
+    public static NotesContentFragment getInstance() {
+        return new NotesContentFragment();
+    }
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        mActivity = (BaseActivity) getActivity();
         initEdit();
         initEvent();
     }
 
     private void initEdit() {
-        MarkdownProcessor markdownProcessor = new MarkdownProcessor(mActivity);
+        MarkdownProcessor markdownProcessor = new MarkdownProcessor(getContext());
         //markdownProcessor.config(markdownConfiguration);
         markdownProcessor.factory(EditFactory.create());
-        mEditTextMonitor = new EditTextMonitor(getBinding().etNotesContentMarkdown);
+        if (mEditTextMonitor == null) mEditTextMonitor = new EditTextMonitor(getBinding().etNotesContentMarkdown);
         markdownProcessor.live(getBinding().etNotesContentMarkdown);
 
         // 为监听器设置默认数据
@@ -64,8 +70,13 @@ public class NotesContentFragment extends BaseFragment<FragmentNotesContentBindi
     }
 
     @Override
-    protected void setArguments() {
+    public void onDestroy() {
+        super.onDestroy();
 
+    }
+
+    @Override
+    protected void setArguments() {
     }
 
     @Override

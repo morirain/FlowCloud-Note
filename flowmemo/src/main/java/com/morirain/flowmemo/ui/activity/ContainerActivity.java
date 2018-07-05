@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.SparseArray;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.morirain.flowmemo.R;
 import com.morirain.flowmemo.base.BaseActivity;
@@ -22,21 +23,38 @@ public class ContainerActivity extends BaseActivity<ActivityContainerBinding, Pa
 
     public static SparseArray<BaseFragment> sFragmentMap = new SparseArray<>();
 
+    private int mKey = 0;
+
     @Override
     protected void init(Bundle savedInstanceState) {
-        int key = 0;
-        Intent intent = getIntent();
-        if (intent != null) key = getIntent().getIntExtra("fragment", 0);
-        if (key != 0) switchFragment(getBinding().container.getId(), sFragmentMap.get(key), null);
-        sFragmentMap.remove(key);
+        if (savedInstanceState != null) {
+            mKey = savedInstanceState.getInt("fragmentKey");
+        } else {
+            Intent intent = getIntent();
+            if (intent != null) mKey = getIntent().getIntExtra("fragment", 0);
+        }
+        LogUtils.e(this);
+        if (mKey != 0) switchFragment(getBinding().container.getId(), sFragmentMap.get(mKey), null);
+        //sFragmentMap.remove(mKey);
 
         StatusBarUtil.setLightMode(this);
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("fragmentKey", mKey);
+    }
+
+    @Override
     public void finish() {
         super.finish();
-        //overridePendingTransition(0, R.anim.slide_out_down);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sFragmentMap.remove(mKey);
     }
 
     public static void setFragment(int key, BaseFragment fragment) {

@@ -11,6 +11,11 @@ import com.yydcdut.markdown.syntax.text.TextFactory;
 
 public class NotesContentPreviewFragment extends BaseFragment<FragmentNotesContentPreviewBinding, NotesContentViewModel> {
 
+    public static NotesContentPreviewFragment getInstance() {
+        NotesContentPreviewFragment fragment = new NotesContentPreviewFragment();
+        return fragment;
+    }
+
     @Override
     protected void init(Bundle savedInstanceState) {
         initPreview();

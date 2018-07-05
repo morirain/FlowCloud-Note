@@ -68,12 +68,14 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         return mViewModel;
     }
 
-    public void switchFragment(int containerViewId, Fragment from, Fragment toHide) {
+    public void switchFragment(int containerViewId, BaseFragment from, Fragment toHide) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        if (!from.isAdded()) {
-            fragmentTransaction//.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        getSupportFragmentManager().executePendingTransactions();
+        if (!from.getAdded()) {
+            fragmentTransaction
                     .add(containerViewId, from)
                     .show(from);
+            from.setAdded(true);
         } else {
             fragmentTransaction.show(from);
         }

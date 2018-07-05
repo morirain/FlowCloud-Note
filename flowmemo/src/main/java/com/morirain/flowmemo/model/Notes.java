@@ -17,10 +17,6 @@ import io.objectbox.annotation.Transient;
 
 public class Notes{
 
-
-    long boxId;
-
-
     public MutableLiveData<String> noteLabel = new MutableLiveData<>();
 
     public MutableLiveData<String> noteContent = new MutableLiveData<>();

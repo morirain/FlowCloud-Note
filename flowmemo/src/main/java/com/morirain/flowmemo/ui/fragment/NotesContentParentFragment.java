@@ -3,17 +3,23 @@ package com.morirain.flowmemo.ui.fragment;
 import android.animation.ArgbEvaluator;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
+import com.blankj.utilcode.util.LogUtils;
 import com.morirain.flowmemo.R;
 import com.morirain.flowmemo.base.BaseActivity;
 import com.morirain.flowmemo.base.BaseApplication;
@@ -28,53 +34,35 @@ import java.util.List;
 
 public class NotesContentParentFragment extends BaseFragment<FragmentNotesContentParentBinding, NotesContentViewModel> {
 
-    private static final String ARG_PARAM_NOTE_LABEL = "noteLabel";
-
-    private static final String ARG_PARAM_NOTE_CONTENT = "noteContent";
-
-    private static final String ARG_PARAM_NOTE_PATH = "notePath";
-
-    private BaseActivity mActivity;
-
     // for drawer
     private MaterialMenuDrawable mMenuDrawable;
 
-    private String mNoteLabel;
-
-    private String mNoteContent;
-
-    private String mNotePath;
+    private Notes mNote;
 
     // 渐变处理
     private int mEndColor;
 
+
     public static NotesContentParentFragment getInstance(Notes note) {
         NotesContentParentFragment fragment = new NotesContentParentFragment();
-        if (note != null) {
-            Bundle args = new Bundle();
-            args.putString(ARG_PARAM_NOTE_LABEL, note.noteLabel.getValue());
-            args.putString(ARG_PARAM_NOTE_CONTENT, note.noteContent.getValue());
-            args.putString(ARG_PARAM_NOTE_PATH, note.notePath);
-            fragment.setArguments(args);
-        }
+        fragment.mNote = note;
         return fragment;
     }
 
     @Override
     protected void setArguments() {
-        if (getArguments() != null) {
-            mNoteLabel = getArguments().getString(ARG_PARAM_NOTE_LABEL);
-            mNoteContent = getArguments().getString(ARG_PARAM_NOTE_CONTENT);
-            mNotePath = getArguments().getString(ARG_PARAM_NOTE_PATH);
-            getViewModel().notesContent.setValue(mNoteContent);
-            getViewModel().notesLabel.setValue(mNoteLabel);
-            getViewModel().setDefaultContentEvent.setValue(mNoteContent);
+        if (mNote != null) {
+            getViewModel().notesContent.setValue(mNote.noteContent.getValue());
+            getViewModel().notesLabel.setValue(mNote.noteLabel.getValue());
+            getViewModel().notesPath = mNote.notePath;
+            getViewModel().setDefaultContentEvent.setValue(mNote.noteContent.getValue());
         }
+
     }
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        mActivity = (BaseActivity) getActivity();
+
 
         initFragment();
         initListener();
@@ -82,13 +70,19 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
         initEvent();
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
     private void initFragment() {
         List<Fragment> fragmentList = new ArrayList<>();
-        fragmentList.add(new NotesContentFragment());
-        fragmentList.add(new NotesContentPreviewFragment());
-        BasePagerAdapter basePagerAdapter = new BasePagerAdapter(mActivity.getSupportFragmentManager(), fragmentList);
+        fragmentList.add(NotesContentFragment.getInstance());
+        fragmentList.add(NotesContentPreviewFragment.getInstance());
+        BasePagerAdapter basePagerAdapter = new BasePagerAdapter(getChildFragmentManager(), fragmentList);
         getBinding().vpFragment.setAdapter(basePagerAdapter);
         getBinding().vpFragment.setCurrentItem(0);
+
     }
 
     private void initListener() {
@@ -144,10 +138,10 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
         Toolbar toolbar = getBinding().toolbarNotesContentParent.toolbar;
         toolbar.setNavigationIcon(mMenuDrawable);
 
-        mActivity.setSupportActionBar(toolbar);
+        ((BaseActivity) getActivity()).setSupportActionBar(toolbar);
 
         // show home
-        ActionBar actionBar = mActivity.getSupportActionBar();
+        ActionBar actionBar = ((BaseActivity) getActivity()).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -169,12 +163,13 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
     }
 
     private int getColor(int colorResources) {
-        return ContextCompat.getColor(mActivity, colorResources);
+        return ContextCompat.getColor(getActivity(), colorResources);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
         inflater.inflate(R.menu.toolbar_notes_content, menu);
     }
 
@@ -182,7 +177,7 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                mActivity.onBackPressed();
+                getActivity().onBackPressed();
                 break;
             case R.id.menu_toolbar_notes_content_undo:
                 getViewModel().onUndoClickEvent.call();
