@@ -1,12 +1,11 @@
 package com.morirain.jgit.utils;
 
+import android.os.Build;
 import android.os.Environment;
 
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.CreateBranchCommand;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.GitCommand;
-import org.eclipse.jgit.api.MergeCommand;
 import org.eclipse.jgit.api.PushCommand;
 import org.eclipse.jgit.api.RemoteAddCommand;
 import org.eclipse.jgit.transport.URIish;
@@ -14,7 +13,6 @@ import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +24,8 @@ import io.reactivex.schedulers.Schedulers;
 
 
 public class JGit {
+
+    public final static boolean SYSTEM_BELOW_API21 = !(Build.VERSION.SDK_INT >= 21);
 
     private static final String TAG = "JGitUtils";
 
@@ -258,6 +258,7 @@ public class JGit {
     }
 
     public void call() {
+        if (SYSTEM_BELOW_API21) return;
         Completable.concat(mTaskSequence)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

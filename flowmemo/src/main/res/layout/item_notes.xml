@@ -5,9 +5,12 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="item"
             type="com.morirain.flowmemo.model.Notes" />
+
         <variable
             name="viewModel"
             type="com.morirain.flowmemo.viewmodel.NotesViewModel" />
@@ -29,8 +32,9 @@
         android:onClick="@{() -> viewModel.onItemClick(item)}"
         app:cardBackgroundColor="@color/colorNotesItem"
         app:cardCornerRadius="2dp"
-        app:cardElevation="2dp"
+        app:cardElevation="@dimen/cardElevation2dp"
         app:cardMaxElevation="0dp"
+        app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true"
         app:contentPadding="8dp">
 
@@ -41,20 +45,23 @@
 
             <TextView
                 android:id="@+id/tv_note_label"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_weight="1.0"
                 android:ellipsize="end"
+                android:gravity="start"
                 android:lineSpacingExtra="2dp"
                 android:maxLines="14"
+                android:singleLine="true"
+                android:text="@{item.noteLabel}"
                 android:textColor="@color/colorText"
                 android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="@{item.noteLabel}"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_note_content"
@@ -80,28 +87,52 @@
                 android:id="@+id/tv_note_last_update_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:text="@{item.noteLastUpdateTime}"
                 android:textColor="@color/colorText"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:text="@{item.noteLastUpdateTime}" />
+                app:layout_constraintBottom_toTopOf="@+id/divide"
+                app:layout_constraintStart_toStartOf="parent" />
 
-            <!--<ImageButton
-                android:id="@+id/button_notes_more"
+            <View
+                android:id="@+id/divide"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="4dp"
+                android:background="@color/colorDivide"
+                android:visibility="@{viewModel.isRealFolder ? View.GONE : View.VISIBLE}"
+                app:layout_constraintBottom_toTopOf="@+id/imageView" />
+
+            <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:onClick="@{handler::onItemMoreClick}"
-                android:padding="6dp"
-                android:src="@drawable/ic_more_vert_black_24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />-->
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_folder_black_24dp"
+                android:visibility="@{viewModel.isRealFolder ? View.GONE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_note_folder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{item.getNoteParentDirName}"
+                android:textColor="@color/colorText"
+                android:textSize="12sp"
+                android:visibility="@{viewModel.isRealFolder ? View.GONE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView" />
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.CardView>

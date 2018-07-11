@@ -2,6 +2,7 @@ package com.morirain.flowmemo.adapter;
 
 
 import android.arch.lifecycle.LifecycleOwner;
+import android.support.annotation.NonNull;
 
 import com.morirain.flowmemo.base.BaseAdapter;
 import com.morirain.flowmemo.model.Notes;
@@ -24,11 +25,14 @@ public class NotesAdapter extends BaseAdapter<Notes> {
         mRepository.getCurrentFolder().observe(lifecycleOwner, folder -> {
             if (folder != null) {
                 getListValue().clear();
-                getListValue().addAll(folder.getNotesList());
+                getListValue().addAll(folder.getNotesListValue());
                 notifyDataSetChanged();
             }
         });
     }
 
-
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        super.onBindViewHolder(holder, position);
+    }
 }

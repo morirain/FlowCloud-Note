@@ -15,6 +15,9 @@ import android.widget.Toast;
 import com.morirain.flowmemo.BR;
 import com.morirain.flowmemo.R;
 import com.morirain.flowmemo.adapter.FolderAdapter;
+import com.morirain.flowmemo.model.repository.NoteLibraryRepository;
+import com.morirain.flowmemo.utils.ApplicationConfig;
+import com.morirain.flowmemo.utils.SingletonFactory;
 import com.morirain.flowmemo.viewmodel.FolderViewModel;
 import com.jaeger.library.StatusBarUtil;
 
@@ -35,6 +38,8 @@ import com.yanzhenjie.permission.Permission;
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
 
     private FolderAdapter mFolderAdapter = new FolderAdapter(this, R.layout.item_drawer_folder);
+
+    private NoteLibraryRepository mRepository = SingletonFactory.getInstance(NoteLibraryRepository.class);
 
     private DrawerLayout mDrawer;
 
@@ -72,6 +77,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 .start();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mRepository.refreshData();
+    }
+
     private void initToolbar() {
         setSupportActionBar(getBinding().toolbarMain.toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -91,7 +102,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         drawerRecyclerView.setLayoutManager(layoutManager);
         drawerRecyclerView.setAdapter(mFolderAdapter);
-        mFolderViewModel.setAdapter(mFolderAdapter);
         mFolderAdapter.setViewModel(mFolderViewModel);
 
         // DrawerToggle

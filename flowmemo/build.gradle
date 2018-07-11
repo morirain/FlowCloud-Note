@@ -148,6 +148,10 @@ dependencies {
     /* https://github.com/afollestad/material-dialogs */
     //implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 
+    /** prettytime */
+    /* https://github.com/ocpsoft/prettytime */
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
+
     /** material-menu */
     /* https://github.com/balysv/material-menu */
     implementation 'com.balysv.materialmenu:material-menu:2.0.0'
@@ -203,14 +207,13 @@ dependencies {
     //implementation 'uk.co.samuelwall:material-tap-target-prompt:2.8.0'
 
     /** Gson */
-
     /* https://github.com/google/gson */
-
     //implementation 'com.google.code.gson:gson:2.8.4'
 
     /** UETool */
     /* https://github.com/eleme/UETool */
     debugImplementation 'me.ele:uetool:1.0.15'
+    releaseImplementation 'me.ele:uetool-no-op:1.0.15'
 }
 
 apply plugin: 'io.objectbox'

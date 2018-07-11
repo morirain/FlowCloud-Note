@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cardElevation2dp">2dp</dimen>
+    <dimen name="cardElevation4dp">4dp</dimen>
+    <dimen name="cardElevation64dp">64dp</dimen>
+</resources>

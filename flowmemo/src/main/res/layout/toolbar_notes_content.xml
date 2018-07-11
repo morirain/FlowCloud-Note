@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.morirain.flowmemo.viewmodel.NotesContentViewModel" />
@@ -25,20 +26,24 @@
                 android:layout_height="0px"
                 android:focusable="true"
                 android:focusableInTouchMode="true">
+
                 <requestFocus />
             </FrameLayout>
 
             <EditText
                 android:id="@+id/et_toolbar_notes_content_title"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@={viewModel.notesLabel}"
+                android:layout_height="match_parent"
                 android:layout_gravity="center|start"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@null"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
+                android:singleLine="true"
+                android:text="@={viewModel.note.noteLabel}"
                 android:textColor="@color/colorText"
-                android:textSize="20sp"
-                android:background="@null"/>
+                android:textSize="20sp" />
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>

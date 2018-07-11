@@ -2,6 +2,7 @@ package com.morirain.flowmemo.model;
 
 
 import android.arch.lifecycle.MutableLiveData;
+import android.support.annotation.NonNull;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -26,24 +27,27 @@ public class Folder {
     @Transient
     public MutableLiveData<String> folderName = new MutableLiveData<>();
     @Transient
-    public MutableLiveData<File> folderDir = new MutableLiveData<>();
-    @Transient
-    private List<Notes> mNotesList = new ArrayList<>();
+    private MutableLiveData<List<Notes>> mNotesList = new MutableLiveData<>();
     @Transient
     private MutableLiveData<Boolean> mIsSelected = new MutableLiveData<>();
 
     public Folder(String folderName) {
-        this.folderName.postValue(folderName);
-        this.folderDir.postValue(null);
+        this.folderName.setValue(folderName);
     }
 
     public Folder(File folderDir) {
-        this.folderName.postValue(folderDir.getName());
-        this.folderDir.postValue(folderDir);
+        this.folderName.setValue(folderDir.getName());
     }
 
-    public List<Notes> getNotesList() {
+    public MutableLiveData<List<Notes>> getNotesList() {
+        if (mNotesList.getValue() == null) mNotesList.setValue(new ArrayList<>());
         return mNotesList;
+    }
+
+    @NonNull
+    public List<Notes> getNotesListValue() {
+        if (mNotesList.getValue() == null) mNotesList.setValue(new ArrayList<>());
+        return mNotesList.getValue();
     }
 
     public MutableLiveData<Boolean> isSelected() {
@@ -51,6 +55,6 @@ public class Folder {
     }
 
     public void setSelected(boolean selected) {
-        mIsSelected.postValue(selected);
+        mIsSelected.setValue(selected);
     }
 }

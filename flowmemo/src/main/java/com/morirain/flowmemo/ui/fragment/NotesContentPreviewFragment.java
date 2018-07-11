@@ -26,7 +26,7 @@ public class NotesContentPreviewFragment extends BaseFragment<FragmentNotesConte
             MarkdownProcessor markdownProcessor = new MarkdownProcessor(getActivity());
             //markdownProcessor.config(markdownConfiguration);
             markdownProcessor.factory(TextFactory.create());
-            getViewModel().notesContent.observe(this, content ->
+            getViewModel().note.noteContent.observe(this, content ->
                     getBinding().tvNotesContentMarkdown.setText(markdownProcessor.parse(content)));
         }
 

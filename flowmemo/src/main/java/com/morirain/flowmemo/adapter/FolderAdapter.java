@@ -36,6 +36,10 @@ public class FolderAdapter extends BaseAdapter<Folder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
+        if (getListValue().get(position)
+                .isSelected().hasObservers())
+            getListValue().get(position)
+                    .isSelected().removeObservers(getLifecycleOwner());
         getListValue().get(position)
                 .isSelected()
                 .observe(getLifecycleOwner(), aBoolean -> {

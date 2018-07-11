@@ -1,6 +1,8 @@
 package com.morirain.flowmemo.viewmodel;
 
 
+import android.arch.lifecycle.MutableLiveData;
+
 import com.morirain.flowmemo.adapter.NotesAdapter;
 import com.morirain.flowmemo.base.BaseViewModel;
 import com.morirain.flowmemo.model.Notes;
@@ -17,11 +19,9 @@ import com.morirain.flowmemo.utils.SingletonFactory;
 
 public class NotesViewModel extends BaseViewModel {
 
-//    private NotesAdapter mAdapter;
-//
-//    private List<Notes> mList;
+    private NoteLibraryRepository mRepository = SingletonFactory.getInstance(NoteLibraryRepository.class);
 
-    private NoteLibraryRepository mNoteLibraryRepository = SingletonFactory.getInstance(NoteLibraryRepository.class);
+    private MutableLiveData<Boolean> isRealFolder = new MutableLiveData<>();
 
     public SingleLiveEvent<Notes> notesClickEvent = new SingleLiveEvent<>();
 
@@ -30,11 +30,13 @@ public class NotesViewModel extends BaseViewModel {
     public NotesViewModel() {
     }
 
-    public void setAdapter(NotesAdapter adapter){
-        /*mAdapter = adapter;
-        mAdapter.setHandler(new ItemNotesHandler());
-        mList = adapter.getDataList().getValue();
-        getListData();*/
+    public MutableLiveData<Boolean> getIsRealFolder() {
+        if (mRepository.isRealFolder(mRepository.getCurrentFolder().getValue())) {
+            isRealFolder.setValue(true);
+        } else {
+            isRealFolder.setValue(false);
+        }
+        return isRealFolder;
     }
 
     public void onNewNoteClick() {

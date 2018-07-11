@@ -19,23 +19,9 @@ import java.util.List;
 
 public class FolderViewModel extends BaseViewModel {
 
-    private FolderAdapter mAdapter;
-
-    private List<Folder> mList;
-
     private NoteLibraryRepository mRepository = SingletonFactory.getInstance(NoteLibraryRepository.class);
 
     public FolderViewModel() {
-    }
-
-    public void setAdapter(FolderAdapter adapter){
-       /* mAdapter = adapter;
-        mList = adapter.getDataList().getValue();
-        getListData();*/
-    }
-
-    private void getListData() {
-        //mList.addAll(mRepository.getFolderList());
     }
 
     public void onItemClick(Folder folder) {

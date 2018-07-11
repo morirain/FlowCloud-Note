@@ -41,7 +41,7 @@
                 android:imeOptions="flagNoExtractUi"
                 android:minHeight="384dp"
                 android:paddingBottom="48dp"
-                android:text="@={viewModel.notesContent}" />
+                android:text="@={viewModel.note.noteContent}" />
 
         </ScrollView>
 

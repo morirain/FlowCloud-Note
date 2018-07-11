@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.morirain.flowmemo.model.repository.NoteLibraryRepository;
 import com.morirain.flowmemo.ui.activity.MainActivity;
+import com.morirain.flowmemo.utils.SingletonFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,6 +25,10 @@ public class SplashActivity extends AppCompatActivity {
         // init UETool
         if(BuildConfig.DEBUG) UETool.showUETMenu();
 
+        // init data
+        SingletonFactory.getInstance(NoteLibraryRepository.class);
+
+        // start
         d = Completable.timer(1, TimeUnit.MICROSECONDS).subscribe(() -> {
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(intent);

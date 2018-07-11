@@ -13,7 +13,6 @@ import java.util.Stack;
  * @since 2018/7/3
  */
 
-
 public class EditTextMonitor {
 
     public interface IsChange {
@@ -32,11 +31,9 @@ public class EditTextMonitor {
     //自动操作标志，防止重复回调,导致无限撤销
     private boolean mFlag = false;
     //如果文本不一致的回调
-    private IsChange mIsChange;
+    private IsChange mIsChangeListener;
     private boolean mChanged = false;
     private String mDefaultContent;
-    //设置时间延迟 以获得更好的效果
-    private int mTime;
 
     public EditTextMonitor(@NonNull EditText editText) {
         this.mEditable = editText.getText();
@@ -45,7 +42,7 @@ public class EditTextMonitor {
     }
 
     public void setIsChangeListener(IsChange isChange) {
-        mIsChange = isChange;
+        mIsChangeListener = isChange;
     }
 
     private void onEditableChanged(Editable s) {
@@ -54,11 +51,11 @@ public class EditTextMonitor {
 
     private void onTextChanged(Editable s) {
         if (s == null) s = mEditable;
-        if (mIsChange != null && mDefaultContent != null) {
+        if (mIsChangeListener != null && mDefaultContent != null) {
             boolean changeBefore = !mDefaultContent.contentEquals(s);
             if (changeBefore != mChanged) {
                 mChanged = changeBefore;
-                mIsChange.isChange(changeBefore);
+                mIsChangeListener.isChange(changeBefore);
             }
         }
     }

@@ -16,6 +16,7 @@ import com.morirain.flowmemo.base.BaseApplication;
 import com.morirain.flowmemo.base.BaseFragment;
 import com.morirain.flowmemo.databinding.FragmentNotesContentBinding;
 import com.morirain.flowmemo.utils.EditTextMonitor;
+import com.morirain.flowmemo.utils.LabelEditTextMonitor;
 import com.morirain.flowmemo.viewmodel.NotesContentViewModel;
 import com.yydcdut.markdown.MarkdownProcessor;
 import com.yydcdut.markdown.syntax.edit.EditFactory;
@@ -47,15 +48,13 @@ public class NotesContentFragment extends BaseFragment<FragmentNotesContentBindi
         MarkdownProcessor markdownProcessor = new MarkdownProcessor(getContext());
         //markdownProcessor.config(markdownConfiguration);
         markdownProcessor.factory(EditFactory.create());
-        if (mEditTextMonitor == null) mEditTextMonitor = new EditTextMonitor(getBinding().etNotesContentMarkdown);
         markdownProcessor.live(getBinding().etNotesContentMarkdown);
-
+        if (mEditTextMonitor == null) mEditTextMonitor = new EditTextMonitor(getBinding().etNotesContentMarkdown);
         // 为监听器设置默认数据
         getViewModel().setDefaultContentEvent.observe(this, mEditTextMonitor::setDefaultText);
-
-        // 监听有无修改
+        // 监听内容有无修改
         mEditTextMonitor.setIsChangeListener(isChange ->
-                getViewModel().isContentChangeEvent.setValue(isChange)
+                getViewModel().getIsContentChangeEvent().setValue(isChange)
         );
         requestFocus();
     }

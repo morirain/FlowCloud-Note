@@ -178,6 +178,9 @@
 -keep class com.yanzhenjie.permission.** { *; }
 -dontwarn com.yanzhenjie.permission.**
 
+# PrettyTime
+-keep class org.ocpsoft.prettytime.i18n.**
+
 # Project
 -keep class android.support.v4.widget.DrawerLayout { *; }
 -keep class android.support.test.espresso.IdlingResource { *; }

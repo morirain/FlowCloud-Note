@@ -33,7 +33,6 @@ public class ContainerActivity extends BaseActivity<ActivityContainerBinding, Pa
             Intent intent = getIntent();
             if (intent != null) mKey = getIntent().getIntExtra("fragment", 0);
         }
-        LogUtils.e(this);
         if (mKey != 0) switchFragment(getBinding().container.getId(), sFragmentMap.get(mKey), null);
         //sFragmentMap.remove(mKey);
 

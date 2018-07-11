@@ -3,67 +3,74 @@ package com.morirain.flowmemo.ui.fragment;
 import android.animation.ArgbEvaluator;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
-import com.blankj.utilcode.util.LogUtils;
 import com.morirain.flowmemo.R;
 import com.morirain.flowmemo.base.BaseActivity;
 import com.morirain.flowmemo.base.BaseApplication;
 import com.morirain.flowmemo.base.BaseFragment;
 import com.morirain.flowmemo.base.BasePagerAdapter;
 import com.morirain.flowmemo.databinding.FragmentNotesContentParentBinding;
+import com.morirain.flowmemo.model.Folder;
 import com.morirain.flowmemo.model.Notes;
+import com.morirain.flowmemo.model.repository.NoteLibraryRepository;
+import com.morirain.flowmemo.utils.LabelEditTextMonitor;
+import com.morirain.flowmemo.utils.SingletonFactory;
 import com.morirain.flowmemo.viewmodel.NotesContentViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class NotesContentParentFragment extends BaseFragment<FragmentNotesContentParentBinding, NotesContentViewModel> {
+
+    private NoteLibraryRepository mRepository = SingletonFactory.getInstance(NoteLibraryRepository.class);
 
     // for drawer
     private MaterialMenuDrawable mMenuDrawable;
 
-    private Notes mNote;
+    private Notes mExistNotes;
 
     // 渐变处理
     private int mEndColor;
 
+    private boolean mCanSaveNote = false;
+
 
     public static NotesContentParentFragment getInstance(Notes note) {
         NotesContentParentFragment fragment = new NotesContentParentFragment();
-        fragment.mNote = note;
+        fragment.mExistNotes = note;
         return fragment;
     }
 
     @Override
     protected void setArguments() {
-        if (mNote != null) {
-            getViewModel().notesContent.setValue(mNote.noteContent.getValue());
-            getViewModel().notesLabel.setValue(mNote.noteLabel.getValue());
-            getViewModel().notesPath = mNote.notePath;
-            getViewModel().setDefaultContentEvent.setValue(mNote.noteContent.getValue());
+        getViewModel().getIsLabelChangeEvent().setValue(false);
+        getViewModel().getIsContentChangeEvent().setValue(false);
+        if (mExistNotes != null) {
+            getViewModel().note = new Notes(mExistNotes);
+            getViewModel().setDefaultContentEvent.setValue(mExistNotes.noteContent.getValue());
+            getViewModel().setDefaultLabelEvent.setValue(mExistNotes.noteLabel.getValue());
+        } else {
+            Folder currentFolder = mRepository.getCurrentFolder().getValue();
+            if (currentFolder != null)
+                getViewModel().note = new Notes(currentFolder.folderName.getValue());
+            getViewModel().setDefaultContentEvent.setValue("");
+            getViewModel().setDefaultLabelEvent.setValue(getViewModel().note.noteLabel.getValue());
         }
-
     }
 
     @Override
     protected void init(Bundle savedInstanceState) {
-
-
         initFragment();
         initListener();
         initToolbar();
@@ -71,8 +78,22 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
+    public void onResume() {
+        mRepository.saveRefreshLock = false;
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        mRepository.saveRefreshLock = true;
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mCanSaveNote) mRepository.saveNote(mExistNotes, getViewModel().note, getViewModel().getIsLabelChangeEvent().getValue());
+        super.onDestroy();
+
     }
 
     private void initFragment() {
@@ -86,7 +107,7 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
     }
 
     private void initListener() {
-        int mColors[] = {getColor(R.color.colorEditViewBackground), getColor(R.color.colorBackground)};
+        int mColors[] = {getColor(R.color.colorEditViewBackground), getColor(R.color.colorPreViewBackground)};
         getBinding().vpFragment.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -151,12 +172,35 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
     }
 
     private void initEvent() {
-        getViewModel().isContentChangeEvent.observe(this, aBoolean -> {
+        // 内容监听器
+        getViewModel().getIsContentChangeEvent().observe(this, aBoolean -> {
                     if (aBoolean == null) aBoolean = false;
                     if (aBoolean) {
                         mMenuDrawable.animateIconState(MaterialMenuDrawable.IconState.CHECK);
-                    } else {
+                        mCanSaveNote = true;
+                    } else if (!getViewModel().getIsLabelChangeEvent().getValue()) {
                         mMenuDrawable.animateIconState(MaterialMenuDrawable.IconState.ARROW);
+                        mCanSaveNote = false;
+                    }
+
+                }
+        );
+        // 初始化标题监听器
+        LabelEditTextMonitor labelEditTextMonitor = new LabelEditTextMonitor(getBinding().toolbarNotesContentParent.etToolbarNotesContentTitle);
+        // 为监听器设置默认数据
+        getViewModel().setDefaultLabelEvent.observe(this, labelEditTextMonitor::setDefaultText);
+        // 监听标题有无修改
+        labelEditTextMonitor.setIsChangeListener(isChange ->
+                getViewModel().getIsLabelChangeEvent().setValue(isChange));
+        // 如果标题已修改
+        getViewModel().getIsLabelChangeEvent().observe(this, aBoolean -> {
+                    if (aBoolean == null) aBoolean = false;
+                    if (aBoolean) {
+                        mMenuDrawable.animateIconState(MaterialMenuDrawable.IconState.CHECK);
+                        mCanSaveNote = true;
+                    } else if (!getViewModel().getIsContentChangeEvent().getValue()) {
+                        mMenuDrawable.animateIconState(MaterialMenuDrawable.IconState.ARROW);
+                        mCanSaveNote = false;
                     }
                 }
         );
@@ -178,6 +222,7 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
         switch (item.getItemId()) {
             case android.R.id.home:
                 getActivity().onBackPressed();
+                //if (getViewModel().isContentChangeEvent.getValue()) mRepository.saveNote(mExistNotes, getViewModel().note);
                 break;
             case R.id.menu_toolbar_notes_content_undo:
                 getViewModel().onUndoClickEvent.call();

@@ -19,13 +19,13 @@ import com.morirain.flowmemo.utils.SingleLiveEvent;
 
 public class NotesContentViewModel extends BaseViewModel {
 
-    public MutableLiveData<String> notesLabel = new MutableLiveData<>();
+    public Notes note;
 
-    public MutableLiveData<String> notesContent = new MutableLiveData<>();
+    private SingleLiveEvent<Boolean> isLabelChangeEvent = new SingleLiveEvent<>();
 
-    public String notesPath;
+    public SingleLiveEvent<String> setDefaultLabelEvent = new SingleLiveEvent<>();
 
-    public SingleLiveEvent<Boolean> isContentChangeEvent = new SingleLiveEvent<>();
+    private SingleLiveEvent<Boolean> isContentChangeEvent = new SingleLiveEvent<>();
 
     public SingleLiveEvent<String> setDefaultContentEvent = new SingleLiveEvent<>();
 
@@ -33,8 +33,17 @@ public class NotesContentViewModel extends BaseViewModel {
 
     public SingleLiveEvent<Void> onRedoClickEvent = new SingleLiveEvent<>();
 
+    public SingleLiveEvent<Boolean> getIsLabelChangeEvent() {
+        if (isLabelChangeEvent.getValue() == null) isLabelChangeEvent.setValue(false);
+        return isLabelChangeEvent;
+    }
+
+    public SingleLiveEvent<Boolean> getIsContentChangeEvent() {
+        if (isContentChangeEvent.getValue() == null) isContentChangeEvent.setValue(false);
+        return isContentChangeEvent;
+    }
+
     public NotesContentViewModel() {
-        notesLabel.setValue("标题");
     }
 
 }

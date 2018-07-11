@@ -20,7 +20,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:cardBackgroundColor="@color/colorPrimary"
-            app:cardElevation="64dp"
+            app:cardElevation="@dimen/cardElevation64dp"
+            app:cardUseCompatPadding="true"
+            app:cardPreventCornerOverlap="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
