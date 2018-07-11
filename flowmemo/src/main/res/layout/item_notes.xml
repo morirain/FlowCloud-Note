@@ -34,8 +34,6 @@
         app:cardCornerRadius="2dp"
         app:cardElevation="@dimen/cardElevation2dp"
         app:cardMaxElevation="0dp"
-        app:cardPreventCornerOverlap="false"
-        app:cardUseCompatPadding="true"
         app:contentPadding="8dp">
 
         <android.support.constraint.ConstraintLayout

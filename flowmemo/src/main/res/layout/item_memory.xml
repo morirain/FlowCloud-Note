@@ -19,9 +19,7 @@
         app:cardBackgroundColor="@color/colorNotesItem"
         app:cardCornerRadius="12dp"
         app:cardElevation="@dimen/cardElevation2dp"
-        app:cardMaxElevation="4dp"
-        app:cardPreventCornerOverlap="false"
-        app:cardUseCompatPadding="true">
+        app:cardMaxElevation="4dp">
 
         <TextView
             android:layout_width="match_parent"

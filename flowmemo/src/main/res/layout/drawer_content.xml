@@ -26,9 +26,7 @@
             android:layout_height="?android:attr/actionBarSize"
             app:cardBackgroundColor="@color/colorPrimary"
             app:cardCornerRadius="0dp"
-            app:cardElevation="@dimen/cardElevation4dp"
-            app:cardPreventCornerOverlap="false"
-            app:cardUseCompatPadding="true">
+            app:cardElevation="@dimen/cardElevation4dp">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
