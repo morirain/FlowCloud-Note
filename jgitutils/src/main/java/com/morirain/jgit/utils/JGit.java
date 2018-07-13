@@ -7,8 +7,6 @@ import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.CreateBranchCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.PushCommand;
-import org.eclipse.jgit.api.RemoteAddCommand;
-import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 import java.io.File;
@@ -24,8 +22,6 @@ import io.reactivex.schedulers.Schedulers;
 
 
 public class JGit {
-
-    public final static boolean SYSTEM_BELOW_API21 = !(Build.VERSION.SDK_INT >= 21);
 
     private static final String TAG = "JGitUtils";
 
@@ -245,7 +241,8 @@ public class JGit {
         return this;
     }
 
-    public JGit addRemote(String remoteUri, String remoteName) {
+    /* 4.0+*/
+    /*public JGit addRemote(String remoteUri, String remoteName) {
         mTaskSequence.add(
                 JGitCreateCommand.create(emitter -> {
                             RemoteAddCommand remoteAddCommand = mNowOpenGitRepo.remoteAdd();
@@ -255,10 +252,9 @@ public class JGit {
                         }
                 ));
         return this;
-    }
+    }*/
 
     public void call() {
-        if (SYSTEM_BELOW_API21) return;
         Completable.concat(mTaskSequence)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

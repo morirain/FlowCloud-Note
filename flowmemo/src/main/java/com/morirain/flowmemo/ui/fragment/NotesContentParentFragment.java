@@ -7,7 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -91,9 +93,30 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
 
     @Override
     public void onDestroy() {
+        // if 强制退出 保存数据而不将Note写入手机中 以便下次打开直接跳到此界面
         if (mCanSaveNote) mRepository.saveNote(mExistNotes, getViewModel().note, getViewModel().getIsLabelChangeEvent().getValue());
         super.onDestroy();
+    }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                checkSave();
+                break;
+        }
+        return false;
+    }
+
+    private void checkSave() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setIcon(R.drawable.ic_folder_black_24dp)
+                .setTitle("提示！")
+                .setMessage("确认退出程序？")
+                .setPositiveButton("确定", (dialog, which) -> getActivity().finish())
+                .setNegativeButton("取消", (dialog, which) -> {
+                })
+                .show();
     }
 
     private void initFragment() {
@@ -221,8 +244,7 @@ public class NotesContentParentFragment extends BaseFragment<FragmentNotesConten
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                getActivity().onBackPressed();
-                //if (getViewModel().isContentChangeEvent.getValue()) mRepository.saveNote(mExistNotes, getViewModel().note);
+                checkSave();//getActivity().onBackPressed();
                 break;
             case R.id.menu_toolbar_notes_content_undo:
                 getViewModel().onUndoClickEvent.call();

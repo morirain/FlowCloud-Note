@@ -1,8 +1,12 @@
 package com.morirain.flowmemo.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.SparseArray;
+import android.view.KeyEvent;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.jaeger.library.StatusBarUtil;
@@ -36,7 +40,7 @@ public class ContainerActivity extends BaseActivity<ActivityContainerBinding, Pa
         if (mKey != 0) switchFragment(getBinding().container.getId(), sFragmentMap.get(mKey), null);
         //sFragmentMap.remove(mKey);
 
-        StatusBarUtil.setLightMode(this);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) StatusBarUtil.setLightMode(this);
     }
 
     @Override
@@ -44,10 +48,9 @@ public class ContainerActivity extends BaseActivity<ActivityContainerBinding, Pa
         super.onSaveInstanceState(outState);
         outState.putInt("fragmentKey", mKey);
     }
-
     @Override
-    public void finish() {
-        super.finish();
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return sFragmentMap.get(mKey).onKeyDown(keyCode, event);
     }
 
     @Override

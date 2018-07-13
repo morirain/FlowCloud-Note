@@ -37,7 +37,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
     /** JGit */
     /* http://www.eclipse.org/jgit */
-    api 'org.eclipse.jgit:org.eclipse.jgit:4.5.4.201711221230-r'
+    api 'org.eclipse.jgit:org.eclipse.jgit:3.7.1.201504261725-r'
     /** Jsch */
     /* http://www.jcraft.com/jsch */
     implementation 'com.jcraft:jsch:0.1.54'

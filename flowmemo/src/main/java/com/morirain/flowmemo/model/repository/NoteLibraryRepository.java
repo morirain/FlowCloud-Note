@@ -1,6 +1,7 @@
 package com.morirain.flowmemo.model.repository;
 
 import android.arch.lifecycle.MutableLiveData;
+import android.support.v4.util.Pair;
 import android.support.v4.util.SimpleArrayMap;
 import android.text.TextUtils;
 
@@ -40,6 +41,8 @@ public class NoteLibraryRepository {
     private HashMap<String, Folder> mFolderMap = new HashMap<>();
 
     private MutableLiveData<Folder> mCurrentFolder = new MutableLiveData<>();
+
+    private MutableLiveData<Pair<Notes, Notes>> mNoteChangeEvent = new MutableLiveData<>();
 
     private Folder mPostCurrentFolder;
 
@@ -256,6 +259,7 @@ public class NoteLibraryRepository {
     }
 
     private String getNotePreview(String noteContent) {
+        if (noteContent == null) return "";
         if (noteContent.length() > ApplicationConfig.NOTE_CONTENT_PREVIEW_LENGTH) {
             return noteContent.substring(0, ApplicationConfig.NOTE_CONTENT_PREVIEW_LENGTH).trim().replace('\n', ' ');
         }
@@ -290,35 +294,50 @@ public class NoteLibraryRepository {
             }
         }
         FileIOUtils.writeFileFromString(savePath, afterNote.noteContent.getValue());
-
+        // 设置界面参数
+        afterNote.notePreview.setValue(getNotePreview(afterNote.noteContent.getValue()));
+        afterNote.setNoteLastUpdateDate(TimeUtils.getNowDate());
+        // 获取目前的Folder
+        Folder noteFolder;
+        if (isRealFolder(afterNote.getNoteParentDirName())) {
+            noteFolder = mFolderMap.get(afterNote.getNoteParentDirName());
+        } else {
+            noteFolder = getUnclassifiedFolder();
+        }
+        // 目前打开的文件夹的NoteList
+        List<Notes> currentNotes = noteFolder.getNotesListValue();
+        // 需要更新原note的时候
         if (sourceNote != null) {
-            Folder noteFolder;
-            if (isRealFolder(afterNote.getNoteParentDirName())) {
-                noteFolder = mFolderMap.get(afterNote.getNoteParentDirName());
-            } else {
-                noteFolder = getUnclassifiedFolder();
-            }
-            // 目前的NoteList
-            List<Notes> currentNotes = noteFolder.getNotesListValue();
-            // 获取修改前的note的位置
-            int allFolderPosition = getAllFolder().getNotesListValue().indexOf(sourceNote);
-
             // 获取修改前的note的位置
             int position = currentNotes.indexOf(sourceNote);
+            int allFolderPosition;
+            // 总之也没必要浪费资源 如果"所有文件" 等同于目前打开的文件夹 那么就跳过不读取 并且标记起来
+            //if (ObjectUtils.equals(getCurrentFolder().getValue(), getAllFolder())) {
+            //    allFolderPosition = -2;
+            //} else {
+                allFolderPosition = getAllFolder().getNotesListValue().indexOf(sourceNote);
+            //}
+
             // 如果存在修改前的note 那么更新原note
             if (position != -1) {
-
-                afterNote.notePreview.setValue(getNotePreview(afterNote.noteContent.getValue()));
-                afterNote.setNoteLastUpdateDate(TimeUtils.getNowDate());
-
-                getAllFolder().getNotesListValue().set(allFolderPosition, afterNote);
+                // 避免重复的set
+                //if (allFolderPosition != -2)
+                    getAllFolder().getNotesListValue().set(allFolderPosition, afterNote);
+                // 设置目前打开的文件夹的noteList
                 currentNotes.set(position, afterNote);
                 // notify change
-                getAllFolder().getNotesList().setValue(getAllFolder().getNotesList().getValue());
-                //getCurrentFolder().getValue().getNotesList().setValue(currentNotes);
-                noteFolder.getNotesList().setValue(noteFolder.getNotesListValue());
-                getCurrentFolder().setValue(getCurrentFolder().getValue());
+                // 提醒Adapter更新原Note
+                getNoteChangeEvent().setValue(new Pair<>(sourceNote, afterNote));
             }
+        } else {
+            // 新增的时候
+            // 设置目前打开的文件夹的noteList
+            // 如果"所有文件" 等同于目前打开的文件夹 那么就跳过
+            if (!ObjectUtils.equals(getCurrentFolder().getValue(), getAllFolder()))
+                getAllFolder().getNotesListValue().add(afterNote);
+            currentNotes.add(afterNote);
+            //先通知新增Note
+            getNoteChangeEvent().setValue(new Pair<>(null, afterNote));
         }
     }
 
@@ -346,11 +365,15 @@ public class NoteLibraryRepository {
         //    return false;
         if (!ObjectUtils.equals(fNote.getNoteParentDirName(), noteFile.getParentFile().getName()))
             return false;
-        if (!ObjectUtils.equals(fNote.noteLabel.getValue(), FileUtils.getFileNameNoExtension(noteFile)))
+        if (!fNote.noteLabel.getValue().equals(FileUtils.getFileNameNoExtension(noteFile)))
             return false;
         /*if (!ObjectUtils.equals(fNote.noteContent.getValue(), sNote.noteContent.getValue()))
             return false;*/ // 没有必要浪费资源
         return true;
+    }
+
+    public MutableLiveData<Pair<Notes, Notes>> getNoteChangeEvent() {
+        return mNoteChangeEvent;
     }
 
     public Folder getAllFolder() {

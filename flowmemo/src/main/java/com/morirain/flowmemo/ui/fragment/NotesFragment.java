@@ -17,6 +17,9 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.LandingAnimator;
+
 
 public class NotesFragment extends BaseFragment<FragmentNotesBinding, NotesViewModel> {
 
@@ -40,12 +43,21 @@ public class NotesFragment extends BaseFragment<FragmentNotesBinding, NotesViewM
 
     private void initRecyclerView() {
         RecyclerView recyclerView = getBinding().notesRecyclerView;
-
+        // 为Adapter设置viewModel
         mAdapter.setViewModel(getViewModel());
+        // 为RecyclerView设置动画
+        recyclerView.setItemAnimator(new LandingAnimator());
 
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(mAdapter);
+        // 为Adapter设置动画
+        recyclerView.setAdapter(new ScaleInAnimationAdapter(mAdapter));
+
+        // 新增条目后 跳转到顶部
+        mAdapter.getItemChangeEvent().observe(this, aVoid -> {
+            recyclerView.scrollToPosition(0);
+            layoutManager.scrollToPositionWithOffset(0, 0);
+        });
     }
 
     private void initEvent() {

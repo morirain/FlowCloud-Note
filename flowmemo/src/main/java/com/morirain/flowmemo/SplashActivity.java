@@ -23,7 +23,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // init UETool
-        if(BuildConfig.DEBUG) UETool.showUETMenu();
+        if(BuildConfig.DEBUG) UETool.showUETMenu(100);
 
         // init data
         SingletonFactory.getInstance(NoteLibraryRepository.class);

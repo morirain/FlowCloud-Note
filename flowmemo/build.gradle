@@ -156,6 +156,10 @@ dependencies {
     /* https://github.com/balysv/material-menu */
     implementation 'com.balysv.materialmenu:material-menu:2.0.0'
 
+    /** recyclerview-animators */
+    /* https://github.com/wasabeef/recyclerview-animators */
+    implementation 'jp.wasabeef:recyclerview-animators:2.3.0'
+
     /** RxMarkdown */
     /* https://github.com/yydcdut/RxMarkdown */
     implementation 'com.yydcdut:markdown-processor:0.1.2'

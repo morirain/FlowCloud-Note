@@ -1,5 +1,6 @@
 package com.morirain.flowmemo.ui.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -91,7 +92,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         }
-        StatusBarUtil.setLightMode(this);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) StatusBarUtil.setLightMode(this);
     }
 
     private void initDrawer() {
